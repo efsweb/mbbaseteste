@@ -1,5 +1,5 @@
 application: dev-mb-base
-version: ope-01
+version: v1
 runtime: php
 api_version: 1
 
