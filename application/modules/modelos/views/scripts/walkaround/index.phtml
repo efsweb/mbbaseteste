@@ -1,0 +1,72 @@
+<div class="ui-grid-a">
+        <div class="title">
+            <h1>Modelos - Walk Around - Geral</h1>
+            <a href="#" class="btn-azul pull-right btn-save" data-toggle="tooltip" data-placement="left" title="salvar conteúdo"><span class="icon-ok-3"></span>salvar</a>
+        </div>
+        
+        <div class="content" id="walk-around">
+            <div class="ui-grid-a cont-form row-01">
+            	<div class="ui-grid-b">
+                    <div class="ui-block-a">
+                        <label class="itens-walk">Visão:</label>
+                        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" class="ui-btn-inline">
+                                <input type="radio" name="visao" id="interno" value="interno" checked="checked">
+                                <label for="interno">Interno</label>
+                                <input type="radio" name="visao" id="externo" value="externo">
+                                <label for="externo">Externo</label>
+                        </fieldset>                
+                    </div>
+                    
+                    <div class="ui-block-b">
+                        <label class="itens-walk">Adicionar ou editar imagem:</label>
+                        <input type="file" name="upload-image" id="upload_imagem" value="" data-mini="true">
+                    </div>
+                    
+                    <div class="ui-block-c"><a href="#" class="ui-btn btn-azul" data-toggle="tooltip" title="Enviar Imagem"><span class="icon-ok-3">&nbsp;</span>enviar</a></div>                
+            	</div>    
+            </div>
+            
+            <div id="row-02" class="ui-grid-a cont-form row-02">
+            	<div style="width: 100%" id="foto-wa">
+                	<a href="#" class="del-foto-wa" data-toggle="tooltip" title="excluir imagem"><span class="icon-cancel-circled-2"></span></a>
+                    <div id="dragg" class="dragg">
+                        <ul class="pop-dragg" id="pop-dragg">
+                            <div class="arrow"><span class="icon-left-dir-2"></span></div>
+                            <li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>
+                            <li><a href="#"><span class="icon-cancel-2"></span>excluir ponto</a></li>  
+                            <li><p>arraste o ponto para editá-lo</p></li>
+                        </ul>
+                    </div>
+                    <img src="images/img-wa.jpg" class="img-responsive"/>
+                </div>
+			</div>   
+            
+                     
+        </div><!-- /content -->
+    </div><!-- ui-grid-a -->
+    
+    
+            <script id="page-init">
+				$( "#dragg" ).draggable({ 
+				containment: "#row-02", scroll: false, 
+				drag: function() {
+					$("#pop-dragg").fadeOut();
+				},
+				
+				});
+			
+				$("#pop-dragg").hide();
+				$( "#dragg" ).mouseover(function(){
+					if(!$( "#dragg" ).hasClass('ui-draggable-dragging'))
+					$("#pop-dragg").fadeIn();
+				});
+				
+				$("#foto-wa > img").mouseenter(function(){
+					if(!$( "#dragg" ).hasClass('ui-draggable-dragging'))
+					$("#pop-dragg").fadeOut();
+				});
+				
+				$(".del-foto-wa").click(function(){
+					$("#foto-wa").remove();
+				});
+           </script>

@@ -1,0 +1,246 @@
+<script type="text/javascript">
+var nextIdUpItem = 0;
+</script>
+    <div class="ui-grid-a">
+        <div class="title">
+            <h1>Modelos - UP - item</h1>
+            <a onclick="saveme();" href="#" class="btn-azul pull-right btn-save" data-toggle="tooltip" data-placement="left" title="salvar conteúdo"><span class="icon-ok-3"></span>salvar</a>
+        </div>
+        <div id="answer" class="resposta">
+            <div class="alert" role="alert"></div>
+        </div>
+        <div class="content" id="up-item">
+            <div class="ui-grid-a cont-form">
+            	<table width="100%" border="0" cellspacing="2" cellpadding="0" id="table-up-item">
+                    <thead>
+                  <tr class="title-table">
+                    <th width="10%"><p>baumuster</p></th>
+                    <th><p>item </p></th>
+                    <th><p>up0</p></th>
+                    <th><p>up1</p></th>
+                    <th><p>up2</p></th>
+                    <th><p>up3</p></th>
+                    <th><p>up4</p></th>
+                    <th><p>up5</p></th>
+                    <th><p>up6</p></th>
+                    <th><p>up7</p></th>
+                    <th><p>up8</p></th>
+                    <th><p>up9</p></th>
+                    <th width="33"><p>ações</p></th>
+                  </tr>
+              </thead>
+              <tbody>
+                <?php $linenm = 0; foreach($this->content as $baumuster => $rows){
+                    foreach($rows as $row => $cols): ?>
+                    <?php $linenm = $linenm + 1; ?>
+                  <tr id='ln_<?= $linenm; ?>'>
+                    <td><p data-vlr="<?= $baumuster; ?>"><?= $baumuster; ?></p></td>
+                    <td class="upitemlbl">
+                        <a id="itemx_<?= $linenm; ?>" data-vlr="<?= $row; ?>" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-alias ui-link">
+                            <?= $cols[0][0]; ?>
+                        </a>
+                    </td>
+                    <?php for($i=0;$i<10;$i++): ?>
+                    <?php $up = 'UP' . $i; if(isset($cols[0][$up])): ?>
+                    <td class="up<?= ($cols[0][$up][0] == 'S') ? ' enable' : ''; ?>">
+                        <a onclick="openselecao(this);" data-lc="<?= $cols[0][$up][1]; ?>" data-lr="<?= $cols[0][$up][2]; ?>" data-variante="<?= $cols[0][$up][3]; ?>" id="<?= $up . '_' . $linenm; ?>" data-rel="popup" data-position-to="window" data-transition="pop"  class="btn-up">
+                            <span class="icon-plus"></span>
+                        </a>
+                    </td>
+                    <?php else: ?>
+                    <td class="up">
+                        <a onclick="openselecao(this);" data-lc="0" data-lr="0" id="<?= $up . '_' . $linenm; ?>" data-rel="popup" data-position-to="window" data-transition="pop"  class="btn-up">
+                            <span class="icon-plus"></span>
+                        </a>
+                    </td>
+                    <?php endif; ?>
+                    <?php endfor; ?>
+                    <td>
+                        <a href="#" class="ui-corner-all ui-btn-b btn-del-item icon-cancel-2" data-toggle="tooltip" title="excluir"></a>
+                    </td>
+                  </tr>
+              <?php endforeach;} ?>
+              </tbody>
+                </table>
+            </div>
+        </div><!-- /content -->
+        <a href="#" class="btn-azul pull-right" id="add-up-item"><span class="icon-plus"></span>adicionar</a>
+    </div><!-- ui-grid-a -->
+    
+<script src="/js/up_controller.js"></script>
+<script type="text/javascript">
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove();
+    }; 
+});
+$('#mnulateralesquerdo').children('div:first').next().attr('data-collapsed', 'false');
+$('#mod_up_item').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+$("#add-up-item").click(function() {
+    nextIdUpItem++;
+    var content = '<tr id="ln_' + nextIdUpItem + '">';
+    content += '<td><p id="baumuster_' + nextIdUpItem + '">Baumuster</p></td>';
+    content += '<td class="upitemlbl">';
+    content += '<a data-idlabel="" id="item_' + nextIdUpItem + '" onclick="opensearch(this);" aria-expanded="false" aria-owns="SelectItem" aria-haspopup="true" href="#SelectItem" id="item_' + nextIdUpItem + '" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-alias ui-link">';
+    content += '<span class="icon-plus">&nbsp;</span>Item</a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP1_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP2_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP3_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP4_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP5_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP6_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP7_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP8_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP9_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td class="up">';
+    content += '<a onclick="openselecao(this);" id="UP10_' + nextIdUpItem + '" data-lc="0" data-lr="0" aria-expanded="false" aria-owns="popUP" aria-haspopup="true" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-up ui-link">';
+    content += '<span class="icon-plus"></span></a>';
+    content += '</td>';
+    content += '<td>';
+    content += '<a data-original-title="excluir" href="#"" class="ui-corner-all ui-btn-b btn-del-item icon-cancel-2 ui-link" data-toggle="tooltip" title=""></a>';
+    content += '</td></tr>';
+    $( "#table-up-item" ).append(content);
+});
+$(document).on("click", ".btn-del-item", function() {
+    $(this).parent().parent().remove();
+});
+function openselecao(obj){
+    var txt = $(obj).closest('tr').children('td:first').next().children('a').html();
+    if(txt == '<span class="icon-plus">&nbsp;</span>Item'){
+        txt = 'SEM ITEM SELECIONADO';
+    }
+    var iid = $(obj).closest('tr').children('td:first').next().next().children('a').attr('data-vlr');
+    /*if(iid == ''){
+        alert('Você precisa escolher o item primeiro!');
+        return;
+    }*/
+    var id  = $(obj).attr('id');
+    var lc  = $(obj).attr('data-lc');
+    var lr  = $(obj).attr('data-lr');
+    $('#popUP').attr('data-parent',id);
+    $('#txtitemup').val(txt);
+    $('#sel-lista-completa').val(lc);
+    $('#sel-lista-resumida').val(lr);
+    $('#sel-lista-completa').prev().html($('#sel-lista-completa').children('option:selected').text());
+    $('#sel-lista-resumida').prev().html($('#sel-lista-resumida').children('option:selected').text());
+    if($(obj).parent().hasClass('enable')){
+        $('#marcar').prop('checked',true).checkboxradio("refresh");
+    }
+    $('#popUP').popup('open');
+}
+function closeuppopup(obj){
+    var tipo = $(obj).attr('data-tipo');
+    if(tipo == 'save'){
+        var id = '#' + $('#popUP').attr('data-parent');
+        var lc = $('#sel-lista-completa').val();
+        var lr = $('#sel-lista-resumida').val();
+        $(id).attr('data-lc', lc);
+        $(id).attr('data-lr', lr);
+        if($('#marcar').is(':checked')){
+            if(!$(id).parent().hasClass('enable')){
+                $(id).parent().addClass('enable');
+            }
+        }else{
+            $(id).attr('data-lc', '0');
+            $(id).attr('data-lr', '0');
+            if($(id).parent().hasClass('enable')){
+                $(id).parent().removeClass('enable');
+            }
+        }
+    }
+    $('#txtitemup').val('');
+    $('#sel-lista-completa option').first().attr('selected','selected');
+    $('#sel-lista-resumida option').first().attr('selected','selected');
+    $('#sel-lista-completa').prev().html('Lista Completa');
+    $('#sel-lista-resumida').prev().html('Lista Resumida');
+    $('#marcar').prop('checked',false).checkboxradio("refresh");
+    $('#popUP').popup('close');
+}
+function changeselup(obj){
+    var txt = $(obj).children('option:selected').text();
+    $(obj).prev().html(txt);
+}
+
+function saveme(){
+    loading('show');
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    var arr = [];
+    $('#table-up-item > tbody').children('tr').each(function(){
+        var linha = $(this).attr('id');
+        //linha  = linha.replace('ln_','');
+        linha  = $(this).children('td:first').children().attr('data-vlr');
+        var up = 0;
+        $(this).children('td').each(function(){
+            attr = $(this).children('a').attr('data-lc');
+            if(typeof attr !== "undefined"){
+                if(attr != 0){
+                    a = 'UP' + up;
+                    b = $(this).children('a').attr('data-lc');
+                    c = $(this).children('a').attr('data-lr');
+                    d = $(this).children('a').attr('data-variante');
+                    linha += '##' + [a, b, c, d];
+                    /*linha += ',UP' + up;
+                    linha += ',' + $(this).children('a').attr('data-lc');
+                    linha += ',' + $(this).children('a').attr('data-lr');*/
+                }
+                up++;
+            }
+            if($(this).hasClass('upitemlbl')){
+                linha += ',' + $(this).children('a').attr('data-vlr');
+            }
+        });
+        arr.push(linha);
+    });
+    $.post('/modelos/actions/saveupitem',{linhas: arr})
+    .done(function(data){
+        console.log(data);
+        loading("hide");
+        $('#answer').children('div').addClass('alert-success').html('Informações atualizadas com sucesso!');
+        $('#answer').slideDown().delay(5000).slideUp();
+    })
+    .fail(function(data){
+        loading("hide");
+        $('#answer').children('div').addClass('alert-danger').html('Houve um erro, tente mais tarde!');
+        $('#answer').slideDown().delay(5000).slideUp();
+    });
+}
+
+
+$('#sel-lista-completa option').first().attr('selected','selected');
+$('#sel-lista-resumida option').first().attr('selected','selected');
+</script>
+    

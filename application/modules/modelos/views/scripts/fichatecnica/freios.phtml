@@ -1,0 +1,106 @@
+<div class="ui-grid-a">
+    <div class="title">
+        <h1>Modelos - Ficha Técnica - Freios</h1>
+        <a onclick="savethis();" href="#" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
+    </div>
+    <div id="answer" class="resposta">
+        <div class="alert" role="alert"></div>
+    </div>
+    <div id="listcontent" class="content">
+        <?php foreach($this->content as $row): ?>
+        <div class="row-cont-ficha" id="linha_<?= $row['bmb_nr_linha']; ?>" data-linha="<?= $row['bmb_nr_linha']; ?>">
+            <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                <tr>
+                    <td>
+                        <div class="ui-field-contain">
+                            <a id="col_<?= $row['bmb_nr_linha']; ?>_0" onclick='opensearch(this);' href="#SelectItem" data-rel="popup" data-idlabel="<?= $row['id_label']; ?>" data-position-to="window" data-transition="pop" class="btn-ficha btn-ficha-label">
+                                &nbsp;<?= $row['desc_label']; ?>
+                            </a>
+                        </div>
+                    </td>
+                    <td class="acoes-col acoes-col-azul">
+                        <div class="ui-field-contain">
+                            <a href="#" class="pull-left icon-cancel-2 link-icon del-row" data-toggle="tooltip" title="Deletar linha"></a>
+                        </div>                                        
+                    </td>
+                </tr>
+            </table>
+
+            <table data-colunas="<?= $row['qtde_coluna']; ?>" width="100%" border="0" cellspacing="2" cellpadding="0">
+                <tr>
+                    <?php for($i = 1; $i <= $row['qtde_coluna']; $i++): ?>
+                    <td>
+                        <div class="ui-field-contain">
+                            <button class="icon-cancel-2 btn-del-col"></button>
+                            <a onclick='opensearch(this);' id="col_<?= $row['bmb_nr_linha'] . '_' . $i; ?>" data-vlr="<?php $t = 'id_vlr_' . $i; echo $row[$t]; ?>" data-tipo="<?php $t = 'tipo_vlr_' . $i; echo $row[$t]; ?>" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-ficha">
+                                &nbsp;<?php $t = 'desc_vlr_' . $i; echo $row[$t]; ?>
+                            </a>
+                        </div>
+                    </td>
+                    <?php endfor; ?>
+                    <td class="acoes-col">
+                        <div class="ui-field-contain">
+                            <a onclick="addColumnToDesc(this);" href="#" class="pull-left icon-plus link-icon add-icon" data-toggle="tooltip" title="Adicionar coluna"></a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div><!-- /row-cont-ficha -->
+        <?php endforeach; ?> 
+    </div><!-- /content -->
+
+    <a href="#" onclick="addRowToContent();" class="btn-azul pull-right" id="add-row-ficha"><span class="icon-plus"></span>adicionar</a>
+
+</div><!-- ui-grid-a -->
+
+<script src="/js/ft_controller.js"></script>
+<script type="text/javascript">
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove(); 
+    }; 
+});
+$('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
+$('#mod_ft_freios').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+function savethis(){
+    $.mobile.loading("show");
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    var str = '';
+    var post = [];
+    $('.content').find('.row-cont-ficha').each(function(){
+        str += $(this).attr('data-linha');
+        str += ',mod_ft_freios';
+        str += ',' + $(this).children('table:last').attr('data-colunas');
+        str += ',' + $(this).children('table:first').children('tbody').children('tr').children('td').children('div').children('a').attr('data-idlabel');
+        $(this).children('table:last').children('tbody').children('tr').find('td').each(function(){
+            if($(this).hasClass('acoes-col')){
+
+            }else{
+                str += ',' + $(this).children('div').children('a').attr('data-vlr');
+                str += ',' + $(this).children('div').children('a').attr('data-tipo');
+            }
+        });
+        post.push(str);
+        str = '';
+    });
+    $.post('/modelos/actions/savedimensoes',{lines: post,pg:'mod_ft_freios'})
+    .done(function(data){
+        var result = JSON.parse(data);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-success').html('Informações atualizadas com sucesso!');
+        $('#answer').slideDown().delay(5000).slideUp();
+    })
+    .fail(function(err){
+        var result = JSON.parse(err);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-danger').html('Houve um erro, tente mais tarde!');
+        $('#answer').delay(5000).slideDown();
+    });
+}
+
+</script>

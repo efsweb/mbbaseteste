@@ -1,0 +1,247 @@
+<div data-role="page">
+<div data-role="content" data-theme="b">
+
+<section class="ui-grid-a modelos-geral">
+<div class="ui-block-a" style="width: 27%;">
+</div>
+
+<div id="modelos-ficha" class="ui-block-b" style="width: 72%;">
+
+<div class="ui-corner-all ui-bar-b ">
+    <h3>Modelos - Ficha Técnica - Dimensões</h3>
+</div>
+<div class="traco"></div>
+
+<a id="add-row-ficha" class="ui-btn ui-btn-b btn-colap ui-shadow ui-corner-all btn-add-ficha"><span class="icon-plus"></span>&nbsp;adicionar dimensão</a>                          
+<div id="estrutura-ficha-tecnica" class="ui-grid-a box-itens">
+	<div class="shadow"></div>
+    <div class="scroll-cont-ficha">
+    	<?php foreach($this->content as $row): ?>
+        <div class="row-cont-ficha">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                    <div class="ui-field-contain">
+                        <a href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-ficha">
+                        	<span class="icon-plus">&nbsp;</span>
+                        	<?= $row->desc_label; ?>
+                        </a>
+                    </div>
+                </td>
+                <td class="acoes-col">
+                    <div class="ui-field-contain">
+                        <a href="#" class="pull-left icon-cancel-2 link-icon del-row"></a>
+                    </div>                                        
+                </td>
+              </tr>
+            </table>
+            
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+              	<?php for($i = 1; $i <= $row->qtde_coluna; $i++): ?>
+                <td>
+                    <div class="ui-field-contain">
+                        <button class="icon-cancel-2 btn-del-col"></button>
+                        <a href="#NovoAlias" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-ficha">
+                        	<span class="icon-plus">&nbsp;</span>
+                        	<?php $t = 'desc_vlr_' . $i; echo $row->$t; ?>
+                        </a>
+                    </div>
+                </td>
+                <?php endfor; ?>
+                <td class="acoes-col">
+                    <div class="ui-field-contain">
+                        <a href="#" class="pull-left icon-plus link-icon add-icon"></a>
+                    </div>
+                </td>
+              </tr>
+            </table>
+        </div>
+        <?php endforeach; ?> 
+    </div><!-- /scroll-cont-ficha -->
+</div><!-- /estrutura-ficha-tecnica -->
+<a href="#" class="pull-left icon-plus link-icon hide add-icon"></a>
+<a class="ui-btn ui-btn-b btn-colap ui-shadow ui-corner-all btn-save-ficha"><span class="icon-plus"></span>&nbsp;salvar</a>                          
+
+<!-- POP UP -->
+<div data-role="popup" id="SelectItem" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+    <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+    <div data-role="header" data-theme="b" class="header-popup">
+    <h1>Pesquisa Descrição Comercial</h1>
+    </div>
+    <div role="main" class="ui-content content-popup">
+        <form data-theme="b">
+            <div class="ui-grid-b radios-filtro">
+                <div class="ui-block-a">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <input type="radio" name="filtro1" id="alias" value="alias" checked="checked">
+                        <label for="alias">Alias</label>
+                        <input type="radio" name="filtro1" id="item" value="item">
+                        <label for="item">Item</label>
+                        <!-- Input Hidden para a busca com valor padrão -->
+                        <input type="hidden" id="param_tipo" value="alias" />
+                    </fieldset>
+                 </div>
+
+                <div class="ui-block-b">
+                    <div class="option-alias">
+                        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                            <input type="radio" name="filtro2" id="label" value="label" checked="checked">
+                            <label for="label">Label</label>
+                            <input type="radio" name="filtro2" id="valor" value="valor">
+                            <label for="valor">Valor</label>
+                            <!-- Input Hidden para a busca com valor padrão -->
+                            <input type="hidden" id="param_finalidade" value="label" />
+                        </fieldset>
+                    </div>
+                </div>
+                
+                <div class="ui-block-c busca-ficha">
+                    <div class="ui-block-a">
+                        <input title="Pressione enter para realizar a busca" id="param_desc_alias" type="search" onkeyup="if((event.keyCode || event.which) == 13){search(); return false;}" placeholder="Buscar - Pressione enter para realizar a busca" data-mini="true" />
+                     </div>
+                    <div class="ui-block-b hide">
+                        <a id="buscarbtn" class="ui-corner-all ui-btn btn-colap icon-search-3" style="margin: 6px 5px; padding:9px;"></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="traco-b"></div>
+            <div id="tbl_resultado_header" class="ui-grid-a tabela-item-label">
+                <table width="98%" border="0" cellspacing="2" cellpadding="0">
+                    <thead>
+                        <tr class="title-table-pop">
+                            <td class="acoes"><p>Ações</p></td>
+                            <td width="259"><p>Descrição Alias</p></td>
+                            <td width="98"><p>Grupo</p></td>
+                            <td width="105"><p>Classificação</p></td>
+                            <td><p>Item Engenharia</p></td>
+                        </tr>
+                     </thead>
+                </table>
+            </div>
+            <div class="scroll">
+                <div class="ui-grid-a tabela-item-label">
+                    <table id="tbl_resultado" width="100%" border="0" cellspacing="2" cellpadding="0"></table>
+                </div>
+            </div>
+
+            <div class="traco-b"></div>
+            
+        </form>
+    </div><!-- CONTENT POP UP -->
+
+</div><!-- /POP UP --> 
+
+<!-- POP UP -->
+<div data-role="popup" id="NovoAlias" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+    <a href="#" onclick="backsearch();" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+    <div data-role="header" data-theme="b" class="header-popup">
+            <h1>Conteúdo Novo Alias</h1>
+        </div>
+
+        <div role="main" class="ui-content content-popup novo-alias">
+
+        <div class="ui-grid-a novo-alias-item-one">
+            <div class="ui-block-a">
+                <div class="ui-field-contain pull-right">
+                    <fieldset data-role="controlgroup" data-type="horizontal"  data-mini="true">
+                            <input type="radio" name="option-novo-alias" id="option-novo-alias-label" value="option-novo-alias-label">
+                            <label for="option-novo-alias-label">Label</label>
+                            <input type="radio" name="option-novo-alias" id="option-novo-alias-valor" value="option-novo-alias-valor">
+                            <label for="option-novo-alias-valor">Valor</label>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="ui-block-b">
+                <div class="ui-field-contain">
+                    <input type="text" name="descricao-novo-alias" value="" data-mini="true" placeholder="Digite a Descrição">
+                </div>
+            </div>
+        </div>
+
+        <div class="traco-b"></div>
+
+        <div class="ui-grid-a novo-alias-item-two">
+            <div class="ui-block-a">
+                <div class="ui-field-contain">
+                    <label>Vincular ao item técnico?</label>
+                </div>
+            </div>
+
+            <div class="ui-block-b">
+                <div class="ui-field-contain">
+                    <fieldset data-role="controlgroup" data-type="horizontal"  data-mini="true">
+                            <input type="radio" name="vincular-item" id="vincular-item-sim" value="vincular-item-sim">
+                            <label for="vincular-item-sim">Sim</label>
+                            <input type="radio" checked="checked" name="vincular-item" id="vincular-item-nao" value="vincular-item-nao">
+                            <label for="vincular-item-nao">Não</label>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-grid-a novo-alias-item-three">
+
+            <div class="traco-b"></div>
+
+            <div class="ui-block-a">
+                <div class="ui-field-contain">
+                    <label for="codigo">Código:</label>
+                    <input type="text" name="codigo" value=""  data-mini="true">
+                </div>
+            </div>
+
+            <div class="ui-block-b">
+                <div class="ui-field-contain">
+                    <label for="descricao">Descrição:</label>
+                    <input type="text" name="descricao" value=""  data-mini="true">
+                </div>
+            </div>
+        </div>
+
+        <div class="traco-b"></div>
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a pull-right">
+                <div class="ui-field-contain text-right">
+                    <a href="#" onclick="backsearch();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b btn-colap">Cancel</a>
+                            <a href="#" onclick="backsearch();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b btn-colap" data-transition="flow">Gravar</a>                                            </div>
+                </div>
+            </div>
+        </div>    
+
+    </div>                            
+
+</div> <!-- /POP UP --> 
+                  
+
+</div>           
+</section>
+
+<script id="panel-init">
+
+	$(document).on("click", ".btn-del-col", function() {
+		$(this).parent().parent().remove();
+	});	
+
+	$(document).on("click", ".del-row", function() {
+		$(this).parent().parent().parent().parent().parent().parent().remove();
+	});
+
+    $("#add-row-ficha").click(function(){
+        var content = "<div class='row-cont-ficha'><table width='100%' border='0' cellpadding='0' cellspacing='0'><tbody><tr><td><div class='ui-field-contain'><a aria-expanded='false' aria-owns='SelectItem' aria-haspopup='true' href='#SelectItem' data-rel='popup' data-position-to='window' data-transition='pop' class='btn-ficha ui-link'><span class='icon-plus'>&nbsp;</span>Adicionar</a></div></td><td class='acoes-col'><div class='ui-field-contain'><a href='#' class='pull-left icon-cancel-2 link-icon del-row ui-link'></a></div></td></tr></tbody></table><table width='100%' border='0' cellpadding='0' cellspacing='0'><tbody><tr><td><div class='ui-field-contain'><button class='icon-cancel-2 btn-del-col ui-btn ui-shadow ui-corner-all'></button><a aria-expanded='false' aria-owns='SelectItem' aria-haspopup='true' href='#SelectItem' data-rel='popup' data-position-to='window' data-transition='pop' class='btn-ficha ui-link'><span class='icon-plus'>&nbsp;</span>Adicionar</a></div></td><td class='acoes-col'><div class='ui-field-contain'><a href='#' class='pull-left icon-plus link-icon add-icon ui-link'></a></div></td></tr></tbody></table></div>";
+        $(".scroll-cont-ficha").prepend(content);
+    });
+
+$(document).on('click',".add-icon", function() {
+    
+        var content = "<td><div class='ui-field-contain'><button class='icon-cancel-2 btn-del-col ui-btn ui-shadow ui-corner-all'></button><a href='#SelectItem' data-rel='popup' data-position-to='window' data-transition='pop' class='btn-ficha ui-link'><span class='icon-plus'>&nbsp;</span>Adicionar</a></div></td>";
+        $(this).parent().parent().parent().prepend( content );
+    });
+</script>
+
+</div>
+</div>

@@ -1,0 +1,10 @@
+<?= $this->modeloid; ?>
+<form class="userform">
+      <fieldset data-role="controlgroup" data-mini="true" class="ui-nodisc-icon">
+            <select onchange="changefamily(this);" name="select-native-5" id="select-native-5">
+                  <?php foreach($this->familia as $k => $v): ?>
+                  <option value="<?= $v; ?>">•&nbsp;<?= $v; ?></option>
+                  <?php endforeach; ?>
+            </select>
+      </fieldset>
+</form>

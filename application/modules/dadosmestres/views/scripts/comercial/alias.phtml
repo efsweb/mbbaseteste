@@ -1,0 +1,170 @@
+<div class="ui-grid-a">
+	<div class="title">
+        <h1>Dados Mestre - Comercial - Alias</h1>
+        <a href="#" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
+    </div>
+    
+    <div class="content">
+    	<div class="cont-form" id="dados-alias">
+        	<div class="ui-grid-b row-01">
+                <div class="ui-block-a">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                            <input name="alias-item-pg" id="alias" value="alias" checked="checked" type="radio">
+                            <label for="alias">Alias</label>
+                            <input name="alias-item-pg" id="item" value="item" type="radio">
+                            <label for="item">Item</label>
+                            <input type="hidden" id="param_tipo_pg" value="alias" />
+                    </fieldset>
+                </div>
+                <div class="ui-block-b">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <input name="label-valor-pg" id="label" value="label" checked="checked" type="radio">
+                        <label for="label">Label</label>
+                        <input name="label-valor-pg" id="valor" value="valor" type="radio">
+                        <label for="valor">Valor</label>
+                        <input type="hidden" id="param_finalidade_pg" value="label" />
+                    </fieldset>
+                </div>                        
+                <div class="ui-block-c">
+                    <input onkeypress="if((event.keyCode || event.which) == 13){searchpg(); return false;}" type="text" name="search-2" id="param_desc_alias_pg" value="" data-mini="true" placeholder="Precione a tecla enter para realizar a busca">
+                    <a href="#AddAlias" data-rel="popup" data-position-to="window" data-transition="pop" data-toggle="tooltip" title="adicionar alias" class="ui-btn btn-azul icon-plus"></a>                    
+                </div>                        
+            </div><!-- /row-01 -->
+            
+            <div class="traco"></div>
+            
+            <div class="ui-grid-a row-02">
+            	<div class="table-alias">
+                    <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                      <tr class="title-alias">
+                        <td><p>ações</p></td>
+                        <td><p>descrição alias</p></td>
+                        <td>
+                        	<div class="ui-select ui-nodisc-icon">
+                                <select onchange="searchpg();" name="select-native-2" id="grupo_pg" data-mini="true" class="ui-nodisc-icon">
+                                    <option value="Todos">Grupo</option>
+                                    <option value="Todos">Todos</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                        	<div class="ui-select ui-nodisc-icon">
+                                <select onchange="searchpg();" name="select-native-2" id="classificacao_pg" data-mini="true">
+                                    <option value="Todos">Classificação</option>
+                                    <option value="Todos">Todos</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td><p>item engenharia</p></td>
+                      </tr>
+                      <tbody id="tbl_resultados" class="alias-content">
+                          <!-- <tr>
+                            <td class="col-acoes">
+                            	<a href="#" data-toggle="tooltip" title="editar" class="icon-pencil-2 btn-acoes"></a>
+                            	<a href="#" data-toggle="tooltip" title="novo" class="icon-plus btn-acoes"></a>
+                            	<a href="#" data-toggle="tooltip" title="excluir" class="icon-cancel-2 btn-acoes"></a>
+                            	<a href="#" data-toggle="tooltip" title="checar dependências" class="icon-check btn-acoes"></a>
+                            </td>
+                            <td><p>descrição alias</p></td>
+                            <td><p>grupo</p></td>
+                            <td><p>classificação</p></td>
+                            <td><p>item engenharia</p></td>
+                          </tr> -->
+                      </tbody>
+                    </table>
+                </div>
+                
+            </div><!-- /row-02 -->
+        
+        </div><!-- /dados-alias -->
+    </div><!-- /content -->
+</div><!-- ui-grid-a -->
+
+
+<script id="panel-init">
+$('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
+$('#mnulateralesquerdo').children('div:first').children('ul').children('li:last').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+function loading(ShowOrHide){
+    setTimeout(function(){$.mobile.loading(ShowOrHide);},1);
+}
+$('input:radio[name=alias-item-pg]').click(function(){
+    $('#param_tipo').val($(this).val());
+    searchpg();
+});
+$('input:radio[name=label-valor-pg]').click(function(){
+    $('#param_finalidade').val($(this).val());
+    searchpg();
+});
+function setEnter(e){
+    var code = e.keyCode || e.which;
+    if(code == 13){
+        e.preventDefault();
+        searchpg();
+    }
+}
+function searchpg(){
+    loading('show');
+
+    $('#tbl_resultados').html('');
+    $('#tbl_resultados').fadeOut('fast');
+
+    var p  = 'param_desc_alias=' + $('#param_desc_alias_pg').val();
+    p  = p + '&param_finalidade=' + $('#param_finalidade_pg').val();
+    p  = p + '&param_tipo=' + $('#param_tipo_pg').val();
+    p  = p + '&param_param_grupo=' + $('#grupo_pg').val();
+    p  = p + '&param_clasi=' + $('#classificacao_pg').val();
+    var ur = '/modelos/fichatecnica/search?' + p;
+    $.post(ur,function(data){
+        var rows = JSON.parse(data);
+        if(rows.length == 0){
+            var si = '<tr>';
+            si += '<td><p>Resultados não encontrado!</p></td>';
+            si += '</tr>';
+            $('#tbl_resultado').append(si);
+        }else{
+            for(i = 0; i <= rows.length - 1; i++){
+                var a = b = c = d = '';
+                if(rows[i].desc_alias)
+                    a = rows[i].desc_alias;
+                if(rows[i].desc_grupo_classificacao)
+                    b = rows[i].desc_grupo_classificacao;
+                if(rows[i].desc_classificacao)
+                    c = rows[i].desc_classificacao;
+                if(rows[i].desc_item_vinculado)
+                    d = rows[i].desc_item_vinculado;
+                var row  = '<tr id="ln_pdc_' + rows[i].id_alias + '">';
+                row += '<td class="col-acoes">';
+                row += '<a href="#" onclick="showalias(\'' + rows[i].id_alias + '\');" class="icon-pencil-2 btn-acoes ui-link" data-toggle="tooltip" title="editar" data-original-title="editar"></a>';
+                row += '&nbsp;<a href="#" onclick="showalias(\'0\',this);" data-toggle="tooltip" title="" class="icon-plus btn-acoes ui-link" data-original-title="novo"></a>';
+                row += '&nbsp;<a href="#" data-toggle="tooltip" title="" class="icon-cancel-2 btn-acoes ui-link" data-original-title="excluir"></a>';
+                row += '&nbsp;<a href="#" data-toggle="tooltip" title="" class="icon-check btn-acoes ui-link" data-original-title="checar dependências"></a></td>';
+                row += '<td><p>' + a + '</p></td>';
+                row += '<td><p>' + b + '</p></td>';
+                row += '<td><p>' + c + '</p></td>';
+                row += '<td><p>' + d + '</p></td>';
+                row += '</tr>';
+                $('#tbl_resultados').append(row);
+            }
+        }
+        loading('hide');
+        $('#tbl_resultados').fadeIn('fast');
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+}
+searchpg();
+$.post('/modelos/index/loadfiltrogrupo',function(resposta){
+    var options = JSON.parse(resposta);
+    for(i=0;i<options.length;i++){
+        var opt = '<option value="' + options[i].desc_grupo_classificacao + '">' + options[i].desc_grupo_classificacao + '</option>';
+        $('#grupo_pg').append(opt);
+    }
+});
+$.post('/modelos/index/loadfiltroclassificacao',function(resposta){
+    var options = JSON.parse(resposta);
+    for(i=0;i<options.length;i++){
+        var opt = '<option value="' + options[i].desc_classificacao + '">' + options[i].desc_classificacao + '</option>';
+        $('#classificacao_pg').append(opt);
+    }
+});
+</script>

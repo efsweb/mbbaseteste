@@ -1,0 +1,24 @@
+<?= $this->mdsel; ?>
+<form class="userform">
+      <fieldset data-role="controlgroup" data-mini="true" class="ui-nodisc-icon">
+            <select onchange="changefamily(this);" name="select-native-5" id="select-native-5">
+                  <?php foreach($this->familia as $k => $v): ?>
+                  <?php if($this->fmsel == $v): ?>
+                  <option selected="selected" value="<?= $v; ?>">•&nbsp;<?= $v; ?></option>
+                  <?php else: ?>
+                  <option value="<?= $v; ?>">•&nbsp;<?= $v; ?></option>
+                  <?php endif; ?>
+                  <?php endforeach; ?>
+            </select>
+
+            <select onchange="loadpg(this);" name="select-native-6" id="select-native-6">
+                  <?php foreach($this->modelos as $k => $v): ?>
+                  <?php if($this->mdsel == $k): ?>
+                  <option selected="selected" value="<?= $k; ?>">•&nbsp;<?= $v; ?></option>
+                  <?php else: ?>
+                  <option value="<?= $k; ?>">•&nbsp;<?= $v; ?></option>
+                  <?php endif; ?>
+                  <?php endforeach; ?>
+            </select>
+      </fieldset>
+</form>

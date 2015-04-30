@@ -1,0 +1,465 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>MBase - Dados Mestre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/jquery.mobile.theme-1.4.4.css"/>
+    <link rel="stylesheet" href="/css/jquery.mobile-1.4.4.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/select2.min.css"/>
+    <link rel="stylesheet" href="/css/default.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+    <link rel="stylesheet" href="/css/fontello.css">
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.mobile-1.4.4.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/select2.full.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+
+    <script id="panel-init">
+        $( document ).on( "pageinit", "body", function( event ) {
+            $( "[data-role='header']" ).toolbar({ theme: "b" });
+            $( "[data-role='panel']" ).panel({ theme: "b" });
+            $( "[data-role='collapsibleset']" ).collapsibleset({
+                theme: "b",
+                collapsedIcon: false,
+                expandedIcon: false
+            });
+            $( "[data-role='listview']" ).listview({ theme: "b" });
+            $( "[data-role='controlgroup']" ).controlgroup({ theme: "b" });
+            $( "[data-role='popup']" ).popup({ theme: "b" });
+            $("input[type='radio']").checkboxradio({ theme: "b" });
+            $('[data-toggle="tooltip"]').tooltip();
+            
+            $('input[type="radio"]').click(function(){
+                if($(this).attr("value")=="vincular-item-nao"){
+                    $(".novo-alias-item-three").hide();
+                }
+                if($(this).attr("value")=="vincular-item-sim"){
+                    $(".novo-alias-item-three").show();
+                }
+            });
+            
+            $( "#collapsible .lista .ui-btn" ).click(function() {
+                $( "#collapsible .lista .ui-btn" ).css("background","#5f5d5d");
+                $(this).css("background","url('/images/arrow-menu-left.png')no-repeat right #525151");
+                $('#mnulateralesquerdo').children('div').each(function(){
+                    $(this).attr('data-collapsed', 'true');
+                });
+            });
+            
+            $(".js-example-basic-multiple").select2();
+            
+            $(".pop-itens-engenharia").hide();
+            $(".add-item-engenharia").click(function() {
+                $(".pop-itens-engenharia").fadeIn();
+            });
+            $(".btn-close").click(function() {
+                $(".pop-itens-engenharia").fadeOut();
+            });
+        });
+    </script>
+    
+</head>
+
+<body>
+
+    <header data-role="header" data-position="fixed" class="header ui-header-fixed">
+        <div class="ui-grid-b">
+            <div class="ui-block-a">
+                <div class="logo"><img src="/images/logo.jpg"/></div>
+            </div>
+            <div class="ui-block-b">
+                <?php echo $this->action('mnutopo', 'index', 'default') ?>
+            </div>
+            <div class="ui-block-c">
+                <div data-role="navbar">
+                    <ul id="menu-user">
+                        <li><a href="#" class="name-user"><?= $this->usuarionome; ?></a></li>
+                        <li><a href="/modelos" data-ajax="false" class="icon-home-2"></a></li>
+                        <li><a href="/" data-ajax="false" class="icon-logout"></a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div>
+        </div>
+    </header>
+    
+    <div data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" id="add-form" class="ui-panel-open menu-left">
+        <?php echo $this->action('selectfamiliamodelo','index','dadosmestres') ?>
+        <?php echo $this->action('mnuesquerdo','index','dadosmestres') ?>
+
+
+    </div><!-- /panel -->    
+    
+    <div data-role="page" class="page-content">
+            <?php echo $this->layout()->content ?>
+        </div>
+    
+    
+<!-- POP UP -->
+<div data-role="popup" id="SelectItem" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+    <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+    <div data-role="header" data-theme="b" class="header-popup">
+    <h1>Pesquisa Descrição Comercial</h1>
+    </div>
+    <div role="main" class="ui-content content-popup">
+        <form data-theme="b">
+            <div class="ui-grid-b radios-filtro">
+                <div class="ui-block-a">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <!-- Tipo -->
+                        <input type="radio" name="filtro1" id="alias-popup" value="alias" checked="checked">
+                        <label for="alias">Alias</label>
+                        <input type="radio" name="filtro1" id="item-popup" value="item">
+                        <label for="item">Item</label>
+                        <!-- Input Hidden para a busca com valor padrão -->
+                        <input type="hidden" id="param_tipo" value="alias" />
+                    </fieldset>
+                 </div>
+
+                <div class="ui-block-b">
+                    <div class="option-alias">
+                        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                            <!-- Finalidade -->
+                            <input type="radio" name="filtro2" id="label-popup" value="label" checked="checked">
+                            <label for="label">Label</label>
+                            <input type="radio" name="filtro2" id="valor-popup" value="valor">
+                            <label for="valor">Valor</label>
+                            <!-- Input Hidden para a busca com valor padrão -->
+                            <input type="hidden" id="param_finalidade" value="label" />
+                        </fieldset>
+                    </div>
+                </div>
+                
+                <div class="ui-block-c busca-ficha">
+                    <div class="ui-block-a">
+                        <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset" style="float: left; width: 80%;">
+                            <input title="Pressione enter para realizar a busca" id="param_desc_alias" onkeypress="if((event.keyCode || event.which) == 13){search(); return false;}" type="search" placeholder="Precione a tecla enter para realizar a busca" data-mini="true">
+                        </div>
+                        <div class="ui-block-b" style="float: right;">
+                            <a href="#" onclick="showalias();" data-rel="popup" data-position-to="window" data-transition="pop" data-toggle="tooltip" title="adicionar alias" class="ui-btn btn-azul icon-plus"></a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+            
+            <div class="traco-b"></div>
+            <div id="tbl_resultado_header" class="ui-grid-a tabela-item-label">
+                <table width="98%" border="0" cellspacing="2" cellpadding="0" data-filter="true" data-input="select-native-2">
+                    <thead>
+                        <tr class="title-table-pop">
+                            <td class="acoes" style="width: 85px;"><p>Ações</p></td>
+                            <td width="270"><p>Descrição Alias</p></td>
+                            <td width="105">
+                                <div data-role="fieldcontain" class="ui-field-contain ui-nodisc-icon">
+                                    <select  style="width: 105px;" onchange="search();" data-native-menu="false" name="select-native-2" id="select-native-2" data-mini="true" class="ui-nodisc-icon popupselectclass">
+                                        <option value="Todos">Grupo</option>
+                                        <option value="Todos">Todos</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td width="150">
+                                <div data-role="fieldcontain" class="ui-field-contain ui-nodisc-icon">
+                                    <select style="width: 150px;" onchange="search();" data-native-menu="true" id="select-classificacao" name="select-classificacao" data-mini="true" class="ui-nodisc-icon popupselectclass">
+                                        <option value="Todos">Classificação</option>
+                                        <option value="Todos">Todos</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td><p>Item Engenharia</p></td>
+                        </tr>
+                     </thead>
+                </table>
+            </div>
+            <div class="scroll">
+                <div class="ui-grid-a tabela-item-label">
+                    <table id="tbl_resultado" width="100%" border="0" cellspacing="2" cellpadding="0"></table>
+                </div>
+            </div>
+
+            <div class="traco-b"></div>
+            
+        </form>
+    </div><!-- CONTENT POP UP -->
+
+</div><!-- /POP UP --> 
+    
+    <!-- POP UP -->
+    <div data-role="popup" id="AddAlias" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+        <a href="#" onclick="backsearch()" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+        <div data-role="header" data-theme="b" class="header-popup">
+            <h3>Adicionar Alias</h3>
+        </div>
+    
+    <div role="main" class="ui-content content-popup add-alias">
+        <div class="ui-grid-a row-01">
+            <div class="ui-block-a">
+                <label>finalidade</label>
+                <fieldset class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <div class="ui-controlgroup-controls">
+
+                        <div class="ui-radio">
+                            <label class="ui-btn ui-corner-all ui-btn-inherit ui-radio-off" for="new-alias">Label</label>
+                            <input data-cacheval="false" name="label-alias" id="new-alias" value="label" checked="checked" type="radio">
+                        </div>
+                        <div class="ui-radio">
+                            <label class="ui-btn ui-corner-all ui-btn-inherit ui-first-child ui-radio-off" for="new-label">Valor</label>
+                            <input data-cacheval="true" name="label-alias" id="new-label" value="valor" type="radio">
+                        </div>
+                        <input type="hidden" id="param_novo_tipo_finalidade" value="label" />
+                        <input type="hidden" id="param_novo_tipo_alias" value="alias" />
+                        <input type="hidden" id="param_id_alias" value="0" />
+                    </div>
+                </fieldset>            
+            </div>
+            <div class="ui-block-b">
+                <label>Descritivo comercial</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset">
+                    <input id="desc_alias_new" data-mini="true" type="text">
+                </div>            
+            </div>            
+        </div><!-- /row-01 -->
+        
+        <div class="traco-b"></div>
+        
+        <div class="ui-grid-a row-02">
+            <div id="popengitem" class="pop-itens-engenharia">
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right btn-close">Close</a>
+                <div data-role="header" class="header-popup"><h3>item / descritivo</h3></div>
+                <ul id="list_itens_vinculados" class="itens-descricao"></ul>
+            </div>
+            <div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-notext ui-nodisc-icon" data-toggle="tooltip" data-placement="top" title="deletar item">
+                <input onclick="backtonormal(this);" type="button" data-enhanced="true" value="<span class='icon-plus'>&nbsp;</span>adicionar item engenharia">
+            </div>        
+            <a href="#" id="btn_add_item_vinculado" class="ui-btn add-item-engenharia"><span class="icon-plus">&nbsp;</span>adicionar item engenharia</a>
+            <input type="hidden" id="itemvinculado" />
+        </div><!-- /row-02 -->
+        
+        <div class="traco-b"></div>
+        
+        <div class="ui-grid-a row-03">
+            <label>Classificação</label>
+            <div class="ui-select">
+                <select id="myclassifications" class="js-example-basic-multiple" multiple="multiple"></select>
+            </div>
+        </div><!-- /row-03 -->
+        <div class="traco-b"></div>
+        <div class="ui-grid-a">
+            <a href="#" onclick="savealias();" data-transition="flow" class="ui-btn btn-azul icon-ok-3 pull-right">gravar</a>
+        </div>
+    </div>
+</div> <!-- /POP UP -->                        
+    
+
+    <!-- POP UP -->
+    <div data-role="popup" id="DamClassificacao" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+        <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+        <div data-role="header" data-theme="b" class="header-popup">
+            <h3>Comercial - Classificação</h3>
+        </div>
+    
+        <div role="main" class="ui-content content-popup comercial-classificacao">
+            <div class="ui-grid-a row-01">
+                <div class="ui-block-a">
+                    <label>Versão MB Base</label>
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-state-disabled ui-shadow-inset">
+                        <input disabled="disabled" name="textinput-1" id="textinput-1" placeholder="Texto versão mb base" value="" type="text">
+                    </div>                
+                </div>
+                <div class="ui-block-b">
+                    <label>ID Classificação</label>                
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-state-disabled ui-shadow-inset">
+                        <input disabled="disabled" name="textinput-1" id="textinput-1" placeholder="texto id classificação" value="" type="text">
+                    </div>                
+                </div>                
+            </div><!-- /row-01 -->
+            
+            <div class="traco-b"></div>
+            
+            <div class="ui-grid-a row-02">
+                <div class="ui-block-a">
+                    <label>Tipo base</label>
+                    <fieldset class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all ui-mini" data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <div class="ui-controlgroup-controls ">
+                            <div class="ui-radio ui-mini">
+                                <label class="ui-btn ui-corner-all ui-btn-inherit ui-first-child ui-radio-off" for="comercial">Comercial</label>
+                                <input data-cacheval="false" name="tipo-base" id="comercial" value="comercial" checked="checked" type="radio">
+                            </div>
+                            <div class="ui-radio ui-mini">
+                                <label class="ui-btn ui-corner-all ui-btn-inherit ui-radio-off" for="tecnica">Técnica</label>
+                                <input data-cacheval="true" name="tipo-base" id="tecnica" value="tecnica" type="radio">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="ui-block-b">
+                    <label for="select-choice-1" class="select">Agrupamento</label>
+                    <div class="ui-select">
+                        <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow ui-nodisc-icon" id="agrupamento-button">
+                            <span>Escolha uma opção</span>
+                            <select name="agrupamento" id="agrupamento">
+                                <option value="ficha">Ficha técnica</option>
+                                <option value="engenharia">Engenharia</option>
+                                <option value="up">UP</option>
+                                <option value="comparativos">Comparativos</option>
+                                <option value="wa">Walk Around</option>                                
+                            </select>
+                        </div>
+                    </div>
+                </div> 
+                               
+            </div><!-- /row-02 -->
+            
+            <div class="traco-b"></div>
+        
+            <div class="ui-grid-a row-03">
+                <label>Classificação</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                    <input name="text-basic" id="text-basic" value="" type="text" data-mini="true">
+                </div>            
+            </div><!-- /row-03 -->
+            
+            <div class="traco-b"></div>
+            
+            <div class="ui-grid-a row-04">
+                <a href="#" data-rel="back" data-transition="flow" class="ui-btn btn-azul pull-right"><span class="icon-ok-3">&nbsp;</span>gravar</a>
+            </div><!-- /row-03 -->
+            
+        
+        </div><!-- /content-popup -->
+        
+    </div> <!-- /POP UP -->  
+    
+    
+<script id="panel-init">
+$('input:radio[name=filtro1]').click(function(){
+    $('#param_tipo').val($(this).val());
+    search();
+});
+
+$('input:radio[name=filtro2]').click(function(){
+    $('#param_finalidade').val($(this).val());
+    search();
+});
+
+function selectme(obj){
+    var txt = $(obj).html();
+    var cod = $(obj).attr('data-vinculo-id');
+    $('#btn_add_item_vinculado').html(txt);
+    $('#itemvinculado').val(cod);
+    $(".pop-itens-engenharia").fadeOut();
+    $('#param_novo_tipo_alias').val('item');
+}
+
+function backtonormal(obj){
+    $('#btn_add_item_vinculado').html($(obj).val());
+    $('#param_novo_tipo_alias').val('alias');
+    $('#itemvinculado').val('');
+}
+
+function savealias(){
+    if(($('#desc_alias_new').val() == '') || ($('#myclassifications').val() == '')){
+        alert('Informe a descrição e a Classificação!');
+        return;
+    }
+    var paid = $('#param_id_alias').val();
+    var fina = $('#param_novo_tipo_finalidade').val();
+    var tipo = $('#param_novo_tipo_alias').val();
+    var desc = $('#desc_alias_new').val();
+    var vinc = $('#itemvinculado').val();
+    var clas = $('#myclassifications').val();
+    console.log(clas);
+    $.post('/modelos/actions/savealias',{
+        param_id_alias : paid,
+        param_id_classificacao: clas,
+        param_desc_alias:desc,
+        param_finalidade:fina,
+        param_tipo:tipo,
+        param_item_vinculado:vinc,
+        param_nivel_item_vinculado: 'modelo'
+    },function(data){
+        console.log(data);
+        $("input[name='label-alias']:first").prev().click();
+        $("input[name='label-alias']").checkboxradio("refresh");
+        $('#param_id_alias').val('0');
+        $('#param_alias_finalidade').val('valor');
+        $('#param_tipo_alias').val('alias');
+        $('#desc_alias_new').val('');
+        $('#itemvinculado').val('');
+        $('#myclassifications').select2("val", "");
+        $('#btn_add_item_vinculado').html('<span class="icon-plus">&nbsp;</span>adicionar item engenharia');
+        searchpg();
+        backsearch();
+    });
+}
+
+function showalias(up,obj){
+    if(typeof up === "undefined"){
+        $('#SelectItem').popup('close');
+        setTimeout(function(){$('#AddAlias').popup('open');},500);
+    }else{
+        var x = up;
+        if(up == 0){
+            y = $(obj).closest('tr').attr('id');
+            y = y.split('_');
+            x = y[2];
+            console.log[y];
+        }
+        $.post('/modelos/index/getaliasdata', {id: x}, function(data){
+            var ret = JSON.parse(data);
+            console.log(ret);
+            $('#desc_alias_new').val(ret.desc_alias);
+            $('#myclassifications').select2("val", ret.id_classificacao);
+            if(up != 0)
+                $('#param_id_alias').val(up);
+            if((ret.cod_item_vinculado !== null) && (ret.desc_item_vinculado !== null)){
+                console.log('entrando aqui');
+                $('#param_alias_finalidade').val('item');
+                $('#btn_add_item_vinculado').html(ret.desc_item_vinculado);
+                $('#itemvinculado').val(ret.cod_item_vinculado);
+                $("input[name='label-alias']:last").prev().click();
+                $("input[name='label-alias']").checkboxradio("refresh");
+                $('#param_tipo_alias').val('item');
+            }
+            $('#SelectItem').popup('close');
+            setTimeout(function(){$('#AddAlias').popup('open');},500);
+        });
+    }
+}
+
+function backsearch(){
+    $('#AddAlias').popup('close');
+    $("input[name='label-alias']:first").prev().click();
+    $("input[name='label-alias']").checkboxradio("refresh");
+    $('#param_id_alias').val('0');
+    $('#param_alias_finalidade').val('valor');
+    $('#param_tipo_alias').val('alias');
+    $('#desc_alias_new').val('');
+    $('#itemvinculado').val('');
+    $('#myclassifications').select2("val", "");
+    $('#btn_add_item_vinculado').html('<span class="icon-plus">&nbsp;</span>adicionar item engenharia');
+    //setTimeout(function(){$('#SelectItem').popup('open');},500);
+}
+
+$.post('/modelos/index/loadclassificacao',function(resposta){
+    var options = JSON.parse(resposta);
+    for(i=0;i<options.length;i++){
+        var opt = '<option value="' + options[i].id_classificacao + '">' + options[i].desc_classificacao + '</option>';
+        $('#myclassifications').append(opt);
+    }
+});
+$.post('/modelos/index/loaditemengenharia',function(resposta){
+    var options = JSON.parse(resposta);
+    for(i=0;i<options.length;i++){
+        var opt = '<li onclick="selectme(this);" data-vinculo-id="' + options[i].cod_item + '">' + options[i].item_desc + '</li>';
+        $('#list_itens_vinculados').append(opt);
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>MBase - Dados Mestre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/jquery.mobile.theme-1.4.4.css"/>
+    <link rel="stylesheet" href="/css/jquery.mobile-1.4.4.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/default.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+    <link rel="stylesheet" href="/css/fontello.css">
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.mobile-1.4.4.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+
+    <script id="panel-init">
+        $( document ).on( "pageinit", "body", function( event ) {
+            $( "[data-role='header']" ).toolbar({ theme: "b" });
+            $( "[data-role='panel']" ).panel({ theme: "b" });
+            $( "[data-role='collapsibleset']" ).collapsibleset({ theme: "b" });
+            $( "[data-role='listview']" ).listview({ theme: "b" });
+            $( "[data-role='controlgroup']" ).controlgroup({ theme: "b" });
+            $( "[data-role='popup']" ).popup({ theme: "b" });
+            $("input[type='radio']").checkboxradio({ theme: "b" });
+            $('[data-toggle="tooltip"]').tooltip();
+            
+            $('input[type="radio"]').click(function(){
+                if($(this).attr("value")=="vincular-item-nao"){
+                    $(".novo-alias-item-three").hide();
+                }
+                if($(this).attr("value")=="vincular-item-sim"){
+                    $(".novo-alias-item-three").show();
+                }
+            });
+            
+            $( "#collapsible .lista .ui-btn" ).click(function() {
+                $( "#collapsible .lista .ui-btn" ).css("background","#5f5d5d");
+                $(this).css("background","url('images/arrow-menu-left.png')no-repeat right");
+            });
+            
+        });
+    </script>
+    
+</head>
+
+<body>
+
+    <header data-role="header" data-position="fixed" class="header">
+        <div class="ui-grid-b">
+            <div class="ui-block-a">
+                <div class="logo"><img src="/images/logo.jpg"/></div>
+            </div>
+            <div class="ui-block-b">
+                <?php echo $this->action('mnutopo', 'index', 'default') ?>
+            </div>
+            <div class="ui-block-c">
+                <div data-role="navbar">
+                    <ul id="menu-user">
+                        <li><a href="#" class="name-user"><?= $this->usuarionome; ?></a></li>
+                        <li><a href="/modelos" data-ajax="false" class="icon-home-2"></a></li>
+                        <li><a href="/" data-ajax="false" class="icon-logout"></a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div>
+        </div>
+    </header>
+    
+    <div data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" id="add-form" class="ui-panel-open menu-left">
+        <form class="userform">
+            <fieldset data-role="controlgroup" data-mini="true" class="ui-nodisc-icon">
+                <select name="select-native-5" id="select-native-5">
+                    <?php foreach($this->familia as $k => $v): ?>
+                    <option data-linha="<?= $v ?>" value="<?= $v ?>">•&nbsp;<?= $v ?></option>
+                    <?php endforeach; ?>
+                </select>
+            
+                <select name="select-native-6" id="select-native-6">
+                <?php foreach($this->modelos as $k => $v): ?>
+                    <?php foreach($v as $id => $desc): ?>
+                        <option data-linha="<?= $k; ?>" data-idmodelo="<?= $id; ?>" data-desc="<?= $desc; ?>">•&nbsp;<?= $desc; ?></option>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+                </select>
+            </fieldset>
+        </form>
+
+        <div data-role="collapsibleset" data-mini="true" data-collapsed-icon="false" class="itens-menu-left">
+            <?php echo $this->action('mnuesquerdo', 'index', 'default') ?>
+        </div>
+
+
+    </div><!-- /panel -->    
+    
+    <div data-role="page" class="page-content">
+            <?php echo $this->layout()->content ?>
+        </div>
+    
+    
+    <!-- POP UP -->
+    <div data-role="popup" id="SelectItem" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+        <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        <div data-role="header" data-theme="b" class="header-popup">
+        <h1>Pesquisa Descrição Comercial</h1>
+        </div>
+        <div class="ui-content content-popup">
+            <form data-theme="b">
+                <div class="ui-grid-b radios-filtro">
+                    <div class="ui-block-a">
+                        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                            <input type="radio" name="filtro1" id="alias" value="alias" checked="checked">
+                            <label for="alias">Alias</label>
+                            <input type="radio" name="filtro1" id="item" value="item">
+                            <label for="item">Item</label>
+                        </fieldset>
+                     </div>
+
+                    <div class="ui-block-b">
+                        <div class="option-alias">
+                            <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                <input type="radio" name="filtroalias" id="label" value="label" checked="checked">
+                                <label for="label">Label</label>
+                                <input type="radio" name="filtroalias" id="valor" value="valor">
+                                <label for="valor">Valor</label>
+                            </fieldset>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-block-c busca-ficha">
+                        <div class="ui-block-a">
+                            <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset">
+                                <input type="text" value="" placeholder="Precione a tecla enter para realizar a busca" data-mini="true">
+                            </div>    
+                         </div>
+                    </div>
+                </div>
+                
+                <div class="traco-b"></div>
+                
+                <div class="ui-grid-a tabela-item-label">
+                    <table width="98%" border="0" cellspacing="2" cellpadding="0">
+                        <thead>
+                            <tr class="title-table-pop">
+                                <td class="acoes"><p>Ações</p></td>
+                                <td width="259"><p>Descrição Alias</p></td>
+                                <td width="98"><p>Grupo</p></td>
+                                <td width="105"><p>Classificação</p></td>
+                                <td><p>Item Engenharia</p></td>
+                            </tr>
+                         </thead>
+                    </table>
+                </div>
+                
+                <div class="scroll">
+                    <div class="ui-grid-a tabela-item-label">
+                        <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                         <tbody>
+                            <tr>
+                                <td class="acoes">
+                                    <a href="#" data-rel="back" data-transition="flow" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td width="259"><p>Suspensão metalica na traseira</p></td>
+                                <td width="98"><p>Engenharia</p></td>
+                                <td width="105"><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão metalica na traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Suspensão Metalica</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>
+                                    <a href="#" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a>
+                                </td>
+                                <td><p>Metalica traseira</p></td>
+                                <td><p>Engenharia</p></td>
+                                <td><p>Dimensões</p></td>
+                                <td><p>XA36 - Transmissão do eixo I - 5,625</p></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="traco-b"></div>
+                
+            </form>
+        </div><!-- CONTENT POP UP -->
+    
+    </div><!-- /POP UP -->   
+    
+    
+    <!-- POP UP -->
+    <div data-role="popup" id="NovoAlias" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+        <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+        <div data-role="header" data-theme="b" class="header-popup">
+            <h1>Conteúdo Novo Alias</h1>
+        </div>
+    
+<div role="main" class="ui-content content-popup novo-alias">
+
+    <div class="ui-grid-a novo-alias-item-one">
+        <div class="ui-block-a">
+            <div class="ui-field-contain pull-right">
+                <fieldset class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all ui-mini" data-role="controlgroup" data-type="horizontal" data-mini="true"><div class="ui-controlgroup-controls ">
+                &nbsp;&nbsp;&nbsp;&nbsp;<div class="ui-radio ui-mini"><label class="ui-btn ui-corner-all ui-btn-inherit ui-radio-off ui-first-child" for="option-novo-alias-label">Label</label><input name="option-novo-alias" id="option-novo-alias-label" value="option-novo-alias-label" type="radio"></div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;<div class="ui-radio ui-mini"><label class="ui-btn ui-corner-all ui-btn-inherit ui-radio-off ui-last-child" for="option-novo-alias-valor">Valor</label><input name="option-novo-alias" id="option-novo-alias-valor" value="option-novo-alias-valor" type="radio"></div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                </div></fieldset>
+            </div>
+        </div>
+        
+        <div class="ui-block-b">
+            <div class="ui-field-contain">
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset" style="margin: 0;"><input name="descricao-novo-alias" value="" data-mini="true" placeholder="Digite a Descrição" type="text"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="traco-b"></div>
+    
+    <div class="ui-grid-a novo-alias-item-two">
+        <div class="ui-block-a">
+            <div class="ui-field-contain">
+                <label>Vincular ao item técnico?</label>
+            </div>
+        </div>
+
+        <div class="ui-block-b">
+            <div class="ui-field-contain">
+                <fieldset class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all ui-mini" data-role="controlgroup" data-type="horizontal" data-mini="true"><div class="ui-controlgroup-controls ">
+                &nbsp;&nbsp;&nbsp;&nbsp;<div class="ui-radio ui-mini"><label class="ui-btn ui-corner-all ui-btn-inherit ui-first-child ui-radio-off" for="vincular-item-sim">Sim</label><input data-cacheval="true" name="vincular-item" id="vincular-item-sim" value="vincular-item-sim" type="radio"></div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;<div class="ui-radio ui-mini"><label class="ui-btn ui-corner-all ui-btn-inherit ui-last-child ui-btn-active ui-radio-on" for="vincular-item-nao">Não</label><input data-cacheval="false" name="vincular-item" id="vincular-item-nao" value="vincular-item-nao" type="radio"></div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                </div></fieldset>
+            </div>
+        </div>
+    </div>
+    
+    <div style="display: none;" class="ui-grid-a novo-alias-item-three">
+    
+    <div class="traco-b"></div>
+    
+        <div class="ui-block-a">
+            <div class="ui-field-contain">
+                <label for="codigo">Código:</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset"><input name="codigo" value="" data-mini="true" type="text"></div>
+            </div>
+        </div>
+        
+        <div class="ui-block-b">
+            <div class="ui-field-contain">
+                <label for="descricao">Descrição:</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset"><input name="descricao" value="" data-mini="true" type="text"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="traco-b"></div>
+        
+    <div class="ui-grid-a">
+        <div class="ui-block-a pull-right">
+            <div class="ui-field-contain text-right">
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b btn-azul" data-rel="back">Cancel</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b btn-azul" data-rel="back" data-transition="flow">Gravar</a>                                            </div>
+            </div>
+        </div>
+    </div>            
+</div>                            
+        
+    </div> <!-- /POP UP -->                        
+    
+    
+
+</body>
+</html>

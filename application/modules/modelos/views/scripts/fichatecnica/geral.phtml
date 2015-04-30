@@ -1,0 +1,97 @@
+<div class="ui-grid-a">
+    <div class="title">
+        <h1>Ficha Técnica - Geral</h1>
+        <a onclick="savedata();" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
+    </div>
+    <div id="answer" class="resposta">
+        <div class="alert" role="alert"></div>
+    </div>
+    <div class="content">
+        
+        <form id="frm_ft" method="post">
+            <div class="ui-grid-a cont-form">
+                    <label for="complemento" class="label-line">Complemento:</label>
+                    <input type="text" name="complemento_modelo" id="complemento" value="<?= (isset($this->content[0]['complemento_modelo'])) ? $this->content[0]['complemento_modelo'] : ''; ?>" data-mini="true">
+                <div class="traco"></div>
+
+                    <label for="tracao" class="label-line">Tração:</label>
+                    <input type="text" name="tracao" id="tracao" value="<?= (isset($this->content[0]['tracao'])) ? $this->content[0]['tracao'] : ''; ?>" data-mini="true">
+
+                <div class="traco"></div>
+
+                    <label for="classificacao" class="label-line">Classificação:</label>
+                    <input type="text" name="classificacao" id="classificacao" value="<?= (isset($this->content[0]['classificacao'])) ? $this->content[0]['classificacao'] : ''; ?>" data-mini="true">
+
+                <div class="traco"></div>
+
+                    <label for="aplicacao" class="label-line">Aplicação:</label>
+                    <input type="text" name="aplicacao" id="aplicacao" value="<?= (isset($this->content[0]['aplicacao'])) ? $this->content[0]['aplicacao'] : ''; ?>" data-mini="true">
+
+                <div class="traco"></div>
+
+                    <label for="b09" class="label-line">B09:</label>
+                    <input type="text" name="b09" id="b09" value="<?= (isset($this->content[0]['b09'])) ? $this->content[0]['b09'] : ''; ?>" data-mini="true">
+
+                <div class="traco"></div>
+
+                    <label for="datadepublicacao" class="label-line">Data de publicação:</label>
+                    <input type="text" name="data_da_publicacao" id="datepicker" value="<?= $this->content[0]['data_publicacao_dados']; ?>" data-mini="true">
+                    <input type="hidden" name="modelo" id="modelo" value="" />
+            </div>
+        </form>
+    </div><!-- /content -->
+
+</div><!-- ui-grid-a -->
+
+
+<script id="panel-init">
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove(); 
+    }; 
+});
+$( "#datepicker" ).datepicker({
+    dateFormat: 'dd/mm/yy',
+    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+    nextText: 'Próximo',
+    prevText: 'Anterior'
+});
+$('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
+$('#mnulateralesquerdo').children('div:first').children('ul').children('li:first').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+function savedata(){
+    $.mobile.loading("show");
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    console.log(document.getElementById('complemento').value);
+    var a = $('#complemento').val();
+    var b = $('#tracao').val();
+    var c = $('#classificacao').val();
+    var d = $('#aplicacao').val();
+    var e = $('#b09').val();
+    var f = $('#datepicker').val();
+    console.log('Antes ' + a + ' | ' + b + ' | ' + c + ' | ' + d + ' | ' + e + ' | ' + f);
+    $.post('/modelos/actions/savegeral',{complemento : a, tracao : b,classificacao : c,aplicacao: d,b09: e,data_da_publicacao: f})
+    .done(function(data){
+        console.log(data);
+        var result = JSON.parse(data);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-success').html(result[0].msg_retorno);
+        $('#answer').slideDown().delay(5000).slideUp();
+    })
+    .fail(function(err){
+        var result = JSON.parse(err);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-danger').html(result[0].msg_retorno);
+        $('#answer').delay(5000).slideDown();
+    });
+}        
+</script>

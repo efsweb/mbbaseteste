@@ -1,0 +1,117 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>MBase - Em Construção</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.4.css" />
+	<link rel="stylesheet" href="css/default.css" />
+	<link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/fontello.css" />
+
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.4.4.js"></script>
+
+	<script id="panel-init">
+		$( document ).on( "pageinit", "#page", function( event ) {
+			$( "body>[data-role='popup']" ).popup();
+			$( "body>#page>[data-role='panel']>[data-role='collapsibleset']" ).collapsibleset();
+			$( "body>#page>[data-role='panel']>[data-role='collapsibleset']>[data-role='collapsible']" ).collapsible();
+		});
+    
+		$(document).ready(function() { 
+			///MENU DE CONFIGURAÇÕES
+			$( "#btn-panel-config" ).click(function() {
+				$("#panel-config").toggleClass( "panel-config-aberto" );
+			});
+		});
+	</script>
+    
+</head>
+
+<body>
+
+    <div id="page" data-theme="b">
+    
+        <header data-role="header" class="ui-header-fixed" data-theme="b">
+            <section class="ui-grid-a">
+            
+                <div class="ui-block-a">
+                    <div class="logo text-center"><img src="images/logo.jpg"/></div>
+                    <div class="select-style pull-left">
+                        <a id="lkb_linha" href="#pop-linha" data-rel="popup" data-transition="pop" >Linha<span class="icon-down-open-1"></span></a>
+                    </div>
+                    
+                    <div class="select-style pull-left">
+                        <a id="lkb_modelo" href="#pop-modelo" data-rel="popup" data-transition="pop" >Modelo<span class="icon-down-open-1"></span></a>
+                    </div>
+                </div>
+                
+                <div class="ui-block-b">
+                    <div class="name-user">
+                        <ul>
+                        	<li><a href="/modelos" title="Principal" data-ajax="false"><span class="icon-home-2"></span></a></li>
+                        	<li><a data-ajax="false" href="/" title="Sair"><span class="icon-logout"></span></a></li>
+                        	<li><a href="#"><?= $this->usuario_nome; ?></a></li>
+                        </ul>
+                    </div>
+                    <ul class="menu-topo">
+                        <li><a href="/modelos" data-ajax="false">modelos</a></li>
+                        <li><a href="/dadosmestre" data-ajax="false">dados mestre</a></li>
+                        <li><a href="/concorrentes" data-ajax="false">concorrentes</a></li>
+                        <li><a href="/seguranca" data-ajax="false">segurança</a></li>
+                        <li><a href="/analise" data-ajax="false">análise</a></li>
+                    </ul>	
+                </div>            
+            </section>
+        </header>
+        
+        <div data-role="page">
+        	<div data-role="content" data-theme="b">
+			    <section class="ui-grid-a modelos-geral">
+			        <div class="ui-block-a">
+			        	<h1>Em Desenvolvimento</h1>
+			        </div>
+			        
+			        <div class="ui-block-b">
+			        </div>            
+			    </section>
+			    
+			</div> 
+        </div>
+
+    </div><!-- #PAGE -->
+    
+    <!-- MENU DE CONFIGURAÇÕES -->
+    <div id="panel-config">
+    	<div class="icon-cog-alt" id="btn-panel-config"></div>
+    </div>
+    <!-- /MENU DE CONFIGURAÇÕES -->
+    <script>
+    	$('#pop-linha').children().click(function(e){
+    		var linha = $(this).data('linha');
+    		$('#pop-modelo').find('li').each(function(){
+    			if($(this).data('linha') == linha){
+    				$(this).removeClass('hide');
+    			}else{
+    				if(!$(this).hasClass('hide')){
+    					$(this).addClass('hide');
+    				}
+    			}
+    		});
+    		$('#lkb_modelo').html('Modelo <span class="icon-down-open-1"></span>');
+    		$('#lkb_linha').html(linha + ' <span class="icon-down-open-1"></span>');
+    		$('#pop-linha').popup('close');
+    	});
+    	$('#pop-modelo').children().click(function(e){
+    		if($(this).data('linha') != 'nenhuma'){
+    			$('#lkb_modelo').html($(this).data('modelo') + ' <span class="icon-down-open-1"></span>');
+    		}
+    		$('#pop-modelo').popup('close');
+    	});
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+application: dev-mb-base
+version: ope-01
+runtime: php
+api_version: 1
+
+handlers:
+- url: /images
+  static_dir: public_html/images
+
+- url: /comparativos
+  static_dir: public_html/images/comparativos
+
+- url: /js
+  static_dir: public_html/js
+
+- url: /css
+  static_dir: public_html/css
+
+- url: /font
+  static_dir: public_html/font
+
+- url: /.*
+  script: public_html/index.php

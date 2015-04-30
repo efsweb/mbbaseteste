@@ -1,0 +1,15 @@
+<div class="modeloselecionadoesquerda">
+	<div class="ui-select">
+		<select id="meumodelo" onchange="loadpg2(this);" class="js-example-basic-multiple" multiple="multiple" style="width: 240px;">
+			<?php
+			foreach($this->modelos as $chave => $arr){
+				foreach($arr as $k => $v){
+			?>
+					<?php if($this->mdsel == $k): ?>
+					<option selected="selected" value="<?= $k; ?>"><?= $v; ?></option>
+					<?php else: ?>
+					<option value="<?= $k; ?>"><?= $v; ?></option>
+			<?php endif;}} ?>
+		</select>
+	</div>
+</div><!-- /row-03 -->

@@ -1,0 +1,10 @@
+<?php
+$module = Zend_Controller_Front::getInstance()->getRequest()->getModuleName();
+?>
+<div data-role="navbar" data-grid="d" id="menu-topo">
+    <ul>
+		<?php foreach($this->menu as $k => $v): ?>
+        <li><a data-ajax="false" data-id="<?= $v['id']; ?>" href="/<?= $v['link']; ?>" class="<?= ($v['link'] == $module) ? 'ui-btn-active' : ''; ?>"><?= $v['desc']; ?></a></li>
+		<?php endforeach; ?>
+    </ul>
+</div>

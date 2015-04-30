@@ -1,0 +1,119 @@
+<div class="ui-grid-a">
+    <div class="title">
+        <h1>Modelos - UP - Geral</h1>
+        <a onclick="saveupgl();" href="#" class="btn-azul pull-right btn-save" data-toggle="tooltip" data-placement="left" title="salvar conteúdo"><span class="icon-ok-3"></span>salvar</a>
+    </div>
+    <div id="answer" class="resposta">
+        <div class="alert" role="alert"></div>
+    </div>
+    <div class="content" id="up-geral">
+        <div class="ui-grid-a cont-form">
+        	<table id="tbl_up_geral" width="100%" border="0" cellspacing="2" cellpadding="0">
+              <tr class="title-table">
+                <td><p>baumuster</p></td>
+                <td><p>variantes</p></td>
+                <td><p>up</p></td>
+                <td><p>aplicação</p></td>
+                <td><p>cabina</p></td>
+                <td><p>composição</p></td>
+                <td><p>cor</p></td>
+                <td><p>transmissão</p></td>
+                <td><p>susp_cabina</p></td>
+              </tr>
+              <?php $ln = 0; foreach($this->geral as $linha): ?>
+              <?php $ln = $ln + 1; ?>
+              <tr>
+                <td class="sem-fundo"><p data-vlr="<?= $linha['baumuster']; ?>"><?= $linha['baumuster']; ?></p></td>
+                <td class="sem-fundo"><p data-vlr="<?= $linha['variante']; ?>"><?= $linha['variante']; ?></p></td>
+                <td>
+                    <a id="btnup_<?= $ln . '_' . $linha['id_up']; ?>" data-vlr="<?= $linha['id_up']; ?>" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-alias ui-link">
+                        <!-- <span class="icon-plus">&nbsp;</span>Alias -->
+                        &nbsp;<?= $linha['up']; ?>
+                    </a>
+                </td>
+                <td>
+                    <a id="btnapp_<?= $ln . '_' . $linha['id_aplicacao']; ?>" data-vlr="<?= $linha['id_aplicacao']; ?>" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-alias ui-link">
+                        <!-- <span class="icon-plus">&nbsp;</span>Alias</a> -->
+                        &nbsp;<?= $linha['aplicacao']; ?>
+                </td>
+                <td>
+                    <a id="btncab_<?= $ln . '_' . $linha['id_cabina']; ?>" data-vlr="<?= $linha['id_cabina']; ?>" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-alias ui-link">
+                        <!-- <span class="icon-plus">&nbsp;</span>Alias</a> -->
+                        &nbsp;<?= $linha['cabina']; ?>
+                </td>
+                <td>
+                    <a id="btncom_<?= $ln . '_' . $linha['id_composicao_pacote_padrao']; ?>" data-vlr="<?= $linha['id_composicao_pacote_padrao']; ?>" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-alias ui-link">
+                        <!-- <span class="icon-plus">&nbsp;</span>Alias</a> -->
+                        &nbsp;<?= $linha['composicao_pacote_padrao']; ?>
+                </td>
+                <td>
+                    <a id="btncor_<?= $ln . '_' . $linha['id_cor']; ?>" data-vlr="<?= $linha['id_cor']; ?>" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-alias ui-link">
+                        <!-- <span class="icon-plus">&nbsp;</span>Alias</a> -->
+                        &nbsp;<?= $linha['cor']; ?>
+                </td>
+                <td>
+                    <a id="btntransmissao_<?= $ln . '_' . $linha['id_transmissao']; ?>" data-vlr="<?= $linha['id_transmissao']; ?>" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-alias ui-link">
+                        &nbsp;<?= $linha['transmissao']; ?>
+                </td>
+                <td>
+                    <a id="btncabina_<?= $ln . '_' . str_replace(' ', '_', $linha['id_susp_cabina']); ?>" data-vlr="<?= $linha['id_susp_cabina']; ?>" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-alias ui-link">
+                        &nbsp;<?= $linha['susp_cabina']; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+            </table>
+        </div>
+    </div><!-- /content -->
+    
+</div><!-- ui-grid-a -->
+    
+<script src="/js/up_controller.js"></script>
+<script type="text/javascript">
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove(); 
+    }; 
+});
+$('#mnulateralesquerdo').children('div:first').next().attr('data-collapsed', 'false');
+$('#mod_up_geral').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+function saveupgl(){
+    loading('show');
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    var rows = [];
+    $('#tbl_up_geral tbody').children('tr').each(function(){
+        if(!$(this).hasClass('title-table')){
+            var row = '';
+            $(this).children('td').each(function(){
+                if(row == ''){
+                    row = $(this).children(':first').attr('data-vlr');
+                }else{
+                    row += ',' + $(this).children(':first').attr('data-vlr');
+                }
+            });
+            rows.push(row);
+        }
+    });
+    console.log(rows);
+    $.post('/modelos/actions/saveupgeral',{linhas: rows})
+    .done(function(data){
+        console.log(data);
+        //var result = JSON.parse(data);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-success').html('Informações atualizadas com sucesso!');
+        $('#answer').slideDown().delay(5000).slideUp();
+    }).fail(function(err){
+        //var result = JSON.parse(err);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-danger').html('Houve um erro, tente mais tarde!');
+        $('#answer').slideDown().delay(5000).slideUp();
+    });
+}
+
+</script>
+

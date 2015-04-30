@@ -1,0 +1,78 @@
+    <div class="ui-grid-a">
+        <div class="title">
+            <h1>Modelos - Walk Around - Geral</h1>
+            <a href="#" class="btn-azul pull-right btn-save" data-toggle="tooltip" data-placement="left" title="salvar conteúdo"><span class="icon-ok-3"></span>salvar</a>
+        </div>
+        
+        <div class="content" id="walk-around">
+            <div class="ui-grid-a cont-form row-01">
+            
+                <ul id="myTab" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#externo" id="home-tab" role="tab" data-toggle="tab" aria-controls="externo" aria-expanded="true">Externo</a>
+                    </li>
+                    <li class="" role="presentation">
+                        <a aria-expanded="false" href="#interno" role="tab" id="profile-tab" data-toggle="tab" aria-controls="interno">Interno</a>
+                    </li>
+                </ul>
+                
+                <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade active in" id="externo" aria-labelledby="home-tab">
+                        <div style="width: 100%" class="foto-wa">
+                            <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
+                            <div class="dragg-bullet">
+                                <ul class="pop-dragg">
+                                    <div class="arrow"><span class="icon-left-dir-2"></span></div>
+                                    <li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>
+                                    <li><a href="#"><span class="icon-cancel-2"></span>excluir ponto</a></li>  
+                                    <li><p>arraste o ponto para editá-lo</p></li>
+                                </ul>
+                            </div>
+                            <img src="/images/img-wa.jpg" class="img-responsive"/>
+                        </div>
+                    </div>
+                    
+                    <div role="tabpanel" class="tab-pane fade" id="interno" aria-labelledby="profile-tab">
+                        <div style="width: 100%" class="foto-wa">
+                            <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
+                            <div class="dragg-bullet">
+                                <ul class="pop-dragg">
+                                    <div class="arrow"><span class="icon-left-dir-2"></span></div>
+                                    <li>Input</li>
+                                    <li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>
+                                    <li><a href="#"><span class="icon-cancel-2"></span>excluir ponto</a></li>  
+                                    <li><p>arraste o ponto para editá-lo</p></li>
+                                </ul>
+                            </div>
+                            <img src="/images/img-wa-interno.jpg" class="img-responsive"/>
+                        </div>
+                    </div>
+                </div>
+            
+            </div><!-- /row-01 -->
+            
+        </div><!-- /content -->
+    </div><!-- ui-grid-a -->
+    
+    
+            <script id="page-init">
+				$( ".dragg-bullet" ).draggable({ 
+				containment: ".tab-pane.active", scroll: false, 
+				drag: function() {
+					$(".pop-dragg").fadeOut();
+				},
+				
+				});
+			
+				$(".pop-dragg").hide();
+				$( ".dragg-bullet" ).mouseover(function(){
+					if(!$( ".dragg-bullet" ).hasClass('ui-draggable-dragging'))
+					$(".pop-dragg").fadeIn();
+				});
+				
+				$(".foto-wa > img").mouseenter(function(){
+					if(!$( ".dragg-bullet" ).hasClass('ui-draggable-dragging'))
+					$(".pop-dragg").fadeOut();
+				});
+           </script>
+    

@@ -1,0 +1,26 @@
+<div style="width: 70%; margin: 0 auto; padding-top: 5%;">
+	
+	<div class="busca-modelos">
+		<h2 style="color: #454343; text-shadow: none; text-transform: uppercase; font-weight: normal;">Escolha o Modelo:</h2>
+	    <form class="ui-filterable">
+	        <input id="autocomplete-input" data-type="search" data-mini="true" placeholder="Buscar modelo">
+	    </form>
+	    <ul data-role="listview" data-filter="true" data-filter-reveal="true" data-input="#autocomplete-input">
+	    	<?php
+			foreach($this->modelos as $chave => $arr){
+				foreach($arr as $k => $v){ ?>
+				<li><a onclick="redirecionapg(this);" data-id="<?= $k; ?>"><?= $v; ?></a></li>
+			<?php }} ?>
+	    </ul>            
+	</div>
+</div>
+
+<script>
+function redirecionapg(obj){
+	var myid = $(obj).attr('data-id');
+	$.post('/modelos/index/registramodelo',{id: myid},function(){
+		window.location.href = '/modelos/fichatecnica/geral';
+	});
+}
+</script>
+

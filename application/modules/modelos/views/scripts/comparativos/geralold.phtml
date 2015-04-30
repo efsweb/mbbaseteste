@@ -1,0 +1,768 @@
+<div class="ui-grid-a">
+	<div class="title">
+        <h1>Modelos - Comparativos - Geral</h1>
+        <a href="#" onclick="savecp();" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
+    </div>
+    <div id="answer" class="resposta">
+        <div class="alert" role="alert"></div>
+    </div>
+    <div class="content">
+        <div class="newmnuconcorrente">
+            <ul>
+                <li class="selecionadocp">
+                    <div class="selecionado-logo">
+                        <img src="/images/comparativos/<?= $this->concorrentes[0][1]; ?>">
+                    </div>
+                    <div class="selecionado-titulo">
+                        <span><?= $this->concorrentes[0][2]; ?></span>
+                    </div>
+                    <ul class="selecioneconcorrente">
+                        <div class="arrowcp"><span class="icon-up-dir-2"></span></div>
+                        <?php foreach($this->concorrentes as $k => $v): ?>
+                        <li data-target="#carousel" data-slide-to="<?= $k; ?>" onclick="changeme(this);" data-img="<?= $v[1]; ?>" data-modelo-id="<?= $v[0]; ?>" data-modelo="<?= $v[2]; ?>">
+                            <img src="/images/comparativos/<?= $v[1]; ?>" class="logo-concorrente" align="left" />
+                            <p>
+                                <span><?= $v[2]; ?></span>
+                            </p>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+            <div class="ui-grid-a">
+                <div class="ui-block-a" style="height: 60px; display:block; background-color: rgba(255, 255, 255, 0.4);">
+                    &nbsp;
+                </div>
+                <div id="controls-slide" class="ui-block-b"><!-- Controls  -->
+                    <div class="newconcorrenteline">&nbsp;</div>
+                </div><!-- /Controls -->
+            </div>
+            <div class="clear">&nbsp;</div>
+            <div class="carousel-inner" role="listbox">
+                <?php $ac = 0; foreach($this->modelos as $k => $v): ?>
+                <div class="item<?php if($ac == 0){$ac = 1; echo ' active';} ?>" id="<?= $k; ?>">
+                    <div class="ui-grid-a" id="modelo-content">
+                        <div class="ui-block-a bloco-mb" id="bloco-mb">
+                            <div id="mb-cabina-<?= $k; ?>" class="ui-grid-a classificacao-bg cabina-mb">
+                                <div data-role="header"><h3 style="color: #454343; text-align: left; margin: 0;">Cabina</h3></div>
+                                <?php if(isset($v['cabina'])){ foreach($v['cabina'] as $a => $b): ?>
+                                <table id="mb_cabina_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_cabina_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_cabina_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /cabina mb -->
+                            <div id="mb-motor-<?= $k; ?>" class="ui-grid-a classificacao-bg motor-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">motor</h3>
+                                </div>
+                                <?php if(isset($v['motor'])){ foreach($v['motor'] as $a => $b): ?>
+                                <table id="mb_motor_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_motor_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_motor_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /motor mb -->
+                            <div id="mb-cambio-<?= $k; ?>" class="ui-grid-a classificacao-bg cambio-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">câmbio</h3>
+                                </div>
+                                <?php if(isset($v['cambio'])){ foreach($v['cambio'] as $a => $b): ?>
+                                <table id="mb_cambio_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_cambio_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_cambio_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /cambio mb -->
+                            <div id="mb-embreagem-<?= $k; ?>" class="ui-grid-a classificacao-bg embreagem-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">embreagem</h3>
+                                </div>
+                                <?php if(isset($v['embreagem'])){ foreach($v['embreagem'] as $a => $b): ?>
+                                <table id="mb_embreagem_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_embreagem_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_embreagem_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /embreagem mb -->
+                            <div id="mb-eixo-traseiro-<?= $k; ?>" class="ui-grid-a classificacao-bg eixo-traseiro-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">eixo-traseiro</h3>
+                                </div>
+                                <?php if(isset($v['etraseiro'])){ foreach($v['etraseiro'] as $a => $b): ?>
+                                <table id="mb_eixo-traseiro_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_eixo-traseiro_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_eixo-traseiro_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /eixo-traseiro mb -->
+                            <div id="mb-pneus-<?= $k; ?>" class="ui-grid-a classificacao-bg pneus-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">pneus</h3>
+                                </div>
+                                <?php if(isset($v['pneus'])){ foreach($v['pneus'] as $a => $b): ?>
+                                <table id="mb_pneus_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_pneus_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_pneus_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /pneus mb -->
+                            <div id="mb-freios-<?= $k; ?>" class="ui-grid-a classificacao-bg freios-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">freios</h3>
+                                </div>
+                                <?php if(isset($v['freios'])){ foreach($v['freios'] as $a => $b): ?>
+                                <table id="mb_freios_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_freios_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_freios_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /freios mb -->
+                            <div id="mb-retardador-<?= $k; ?>" class="ui-grid-a classificacao-bg retardador-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">retardador</h3>
+                                </div>
+                                <?php if(isset($v['retardador'])){ foreach($v['retardador'] as $a => $b): ?>
+                                <table id="mb_retardador_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_retardador_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_retardador_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /retardador mb -->
+                            <div id="mb-suspensao-dianteira-<?= $k; ?>" class="ui-grid-a classificacao-bg suspensao-dianteira-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">suspensao-dianteira</h3>
+                                </div>
+                                <?php if(isset($v['sdianteira'])){ foreach($v['sdianteira'] as $a => $b): ?>
+                                <table id="mb_suspensao-dianteira_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_suspensao-dianteira_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_suspensao-dianteira_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /suspensao-dianteira mb -->
+                            <div id="mb-suspensao-traseira-<?= $k; ?>" class="ui-grid-a classificacao-bg suspensao-traseira-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">suspensao-traseira</h3>
+                                </div>
+                                <?php if(isset($v['straseira'])){ foreach($v['straseira'] as $a => $b): ?>
+                                <table id="mb_suspensao-traseira_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_suspensao-traseira_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_suspensao-traseira_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /suspensao-traseira mb -->
+                            <div id="mb-chassis-<?= $k; ?>" class="ui-grid-a classificacao-bg chassis-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">chassis</h3>
+                                </div>
+                                <?php if(isset($v['chassis'])){ foreach($v['chassis'] as $a => $b): ?>
+                                <table id="mb_chassis_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_chassis_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_chassis_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /chassis mb -->
+                            <div id="mb-capacidade-<?= $k; ?>" class="ui-grid-a classificacao-bg capacidade-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">capacidade</h3>
+                                </div>
+                                <?php if(isset($v['capacidade'])){ foreach($v['capacidade'] as $a => $b): ?>
+                                <table id="mb_capacidade_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_capacidade_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_capacidade_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /capacidade mb -->
+                            <div id="mb-garantia-<?= $k; ?>" class="ui-grid-a classificacao-bg garantia-mb">
+                                <div data-role="header">
+                                    <h3 style="color: #454343; text-align: left; margin: 0;">garantia</h3>
+                                </div>
+                                <?php if(isset($v['garantia'])){ foreach($v['garantia'] as $a => $b): ?>
+                                <table id="mb_garantia_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo">
+                                                <a id="mb_garantia_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[1]; ?>" data-tipo="label"><?= $b[2]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="mb_garantia_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[3]; ?>" data-tipo="label"><?= $b[4]; ?></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /garantia mb -->
+                        </div>
+                        <div class="ui-block-b concorrenteslist" id="bloco-conc">
+                            <div id="<?= $k; ?>-cabina" class="ui-grid-a classificacao-bg cabina-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('cabina','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['cabina'])){ foreach($v['cabina'] as $a => $b): ?>
+                                <table id="cp_cabina_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_cabina_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_cabina_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /cabina conc -->
+                            <div id="<?= $k; ?>-motor" class="ui-grid-a classificacao-bg motor-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('motor','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['motor'])){ foreach($v['motor'] as $a => $b): ?>
+                                <table id="cp_motor_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_motor_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_motor_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /motor conc -->
+                            <div id="<?= $k; ?>-cambio" class="ui-grid-a classificacao-bg cambio-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('cambio','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['cambio'])){ foreach($v['cambio'] as $a => $b): ?>
+                                <table id="cp_cambio_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_cambio_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_cambio_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /cambio conc -->
+                            <div id="<?= $k; ?>-embreagem" class="ui-grid-a classificacao-bg embreagem-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('embreagem','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['embreagem'])){ foreach($v['embreagem'] as $a => $b): ?>
+                                <table id="cp_embreagem_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_embreagem_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_embreagem_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /embreagem conc -->
+                            <div id="<?= $k; ?>-eixo-traseiro" class="ui-grid-a classificacao-bg eixo-traseiro-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('eixo-traseiro','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['etraseiro'])){ foreach($v['etraseiro'] as $a => $b): ?>
+                                <table id="cp_eixo-traseiro_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_eixo-traseiro_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_eixo-traseiro_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /eixo-traseiro conc -->
+                            <div id="<?= $k; ?>-pneus" class="ui-grid-a classificacao-bg pneus-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('pneus','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['pneus'])){ foreach($v['pneus'] as $a => $b): ?>
+                                <table id="cp_pneus_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_pneus_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_pneus_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /pneus conc -->
+                            <div id="<?= $k; ?>-freios" class="ui-grid-a classificacao-bg freios-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('freios','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['freios'])){ foreach($v['freios'] as $a => $b): ?>
+                                <table id="cp_freios_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_freios_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_freios_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /freios conc -->
+                            <div id="<?= $k; ?>-retardador" class="ui-grid-a classificacao-bg retardador-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('retardador','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['retardador'])){ foreach($v['retardador'] as $a => $b): ?>
+                                <table id="cp_retardador_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_retardador_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_retardador_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /retardador conc -->
+                            <div id="<?= $k; ?>-suspensao-dianteira" class="ui-grid-a classificacao-bg suspensao-dianteira-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('suspensao-dianteira','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['sdianteira'])){ foreach($v['sdianteira'] as $a => $b): ?>
+                                <table id="cp_suspensao-dianteira_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_suspensao-dianteira_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_suspensao-dianteira_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /suspensao-dianteira conc -->
+                            <div id="<?= $k; ?>-suspensao-traseira" class="ui-grid-a classificacao-bg suspensao-traseira-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('suspensao-traseira','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['straseira'])){ foreach($v['straseira'] as $a => $b): ?>
+                                <table id="cp_suspensao-traseira_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_suspensao-traseira_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_suspensao-traseira_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /suspensao-traseira conc -->
+                            <div id="<?= $k; ?>-chassis" class="ui-grid-a classificacao-bg chassis-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('chassis','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['chassis'])){ foreach($v['chassis'] as $a => $b): ?>
+                                <table id="cp_chassis_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_chassis_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_chassis_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /chassis conc -->
+                            <div id="<?= $k; ?>-capacidade" class="ui-grid-a classificacao-bg capacidade-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('capacidade','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['capacidade'])){ foreach($v['capacidade'] as $a => $b): ?>
+                                <table id="cp_capacidade_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_capacidade_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_capacidade_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /capacidade conc -->
+                            <div id="<?= $k; ?>-garantia" class="ui-grid-a classificacao-bg garantia-conc">
+                                <div data-role="header">
+                                    <a onclick="addline('garantia','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="adicionar item" class="ui-btn btn-azul ui-btn-right add-item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                                <?php if(isset($v['garantia'])){ foreach($v['garantia'] as $a => $b): ?>
+                                <table id="cp_garantia_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">
+                                    <tbody>
+                                        <tr>
+                                            <td class="item-class tamanho-fixo-conc">
+                                                <a id="cp_garantia_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[5]; ?>" data-tipo="label"><?= $b[6]; ?></a>
+                                            </td>
+                                            <td class="item-class">
+                                                <a id="cp_garantia_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn" data-vlr="<?= $b[7]; ?>" data-tipo="label"><?= $b[8]; ?></a>
+                                            </td>
+                                            <td class="icon-class icon-enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <?php endforeach; }?>
+                            </div><!-- /garantia conc -->
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div><!-- /carousel -->
+    </div><!-- /content -->
+</div><!-- ui-grid-a -->
+<script src="/js/cp_controller.js"></script>
+<script type="text/javascript">
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove();
+    };
+});
+$('#mnulateralesquerdo').children('div:last').prev().attr('data-collapsed', 'false');
+$('#mod_cp_geral').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+    function addline(tipo,cp){
+        var mbclass = '.' + tipo + '-mb';
+        var cpclass = '.' + tipo + '-conc';
+        var ids = [];
+        $('.carousel-inner').find(mbclass).each(function(){
+            var sp = $(this).attr('id');
+            var pt = sp.split('-');
+            ids.push(pt[pt.length-1]);
+        });
+        //ids.indexOf(cp); para adicionar linha somente ao concorrente ativo
+        for(i=0;i<ids.length;i++){
+            var dvidmb = '#mb-' + tipo + '-' + ids[i];
+            var dvidcp = '#' + ids[i] + '-' + tipo;
+            var linenm = 0;
+            var tblidc = $(dvidmb).children('table:last').attr('id');
+            if(typeof tblidc !== 'undefined'){
+                linenm = parseInt(tblidc.split('_')[3]) + 1;
+            }
+            var mbtblid = 'mb_' + tipo + '_' + ids[i] + '_' + linenm;
+            var cptblid = 'cp_' + tipo + '_' + ids[i] + '_' + linenm;
+            var mbcol01 = mbtblid + '_1';
+            var mbcol02 = mbtblid + '_2';
+            var cpcol01 = cptblid + '_1';
+            var cpcol02 = cptblid + '_2';
+
+            mbtbl  = '<table id="' + mbtblid + '" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">';
+            mbtbl += '<tr><td class="item-class tamanho-fixo">';
+            mbtbl += '<a id="' + mbcol01 + '" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn">';
+            mbtbl += '<span class="icon-plus"></span>Item</a>';
+            mbtbl += '</td><td class="item-class">';
+            mbtbl += '<a id="' + mbcol02 + '" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn">';
+            mbtbl += '<span class="icon-plus"></span>Descritivo MB</a>';
+            mbtbl += '</td></tr></table>';
+
+            cptbl  = '<table id="' + cptblid + '" width="100%" border="0" cellspacing="4" cellpadding="0" class="classificacao">';
+            cptbl += '<tr><td class="item-class tamanho-fixo-conc">';
+            cptbl += '<a id="' + cpcol01 + '" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn">';
+            cptbl += '<span class="icon-plus"></span>Descritivo Concorrente</a>';
+            cptbl += '</td><td class="item-class">';
+            cptbl += '<a id="' + cpcol02 + '" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn">';
+            cptbl += '<span class="icon-plus"></span>Argumento de Vendas</a>';
+            cptbl += '</td>';
+            cptbl += '<td class="icon-class icon-enable">';
+            cptbl += '<a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="Excluir item" class="icon-cancel-2 ui-link"></a>';
+            cptbl += '</td>';
+            cptbl += '</tr></table>';
+
+            $(dvidmb).append(mbtbl);
+            $(dvidcp).append(cptbl);
+            ajustHeightTable();
+        }
+    }
+    function changeme(obj){
+        var img = "/images/comparativos/" + $(obj).attr('data-img');
+        var mod = $(obj).attr('data-modelo');
+        var id  = '#' + $(obj).attr('data-modelo-id');
+        $(obj).closest('ul').prev().prev().children('img').attr('src',img);
+        $(obj).closest('ul').prev().children('span').html(mod);
+        setTimeout(function(){ajustHeightTable();},300); 
+    }
+    function excludeme(obj){
+        var tblcp = '#' + $(obj).closest('table').attr('id');
+        var tblmb = tblcp.replace('cp','mb');
+        console.log(tblcp + ' - ' + tblmb);
+        $(tblmb).remove();
+        $(tblcp).remove();
+    }
+    
+    $('.carousel').carousel({
+        pause: true,
+        interval: false
+    });
+
+    function savecp(){
+        loading('show');
+        if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+            $('#answer').slideUp('fast');
+            $('#answer').children('div').removeClass('alert-danger');
+            $('#answer').children('div').removeClass('alert-success');
+        }
+        var mbclass = '.cabina-mb';
+        var ids = [];
+        $('.carousel-inner').find(mbclass).each(function(){
+            var sp = $(this).attr('id');
+            var pt = sp.split('-');
+            ids.push(pt[pt.length-1]);
+        });
+        var arr = [];
+        for(i=0;i<ids.length;i++){
+            var item = '#' + ids[i];
+            $(item).children('.ui-grid-a').children('div:first').children('div').each(function(){
+                var agrupamento = 'mod_cp_' + $(this).attr('id').split('-')[1];
+                switch(agrupamento){
+                    case 'mod_cp_cambio':
+                        agrupamento = agrupamento.replace('cambio', 'câmbio');
+                        console.log('cambio: ' + agrupamento);
+                        break;
+                    case 'mod_cp_capacidade':
+                        agrupamento = agrupamento.replace('capacidade', 'capacidades');
+                        console.log('capacidade: ' + agrupamento);
+                        break;
+                    case 'mod_cp_eixo':
+                        agrupamento = agrupamento + '_' + $(this).attr('id').split('-')[2];
+                        console.log('eixo: ' + agrupamento);
+                        break;
+                    case 'mod_cp_suspensao':
+                        agrupamento = agrupamento + '_' + $(this).attr('id').split('-')[2];
+                        console.log('suspensao: ' + agrupamento);
+                        break;
+                    case 'mod_cp_sistema':
+                        agrupamento = agrupamento + '_' + $(this).attr('id').split('-')[2];
+                        console.log('sistema: ' + agrupamento);
+                        break;
+                    default:
+                        console.log('default: ' + agrupamento);
+                        break;
+                }
+                $(this).children('table').each(function(){
+                    var mbtbid = $(this).attr('id');
+                    var linenm = mbtbid.split('_')[mbtbid.split('_').length - 1];
+                    var mbcl01 = '#' + mbtbid + '_1';
+                    var mbcl02 = '#' + mbtbid + '_2';
+                    var cpcl01 = '#' + mbtbid.replace('mb','cp') + '_1';
+                    var cpcl02 = '#' + mbtbid.replace('mb','cp') + '_2';
+
+                    var str = ids[i] + ',' + agrupamento + ',' + linenm + ',' + $(mbcl01).attr('data-vlr') + ',' + $(mbcl02).attr('data-vlr') + ',' + $(cpcl01).attr('data-vlr') + ',' + $(cpcl02).attr('data-vlr');
+                    arr.push(str);
+                });
+            });
+        }
+        //console.log(arr);
+        $.post('/modelos/actions/savecomparativos',{comparativos: arr})
+        .done(function(data){
+            //console.log(data);
+            //var result = JSON.parse(data);
+            $.mobile.loading("hide");
+            $('#answer').children('div').addClass('alert-success').html('Informações atualizadas com sucesso!');
+            $('#answer').slideDown().delay(5000).slideUp();
+        }).fail(
+            function(err){
+            //var result = JSON.parse(err);
+            $.mobile.loading("hide");
+            $('#answer').children('div').addClass('alert-danger').html('Houve um erro, tente mais tarde!');
+            $('#answer').delay(5000).slideDown();
+        });
+    }
+
+function ajustHeightTable(){
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+    var chave = 0;
+    $('.active').each(function(){
+        $(this).find('table').each(function(){
+            var mbtbid = '#' + $(this).attr('id');
+            var cptbid = mbtbid.replace('mb','cp');
+            $(mbtbid).removeAttr('style');
+            $(cptbid).removeAttr('style');
+            var mbheight = $(mbtbid).outerHeight();
+            var cpheight = $(cptbid).outerHeight();
+            if(mbheight > cpheight){
+                $(cptbid).outerHeight(mbheight + 11);
+            }else{
+                if(msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)){
+                    if(mbheight != cpheight){
+                        if(chave == 0){
+                            chave = 1;
+                            $(mbtbid).outerHeight(111);
+                        }else{
+                            h = cpheight - 1;
+                            console.log(h);
+                            $(mbtbid).outerHeight(h);
+                        }
+                    }
+                    //console.log('MB ' + $(mbtbid).outerHeight() + '; CP ' + cpheight);
+                }else{
+                    $(mbtbid).outerHeight(cpheight + 11);
+                }
+            }
+        });
+    });
+}
+
+/*$(document).ready(function(){
+    ajustHeightTable();
+});*/
+$(document).on('pageshow', 'div', function (event, ui){
+    setTimeout(function(){ajustHeightTable();},600);
+});
+$(window).resize(function(){
+    ajustHeightTable();
+});
+//setTimeout(function(){ajustHeightTable();},600);
+</script>
+
+

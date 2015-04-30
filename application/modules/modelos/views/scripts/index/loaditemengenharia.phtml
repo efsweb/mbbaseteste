@@ -1,0 +1,4 @@
+<?php
+foreach($this->class as $item): ?>
+	<li onclick="selectme(this);" data-vinculo-id="<?= $item['cod_item']; ?>"><?= $item['item_desc']; ?></li>
+<?php endforeach; ?>

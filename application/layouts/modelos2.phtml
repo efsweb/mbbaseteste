@@ -1,0 +1,481 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>MBase - Modelos</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/css/jquery.mobile.theme-1.4.4.css"/>
+	<link rel="stylesheet" href="/css/jquery.mobile-1.4.4.css"/>
+    <link rel="stylesheet" href="/css/carrousel.css"/>
+	<link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/select2.min.css"/>
+	<link rel="stylesheet" href="/css/default.css"/>
+	<link rel="stylesheet" href="/css/style.css"/>
+	<link rel="stylesheet" href="/css/jquery-ui.css" />
+    <link rel="stylesheet" href="/css/fontello.css">
+
+	<script src="/js/jquery.js"></script>
+	<script src="/js/jquery.mobile-1.4.4.js"></script>
+	<script src="/js/bootstrap.js"></script>
+    <script src="/js/draggable.js"></script>
+    <script src="/js/select2.full.js"></script>
+    <script src="/js/select3.full.js"></script>
+	<script src="/js/jquery-ui.js"></script>
+    <script src="/js/jquery.infinitescroll.js"></script>
+    <script src="/js/modelos_ctrl.js"></script>
+
+	<script id="panel-init">
+		$(document).on("pageinit", "body", function(event){
+			$( "[data-role='header']" ).toolbar({ theme: "b" });
+			$( "[data-role='panel']" ).panel({ theme: "b" });
+			$( "[data-role='collapsibleset']" ).collapsibleset({
+                theme: "b",
+                collapsedIcon: false,
+                expandedIcon: false
+            });
+			$( "[data-role='listview']" ).listview({ theme: "b" });
+			$( "[data-role='controlgroup']" ).controlgroup({ theme: "b" });
+			$( "[data-role='popup']" ).popup({ theme: "b" });
+			$("input[type='radio']").checkboxradio({ theme: "b" });
+			$('[data-toggle="tooltip"]').tooltip();
+			
+			$('input[type="radio"]').click(function(){
+				if($(this).attr("value")=="vincular-item-nao"){
+					$(".novo-alias-item-three").hide();
+				}
+				if($(this).attr("value")=="vincular-item-sim"){
+					$(".novo-alias-item-three").show();
+				}
+			});
+			
+			$( "#collapsible .lista .ui-btn" ).click(function() {
+				$( "#collapsible .lista .ui-btn" ).css("background","#5f5d5d");
+				$(this).css("background","url('/images/arrow-menu-left.png')no-repeat right");
+                $('#mnulateralesquerdo').children('div').each(function(){
+                    $(this).attr('data-collapsed', 'true');
+                });
+                //$(this).closest('#collapsible').trigger( "expand" );
+			});
+			$("#myclassifications").select2();
+            $("#meumodelo").select2();
+            $("#modeloindex").select2();
+            $(".pop-itens-engenharia").hide();
+            $(".add-item-engenharia").click(function() {
+                $(".pop-itens-engenharia").fadeIn();
+            });
+            $(".btn-close").click(function() {
+                $(".pop-itens-engenharia").fadeOut();
+            });
+		});
+        $(document).on("pagebeforeshow", "#pgconteudo", function(event,data){
+            //console.log(data.prevPage);
+            /*if(data.xhr.status == 0){
+                window.location.reload();
+            }*/
+        });
+	</script>
+    
+</head>
+
+<body>
+
+    <header data-role="header" data-position="fixed" class="header">
+        <div class="ui-grid-b">
+        	<div class="ui-block-a">
+            	<div class="logo"><img src="/images/logo.jpg"/></div>
+            </div>
+            <div class="ui-block-b">
+                <?php echo $this->action('mnutopo', 'index', 'default') ?>
+            </div>
+            <div class="ui-block-c">
+				<div data-role="navbar">
+					<ul id="menu-user">
+						<li><a href="#" class="name-user"><?= $this->usuarionome; ?></a></li>
+						<li><a href="/modelos" data-ajax="false" class="icon-home-2"></a></li>
+						<li><a href="/logout" data-ajax="false" class="icon-logout"></a></li>
+					</ul>
+				</div><!-- /navbar -->
+            </div>
+        </div>
+    </header>
+    
+    <div style="display: none;" data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" id="add-form" class="ui-panel-open menu-left">
+        <?php echo $this->action('selectfamiliamodelonovo','index','modelos') ?>
+        
+        <div class="menu-height">
+            <div id="mnulateralesquerdo" data-role="collapsibleset" data-mini="true" data-collapsed-icon="false" class="itens-menu-left">
+            	<?php echo $this->action('mnuesquerdo', 'index', 'default') ?>
+            </div>
+        </div>
+    </div><!-- /panel -->    
+    
+    <div id="pgconteudo" data-role="page" class="page-content" data-cache="never">
+        <?php echo $this->layout()->content ?>
+    </div>
+    
+    
+    <div data-role="popup" id="SelectItem" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+    <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+    <div data-role="header" data-theme="b" class="header-popup">
+    <h1>Pesquisa Descrição Comercial</h1>
+    </div>
+    <div role="main" class="ui-content content-popup">
+        <form data-theme="b">
+            <div class="ui-grid-b radios-filtro">
+                <div class="ui-block-a">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <!-- Tipo -->
+                        <input type="radio" name="filtro1" id="alias" value="alias" checked="checked">
+                        <label for="alias">Alias</label>
+                        <input type="radio" name="filtro1" id="item" value="item">
+                        <label for="item">Item</label>
+                        <!-- Input Hidden para a busca com valor padrão -->
+                        <input type="hidden" id="param_tipo" value="alias" />
+                    </fieldset>
+                 </div>
+
+                <div class="ui-block-b">
+                    <div class="option-alias">
+                        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                            <!-- Finalidade -->
+                            <input type="radio" name="filtro2" id="label" value="label" checked="checked">
+                            <label for="label">Label</label>
+                            <input type="radio" name="filtro2" id="valor" value="valor">
+                            <label for="valor">Valor</label>
+                            <!-- Input Hidden para a busca com valor padrão -->
+                            <input type="hidden" id="param_finalidade" value="label" />
+                        </fieldset>
+                    </div>
+                </div>
+                
+                <div class="ui-block-c busca-ficha">
+                    <div class="ui-block-a">
+                        <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset" style="float: left; width: 80%;">
+                            <input title="Pressione enter para realizar a busca" id="param_desc_alias" onkeypress="if((event.keyCode || event.which) == 13){search(); return false;}" type="search" placeholder="Precione a tecla enter para realizar a busca" data-mini="true">
+                        </div>
+                        <div class="ui-block-b" style="float: right;">
+                            <a href="#" onclick="showalias();" data-rel="popup" data-position-to="window" data-transition="pop" data-toggle="tooltip" title="adicionar alias" class="ui-btn btn-azul icon-plus"></a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+            
+            <div class="traco-b"></div>
+            <div id="tbl_resultado_header" class="ui-grid-a tabela-item-label">
+                <table width="98%" border="0" cellspacing="2" cellpadding="0" data-filter="true" data-input="select-native-2">
+                    <thead>
+                        <tr class="title-table-pop">
+                            <td class="acoes" style="width: 85px;"><p>Ações</p></td>
+                            <td width="270"><p>Descrição Alias</p></td>
+                            <td width="105">
+                                <div data-role="fieldcontain" class="ui-field-contain ui-nodisc-icon">
+                                    <select  style="width: 105px;" onchange="search();" data-native-menu="false" name="select-native-2" id="select-native-2" data-mini="true" class="ui-nodisc-icon popupselectclass">
+                                        <option value="Todos">Grupo</option>
+                                        <option value="Todos">Todos</option>
+                                        <?php echo $this->action('loadfiltrogrupo', 'index', 'modelos') ?>
+                                    </select>
+                                </div>
+                            </td>
+                            <td width="150">
+                                <div data-role="fieldcontain" class="ui-field-contain ui-nodisc-icon">
+                                    <select style="width: 150px;" onchange="search();" data-native-menu="true" id="select-classificacao" name="select-classificacao" data-mini="true" class="ui-nodisc-icon popupselectclass">
+                                        <option value="Todos">Classificação</option>
+                                        <option value="Todos">Todos</option>
+                                        <?php echo $this->action('loadfiltroclassificacao', 'index', 'modelos') ?>
+                                    </select>
+                                </div>
+                            </td>
+                            <td><p>Item Engenharia</p></td>
+                        </tr>
+                     </thead>
+                </table>
+            </div>
+            <!-- <div id="popupscroller" onscroll="validaScroll();" class="scroll"> -->
+            <!-- <div id="popupscroller" class="scroll"> -->
+                <div id="dvscroller" style="width: 100%; height: 300px; overflow-y: scroll; display: block;" class="ui-grid-a tabela-item-label">
+                    <table id="tbl_resultado" width="100%" border="0" cellspacing="2" cellpadding="0"></table>
+                </div>
+            <!-- </div> -->
+
+            <div class="traco-b"></div>
+            
+        </form>
+    </div><!-- CONTENT POP UP -->
+
+</div><!-- /POP UP --> 
+    
+    
+<!-- POP UP -->
+    <div data-role="popup" id="AddAlias" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+        <a href="#" onclick="backsearch()" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+        <div data-role="header" data-theme="b" class="header-popup">
+            <h3>Adicionar Alias</h3>
+        </div>
+    
+    <div role="main" class="ui-content content-popup add-alias">
+        <div class="ui-grid-a row-01">
+            <div class="ui-block-a">
+                <label>finalidade</label>
+                <fieldset class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <div class="ui-controlgroup-controls">
+
+                        <div class="ui-radio">
+                            <label class="ui-btn ui-corner-all ui-btn-inherit ui-radio-off" for="new-alias">Label</label>
+                            <input data-cacheval="false" name="label-alias" id="new-alias" value="label" checked="checked" type="radio">
+                        </div>
+                        <div class="ui-radio">
+                            <label class="ui-btn ui-corner-all ui-btn-inherit ui-first-child ui-radio-off" for="new-label">Valor</label>
+                            <input data-cacheval="true" name="label-alias" id="new-label" value="valor" type="radio">
+                        </div>
+                        <input type="hidden" id="param_novo_tipo_finalidade" value="label" />
+                        <input type="hidden" id="param_novo_tipo_alias" value="alias" />
+                        <input type="hidden" id="param_id_alias" value="0" />
+                    </div>
+                </fieldset>            
+            </div>
+            <div class="ui-block-b">
+                <label>Descritivo comercial</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset">
+                    <input id="desc_alias_new" data-mini="true" type="text">
+                </div>            
+            </div>            
+        </div><!-- /row-01 -->
+        
+        <div class="traco-b"></div>
+        
+        <div class="ui-grid-a row-02">
+            <div id="popengitem" class="pop-itens-engenharia">
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right btn-close">Close</a>
+                <div data-role="header" class="header-popup"><h3>item / descritivo</h3></div>
+                <ul id="list_itens_vinculados" class="itens-descricao">
+                    <?php echo $this->action('loaditemengenharia', 'index', 'modelos') ?>
+                </ul>
+            </div>
+            <div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-notext ui-nodisc-icon" data-toggle="tooltip" data-placement="top" title="deletar item">
+                <input onclick="backtonormal(this);" type="button" data-enhanced="true" value="<span class='icon-plus'>&nbsp;</span>adicionar item engenharia">
+            </div>        
+            <a href="#" id="btn_add_item_vinculado" class="ui-btn add-item-engenharia"><span class="icon-plus">&nbsp;</span>adicionar item engenharia</a>
+            <input type="hidden" id="itemvinculado" />
+        </div><!-- /row-02 -->
+        
+        <div class="traco-b"></div>
+        
+        <div class="ui-grid-a row-03">
+            <label>Classificação</label>
+            <div class="ui-select">
+                <select id="myclassifications" class="js-example-basic-multiple" multiple="multiple">
+                    <?php echo $this->action('loadclassificacao', 'index', 'modelos') ?>
+                </select>
+            </div>
+        </div><!-- /row-03 -->
+        <div class="traco-b"></div>
+        <div class="ui-grid-a">
+            <a href="#" onclick="savealias();" data-transition="flow" class="ui-btn btn-azul icon-ok-3 pull-right">gravar</a>
+        </div>
+    </div>
+</div> <!-- /POP UP --> 
+
+
+
+<!-- Popup UP -->
+    <div data-role="popup" id="popUP" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+        <a onclick="closeuppopup(this);" data-tipo="close" href="#" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+        <div data-role="header" data-theme="b" class="header-popup">
+            <h3>Conteúdo UP</h3>
+        </div>
+    
+        <div role="main" class="ui-content content-popup itens-up">
+            <div class="ui-grid-a row-01">
+                <div class="ui-block-a">
+                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset">
+                        <input name="item" disabled="disabled" id="txtitemup" placeholder="Item" value="" data-mini="true" type="text">
+                    </div>                
+                </div>
+                
+                <div class="ui-block-b">
+                    <fieldset class="ui-controlgroup ui-controlgroup-vertical ui-corner-all" data-role="controlgroup">
+                        <div class="ui-controlgroup-controls ">
+                            <div class="ui-checkbox">
+                                <label class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-off" for="marcar">Marcar</label>
+                                <input data-cacheval="true" name="marcar" id="marcar" type="checkbox">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>  
+            </div><!-- /row-01 -->
+            
+            <div class="traco-b"></div>
+            
+            <div class="ui-grid-a row-02">
+                <div class="ui-block-a">
+                    <div class="ui-select ui-mini">
+                        <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow" id="lista-completa">
+                            <span>Lista Completa</span>
+                            <select onchange="changeselup(this);" name="sel-lista-completa" id="sel-lista-completa">
+                                <option value="0" selected="selected">Lista Completa</option>
+                                <option value="1">Não Atribuído</option>
+                                <option value="2">Conforto</option>
+                                <option value="3">Desempenho</option>
+                                <option value="4">Praticidade</option>
+                                <option value="5">Segurança</option>
+                                <option value="6">Vocação</option>
+                                <option value="7">Pintura</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ui-block-b">
+                    <div class="ui-select ui-mini">
+                        <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow" id="lista-resumida">
+                            <span>Lista Resumida</span>
+                            <select onchange="changeselup(this);" name="sel-lista-resumida" id="sel-lista-resumida">
+                                <option value="0" selected="selected">Lista Resumida</option>
+                                <option value="1">Não Atribuído</option>
+                                <option value="2">Conforto</option>
+                                <option value="3">Desempenho</option>
+                                <option value="4">Praticidade</option>
+                                <option value="5">Segurança</option>
+                                <option value="6">Vocação</option>
+                                <option value="7">Pintura</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>  
+            </div><!-- /row-02 -->
+            
+            <div class="traco-b"></div>
+            
+            <div class="ui-grid-a">
+                <a onclick="closeuppopup(this);" data-tipo="save" href="#" data-transition="flow" class="ui-btn btn-azul pull-right">gravar</a>
+            </div>
+            
+        </div> <!-- /content-popup -->                           
+        
+    </div> <!-- /Popup UP -->
+    
+    
+    <!-- Popup UP -->
+    <div data-role="popup" id="popWA" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+        <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+        <div data-role="header" data-theme="b" class="header-popup">
+            <h3>Conteúdo Walk Around</h3>
+        </div>
+    
+        <div role="main" class="ui-content content-popup itens-wa">
+            
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <img src="/images/img-pop-wa.png"/>
+                </div>
+                <div class="ui-block-b">
+                    <textarea disabled="disabled" style="height: 250px;" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-mini ui-textinput-autogrow" cols="40" rows="8" name="textarea-6" id="textarea-6" data-mini="true">Descrição</textarea>
+                </div>                
+            </div>
+
+            <div class="traco-b"></div>
+            
+            <div class="ui-grid-a">
+                <a href="#" data-rel="back" data-transition="flow" class="ui-btn btn-azul pull-right">gravar</a>
+            </div>
+            
+        </div> <!-- /content-popup -->                           
+        
+    </div> <!-- /Popup UP -->  
+    
+    <!-- Popup UP Foto -->
+    <div data-role="popup" id="popWAfoto" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+        <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+        <div data-role="header" data-theme="b" class="header-popup">
+            <h3>Foto Walk Around</h3>
+        </div>
+    
+        <div role="main" class="ui-content content-popup fotos-wa">
+            
+            <div class="ui-grid-a">
+                <label for="file">Escolha a imagem:</label>
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-mini">
+                    <input name="file" id="file" value="" type="file" data-mini="true">
+                </div>
+            </div>
+
+            <div class="traco-b"></div>
+            
+            <div class="ui-grid-a">
+                <a href="#" data-rel="back" data-transition="flow" class="ui-btn btn-azul pull-right"><span class="icon-ok-3">&nbsp;</span>Enviar</a>
+            </div>
+            
+        </div> <!-- /content-popup -->                           
+        
+    </div> <!-- /Popup UP -->
+
+<script id="panel-init">
+
+$('input:radio[name=filtro1]').click(function(){
+    $('#param_tipo').val($(this).val());
+    search();
+});
+$('input:radio[name=filtro2]').click(function(){
+    $('#param_finalidade').val($(this).val());
+    search();
+});
+$('input:radio[name=label-alias]').click(function(){
+    $('#param_novo_tipo_finalidade').val($(this).val());
+});
+
+$('#SelectItem').popup({
+    afteropen: function(e){
+        $('body').css('overflow','hidden');
+    },
+    afterclose: function(e){
+        $('body').css('overflow','auto');
+    }
+});
+
+var vezes = 0;
+function clearbeforeme(obj){
+    var referencia = $(obj).closest('.select2').prev().attr('id');
+    vezes = vezes + 1;
+    if(vezes > 4){
+        vezes = 1;
+    }
+    if(referencia == 'meumodelo' && vezes == 1){
+        var text = $("#meumodelo option:selected").text();
+        var id   = $('#meumodelo').val();
+        if(text != ''){
+            $(obj).attr('data-anterior', text);
+            $(obj).attr('data-id-anterior', text);
+        }
+        //console.log('No focus ' + $(obj).attr('data-anterior'));
+        $(obj).parent().prev().remove();
+        $('#meumodelo').children("option:selected").removeAttr('selected');
+    }
+}
+function verificame(obj){
+    if($('#meumodelo').next().hasClass('select2-container--open')){
+        //console.log('tem a classe');
+        /*var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)){
+            vezes = 0;
+        }*/
+    }else{
+        var text  = $("#meumodelo option:selected").text();
+        //console.log('No blur ' + $(obj).attr('data-anterior'));
+        if(text == ''){
+            text = $(obj).attr('data-anterior');
+
+        }
+        var item  = '<li class="select2-selection__choice" title="' + text + '"><span class="select2-selection__choice__remove" role="presentation">×</span>' + text + '</li>';
+        $(obj).closest('ul').prepend(item);
+        vezes = 0;
+    }
+}
+</script>
+
+</body>
+</html>

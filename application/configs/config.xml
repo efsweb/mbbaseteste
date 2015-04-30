@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+    <production>
+        <database>
+            <adapter>pdo_mysql</adapter>
+            <adapterfront>mysql</adapterfront>
+            <host>173.194.253.0</host>
+            <username>root</username>
+            <password>YBOH2011</password>
+            <dbname>mbase_prod</dbname>
+        </database>
+    </production>
+    <staging extends="production">
+    </staging>
+    <testig extends="production">
+    </testig>
+    <development extends="production">
+        <database>
+            <adapter>pdo_mysql</adapter>
+            <adapterfront>mysql</adapterfront>
+            <host>173.194.253.0</host>
+            <username>root</username>
+            <password>YBOH2011</password>
+            <dbname>mbase_prod</dbname>
+        </database>
+    </development>
+</configdata>
