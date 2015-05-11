@@ -1,6 +1,6 @@
-application: dev-mb-base
-version: v1-0-0 #versao da api.atualizacao da api.correcao de bug
-runtime: php
+application: mb-base
+version: v1-0-0 #versao da api - atualizacao da api - correcao de bug
+runtime: php55
 api_version: 1
 
 handlers:

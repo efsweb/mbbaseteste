@@ -18,29 +18,30 @@
                 
                 <div id="myTabContent" class="tab-content">
                     <div role="tabpanel" class="tab-pane fade active in" id="externo" aria-labelledby="home-tab">
-                        <div style="width: 100%" class="foto-wa">
+                        <div id="imgfront" style="width: 100%" class="foto-wa">
                             <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
-                            <div class="dragg-bullet">
+                            <div id="bullet_1" class="dragg-bullet">
                                 <ul class="pop-dragg">
                                     <div class="arrow"><span class="icon-left-dir-2"></span></div>
+                                    <li><a id="txt_tit_01" href="#SelectItem" onclick='opensearch(this);' data-tipo="0" data-vlr="0" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>titulo ponto</a></li>
                                     <li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>
-                                    <li><a href="#"><span class="icon-cancel-2"></span>excluir ponto</a></li>  
+                                    <li><a href="#" onclick="excludeme(this);"><span class="icon-cancel-2"></span>excluir ponto</a></li>  
                                     <li><p>arraste o ponto para editá-lo</p></li>
                                 </ul>
                             </div>
-                            <img src="/images/img-wa.jpg" class="img-responsive"/>
+                            <img id='img_externo' src="/images/img-wa.jpg" class="img-responsive"/>
                         </div>
                     </div>
                     
                     <div role="tabpanel" class="tab-pane fade" id="interno" aria-labelledby="profile-tab">
-                        <div style="width: 100%" class="foto-wa">
+                        <div id="imgback" style="width: 100%" class="foto-wa">
                             <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
                             <div class="dragg-bullet">
                                 <ul class="pop-dragg">
                                     <div class="arrow"><span class="icon-left-dir-2"></span></div>
-                                    <li>Input</li>
+                                    <li><input type="text" placeholder="Titulo do ponto" data-mini="true" /></li>
                                     <li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>
-                                    <li><a href="#"><span class="icon-cancel-2"></span>excluir ponto</a></li>  
+                                    <li><a href="#" onclick="excludeme(this);"><span class="icon-cancel-2"></span>excluir ponto</a></li>  
                                     <li><p>arraste o ponto para editá-lo</p></li>
                                 </ul>
                             </div>
@@ -55,24 +56,116 @@
     </div><!-- ui-grid-a -->
     
     
-            <script id="page-init">
-				$( ".dragg-bullet" ).draggable({ 
-				containment: ".tab-pane.active", scroll: false, 
-				drag: function() {
-					$(".pop-dragg").fadeOut();
-				},
-				
-				});
-			
-				$(".pop-dragg").hide();
-				$( ".dragg-bullet" ).mouseover(function(){
-					if(!$( ".dragg-bullet" ).hasClass('ui-draggable-dragging'))
-					$(".pop-dragg").fadeIn();
-				});
-				
-				$(".foto-wa > img").mouseenter(function(){
-					if(!$( ".dragg-bullet" ).hasClass('ui-draggable-dragging'))
-					$(".pop-dragg").fadeOut();
-				});
-           </script>
+<script>
+var id_do_ponto = 1;
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove(); 
+    }; 
+});
+$(document).on('pageshow', 'div', function (event, ui) {
+    updatedots(1205.39,476);
+});
+document.getElementById('externo').addEventListener('contextmenu',function(e){
+    e.preventDefault();
+    id_do_ponto = id_do_ponto + 1;
+    var x = e.pageX - 20;
+    var y = e.pageY - 20;
+    var dv  = '<div id="bullet_' + id_do_ponto + '" style="position: absolute; top: ' + y + 'px; left: ' + x + 'px;" class="dragg-bullet">';
+        dv += '<ul class="pop-dragg">';
+        dv += '<div class="arrow"><span class="icon-left-dir-2"></span></div>';
+        dv += '<li><div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset"><input id="txt_' + id_do_ponto + '" type="text" placeholder="Titulo do ponto" data-mini="true"></div></li>';
+        dv += '<li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>';
+        dv += '<li><a href="#" onclick="excludeme(this);"><span class="icon-cancel-2"></span>excluir ponto</a></li>  ';
+        dv += '<li><p>arraste o ponto para editá-lo</p></li>';
+        dv += '</ul>';
+        dv += '</div>';
+    $('#imgfront').append(dv);
+    var id = '#bullet_' + id_do_ponto;
+    $(id).draggable({ 
+        containment: ".tab-pane.active", scroll: false, 
+        drag: function() {
+            $(".pop-dragg").fadeOut();
+        }  
+    });
+    $(id).mouseover(function(){
+        if(!$(id).hasClass('ui-draggable-dragging'))
+        $(id + " .pop-dragg").fadeIn();
+    });
+});
+document.getElementById('interno').addEventListener('contextmenu',function(e){
+    e.preventDefault();
+    id_do_ponto = id_do_ponto + 1;
+    var x = e.pageX - 20;
+    var y = e.pageY - 20;
+    var dv  = '<div id="bullet_' + id_do_ponto + '" style="top: ' + y + 'px; left: ' + x + 'px;" class="dragg-bullet">';
+        dv += '<ul class="pop-dragg">';
+        dv += '<div class="arrow"><span class="icon-left-dir-2"></span></div>';
+        dv += '<li><div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset"><input id="txt_' + id_do_ponto + '" type="text" placeholder="Titulo do ponto" data-mini="true"></div></li>';
+        dv += '<li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>';
+        dv += '<li><a href="#" onclick="excludeme(this);><span class="icon-cancel-2"></span>excluir ponto</a></li>  ';
+        dv += '<li><p>arraste o ponto para editá-lo</p></li>';
+        dv += '</ul>';
+        dv += '</div>';
+    $('#imgback').append(dv);
+    var id = '#bullet_' + id_do_ponto;
+    $(id).draggable({ 
+        containment: ".tab-pane.active", scroll: false, 
+        drag: function() {
+            $(".pop-dragg").fadeOut('fast');
+        },
+        stop: function(evt){
+            var x = parseInt(evt.pageX) - 20;
+            var y = parseInt(evt.pageY) - 20;
+            $(id).attr('data-left',x);
+            $(id).attr('data-top',y);
+        }
+    });
+    $(id).mouseover(function(){
+        if(!$(id).hasClass('ui-draggable-dragging'))
+        $(id + " .pop-dragg").fadeIn();
+    });
+});
+
+function excludeme(obj){
+    $(obj).closest('ul').parent().remove();
+}
+
+//Função que atualiza a posição do ponto quando redimenciona a página
+function updatedots(wi,li){
+    var wid = parseFloat($('#img_externo').width());
+    var min = wi - wid;
+    if(min > 1){
+        var per = parseInt((min * 100) / wi);
+        per = parseInt(per / 2);
+        var lef = li - parseInt(((li * per) / 100));
+        $('#bullet_1').css('left',lef);
+    }
+}
+
+$('#bullet_1').draggable({ 
+    containment: ".tab-pane.active", scroll: false, 
+    drag: function() {
+        $(".pop-dragg").fadeOut('fast');
+    },
+    stop: function(e){
+        var x = parseInt(e.pageX) - 20;
+        var y = parseInt(e.pageY) - 20;
+        $('#bullet_1').attr('data-left',x);
+        $('#bullet_1').attr('data-top',y);
+    }
+});
+
+$(".pop-dragg").hide();
+$('#bullet_1').mouseover(function(){
+	if(!$('#bullet_1').hasClass('ui-draggable-dragging'))
+	$("#bullet_1 .pop-dragg").fadeIn();
+});
+
+$(".foto-wa > img").mouseenter(function(){
+	if(!$('#bullet_1').hasClass('ui-draggable-dragging'))
+	$(".pop-dragg").fadeOut();
+});
+</script>
     
