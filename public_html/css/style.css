@@ -1376,7 +1376,12 @@ h1{
 	background-color: #2a2a2a;
 	padding-left: 9px;
 }
-
+#wapopanswer{
+	margin-top: 25px;
+	margin-left: 5px;
+	display: none;
+	font-size: 12px;
+}
 
 
 /************** SEGURANÇA - USUÁRIO **************/
