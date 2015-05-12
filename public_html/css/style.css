@@ -832,6 +832,8 @@ h1{
 	text-shadow: none;
 	font-weight: normal;
 	display: block;
+	word-wrap: break-word;
+	line-height: 1.1;
 }
 
 #walk-around .row-01 .dragg-bullet .pop-dragg li p{
@@ -1357,13 +1359,17 @@ h1{
 	text-transform: uppercase;
 	line-height: 1;
 }
-.itens-wa .ui-block-b input{
+.itens-wa .ui-block-b a{
 	font-size: 12px;
 	height: 25px;
 	width: 100%;
 }
 
-.itens-wa .wa-pop-titulo{
+.itens-wa .wa-pop-titulo, .itens-wa .wa-pop-desc{
+	width: 568px;
+	display: block;
+	line-height: 1.1em;
+	padding-top: 12px;
 	border: 1px solid #1d1d1d;
 	color: #fff;
 	text-shadow: 0 1px 0 #111;

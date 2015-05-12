@@ -66,6 +66,10 @@ $(document).on('pagehide', 'div', function (event, ui) {
 });
 $(document).on('pageshow', 'div', function (event, ui) {
     updatedots(1205.39,476);
+    /*jQMProgressBar('progressbar')
+                    .isMini(true)
+                    .build()
+                    .run();*/
 });
 document.getElementById('externo').addEventListener('contextmenu',function(e){
     e.preventDefault();
@@ -75,7 +79,7 @@ document.getElementById('externo').addEventListener('contextmenu',function(e){
     var dv  = '<div id="bullet_' + id_do_ponto + '" style="position: absolute; top: ' + y + 'px; left: ' + x + 'px;" class="dragg-bullet">';
         dv += '<ul class="pop-dragg">';
         dv += '<div class="arrow"><span class="icon-left-dir-2"></span></div>';
-        dv += '<li><div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset"><input id="txt_' + id_do_ponto + '" type="text" placeholder="Titulo do ponto" data-mini="true"></div></li>';
+        dv += '<li><a id="txt_' + id_do_ponto + '" href="#SelectItem" onclick="opensearch(this);" data-tipo="0" data-vlr="0" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>titulo ponto</a></li>';
         dv += '<li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>';
         dv += '<li><a href="#" onclick="excludeme(this);"><span class="icon-cancel-2"></span>excluir ponto</a></li>  ';
         dv += '<li><p>arraste o ponto para editá-lo</p></li>';
@@ -167,5 +171,41 @@ $(".foto-wa > img").mouseenter(function(){
 	if(!$('#bullet_1').hasClass('ui-draggable-dragging'))
 	$(".pop-dragg").fadeOut();
 });
+
+
+function activenext(obj){
+    $(obj).next().trigger('click');
+}
+function getbase64(){
+    var reader = new FileReader();
+    reader.onload = function(e){
+        document.getElementById('popwaimgshowing').src = e.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+
+function gravapopuupinfo(){
+    //$('#wapopanswer').removeClass('hide');
+    var frm  = document.getElementById('popwaimg');
+    var arq  = frm.files[0];
+    var info = new FormData();
+    info.append('arquivo',arq);
+    var urla = $('#urlaction').val();
+    $.ajax({
+        url: urla,
+        type: 'POST',
+        data: info,
+        cache: false,
+        processData: false,
+        contentType: false
+    }).done(function(foi){
+        console.log(foi);
+    }).fail(function(quebro){
+        console.log(quebro)
+    });
+    
+}
+
 </script>
     
