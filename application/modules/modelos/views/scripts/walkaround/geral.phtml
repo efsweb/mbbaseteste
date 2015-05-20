@@ -19,7 +19,7 @@
                 <div id="myTabContent" class="tab-content">
                     <div role="tabpanel" class="tab-pane fade active in" id="externo" aria-labelledby="home-tab">
                         <div id="imgfront" style="width: 100%" class="foto-wa">
-                            <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
+                            <a href="#popWAfoto" onclick="fotopara('externo');" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
                             <div id="bullet_1" class="dragg-bullet">
                                 <ul class="pop-dragg">
                                     <div class="arrow"><span class="icon-left-dir-2"></span></div>
@@ -29,13 +29,13 @@
                                     <li><p>arraste o ponto para editá-lo</p></li>
                                 </ul>
                             </div>
-                            <img id='img_externo' src="/images/img-wa.jpg" class="img-responsive"/>
+                            <img id='img_externo' src="<?= $this->imgfront; ?>" class="img-responsive" /> <!--  class="img-responsive" -->
                         </div>
                     </div>
                     
                     <div role="tabpanel" class="tab-pane fade" id="interno" aria-labelledby="profile-tab">
                         <div id="imgback" style="width: 100%" class="foto-wa">
-                            <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
+                            <a href="#popWAfoto" onclick="fotopara('interno');" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
                             <div class="dragg-bullet">
                                 <ul class="pop-dragg">
                                     <div class="arrow"><span class="icon-left-dir-2"></span></div>
@@ -45,7 +45,7 @@
                                     <li><p>arraste o ponto para editá-lo</p></li>
                                 </ul>
                             </div>
-                            <img src="/images/img-wa-interno.jpg" class="img-responsive"/>
+                            <img id="img_interno" src="/images/img-wa-interno.jpg" class="img-responsive"/>
                         </div>
                     </div>
                 </div>
@@ -172,7 +172,42 @@ $(".foto-wa > img").mouseenter(function(){
 	$(".pop-dragg").fadeOut();
 });
 
+function fotopara(visao){
+    $('#fileuploadfotowa').attr('data-visao',visao);
+}
 
+function uploadwafoto(){
+    visao  = $('#fileuploadfotowa').attr('data-visao');
+    modelo = $('#meumodelo option:selected').text();
+    modelo = modelo.replace(/ /g,'').replace(/\//g,'_').toLowerCase();
+    nomeim = ['WA_',modelo,'_fundo_',visao,'.jpg'];
+    filename = nomeim.join("");
+
+    var frm  = document.getElementById('fileuploadfotowa');
+    var arq  = frm.files[0];
+    var info = new FormData();
+    info.append('arquivo',arq);
+    info.append('nomefile',filename);
+    var urla = $('#urlaction').val();
+    $.ajax({
+        url: '/modelos/walkaround/uploadimg',
+        type: 'POST',
+        data: info,
+        cache: false,
+        processData: false,
+        contentType: false
+    }).done(function(data){
+        console.log(data);
+        /*aws = JSON.parse(data);
+        console.log(aws.path);
+        if(aws.status == 'ok'){
+            img = '#img_' + visao;
+            $(img).attr('src',aws.path);
+        }*/
+    }).fail(function(anw){
+        console.log('falhou')
+    });
+}
 function activenext(obj){
     $(obj).next().trigger('click');
 }
@@ -180,6 +215,18 @@ function getbase64(){
     var reader = new FileReader();
     reader.onload = function(e){
         document.getElementById('popwaimgshowing').src = e.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function getbase641(visao){
+    var reader = new FileReader();
+    reader.onload = function(e){
+        if(visao == 'ext'){
+            document.getElementById('img_externo').src = e.target.result;
+        }else{
+            document.getElementById('img_interno').src = e.target.result;
+        }
     };
     reader.readAsDataURL(event.target.files[0]);
 }

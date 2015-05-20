@@ -85,11 +85,6 @@ class Modelos_IndexController extends Zend_Controller_Action{
         }
         $this->view->modelos = $myarr;
         $this->view->fmsel = $modelo->fm;
-        /*$this->view->mdsel = key($this->view->modelos);
-        if(array_key_exists($modelo->id, $this->view->modelos)){
-            $this->view->mdsel = $modelo->id;
-        }*/
-        
     }
     public function selectmodelosAction(){
         Zend_Layout::resetMvcInstance();
