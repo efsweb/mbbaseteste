@@ -23,12 +23,19 @@ class Modelos_ActionsController extends Zend_Controller_Action{
     }
 
     public function savecomentariosAction(){
-        $comment01 = $this->getRequest()->getParam('c1');
+        /*$comment01 = $this->getRequest()->getParam('c1');
         $comment02 = $this->getRequest()->getParam('c2');
         
         $modeloid = new Zend_Session_Namespace('modeloselecionado');
         $model = new Model_Comentarios();
         $return = $model->atualizar($modeloid->id,$comment01, $comment02);
+        echo json_encode($return);*/
+
+        $arr     = $this->getRequest()->getParam('lines');
+        $pg      = $this->getRequest()->getParam('pg');
+        $model   = new Model_Dimensoes();
+        $idmodel = new Zend_Session_Namespace('modeloselecionado');
+        $return  = $model->atualizar($idmodel->id,$arr,$pg);
         echo json_encode($return);
     }
 

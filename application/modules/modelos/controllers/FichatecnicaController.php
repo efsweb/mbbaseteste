@@ -147,8 +147,12 @@ class Modelos_FichatecnicaController extends Zend_Controller_Action{
         if($mdid != $modeloid->id){
             $modeloid->id = $mdid;
         }
+        /*
+        ANTIGO CHAMAVA ASSIM
         $modelo = new Model_Comentarios();
-        $this->view->content = $modelo->lista($mdid);
+        $this->view->content = $modelo->lista($mdid);*/
+        $modelo = new Model_ModelosMapper();
+        $this->view->content = $modelo->visaomodelos($mdid,$pgid);
     }
 
     /**
