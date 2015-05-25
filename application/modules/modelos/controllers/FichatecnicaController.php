@@ -1,5 +1,5 @@
 <?php
-
+use google\appengine\api\cloud_storage\CloudStorageTools;
 class Modelos_FichatecnicaController extends Zend_Controller_Action{
     public function init(){
         $this->_helper->layout()->setLayout('modelos');
@@ -19,6 +19,7 @@ class Modelos_FichatecnicaController extends Zend_Controller_Action{
         }
         $modelo = new Model_Geralft();
         $this->view->content = $modelo->loaddata($mdid,$pgid);
+<<<<<<< HEAD
 
         $modelos = new Model_ModelosMapper();
         $familias = $modelos->lista();
@@ -29,6 +30,23 @@ class Modelos_FichatecnicaController extends Zend_Controller_Action{
             }
         }
         exit();
+=======
+        
+        $myarr = 'Accelo / 815';
+        /*foreach ($familias as $key => $value) {
+            $arr = $modelos->lista2('modelo',$value);
+            if(array_key_exists($modelo->id, $arr)){
+                $myarr = $arr[$modelo->id];
+            }
+        }*/
+        $nome = strtolower(str_replace(' / ', '_', $myarr));
+        $img_ft = 'gs://mb-ft-images/' . $nome . '_pic_1.jpg';
+        $img_vn = 'gs://mb-ft-images/' . $nome . '_pic_2.jpg';
+        $this->view->foto     = CloudStorageTools::getImageServingUrl($img_ft);
+        $this->view->vinheta  = CloudStorageTools::getImageServingUrl($img_vn);
+
+        
+>>>>>>> v1
 
     }
     public function caixadetransferenciaAction(){
@@ -190,4 +208,28 @@ class Modelos_FichatecnicaController extends Zend_Controller_Action{
            echo 'Erro ao fazer o upload da imagem';
        }
     }
+
+
+    public function uploadimgAction(){
+        Zend_Layout::resetMvcInstance();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $nome = $this->getRequest()->getParam('nomefile', '');
+
+        $bucket    = 'mb-ft-images/testes';
+        $root_path = 'gs://' . $bucket . '/';
+        $name = $name = $_FILES['arquivo']['name'];
+        $original = $root_path . $nome;
+        $tmp = $_FILES['arquivo']['tmp_name'];
+
+        CloudStorageTools::deleteImageServingUrl($original);
+        unlink($original);
+        if(move_uploaded_file($tmp, $original)){
+            $path = CloudStorageTools::getImageServingUrl($original);
+            $arr  = array('status' => 'ok','path' => $path);
+            echo json_encode($arr);
+        }else{
+            echo 'nao rolou';
+        }
+    }
+
 }

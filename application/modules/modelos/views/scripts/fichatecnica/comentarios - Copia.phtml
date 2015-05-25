@@ -1,0 +1,61 @@
+<div class="ui-grid-a">
+    <div class="title">
+        <h1>Ficha Técnica - Comentários</h1>
+        <a href="#" onclick="savedata();" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
+    </div>
+    <div id="answer" class="resposta">
+        <div class="alert" role="alert"></div>
+    </div>
+    <div class="content">
+        <form id="frm_ft" method="post">
+            <div class="ui-grid-a cont-form">
+                <label for="comentario01" class="label-line">Comentário:</label>
+                <textarea name="comentario01" id="comentario01" data-mini="true" class="height-text-area">
+                <?= (isset($this->content[0]['comentario_1'])) ? $this->content[0]['comentario_1'] : ''; ?>
+                </textarea>
+                <div class="traco"></div>
+                <label for="comentario02" class="label-line">Comentário:</label>
+                <textarea name="comentario02" id="comentario02" data-mini="true" class="height-text-area">
+                <?= (isset($this->content[0]['comentario_2'])) ? $this->content[0]['comentario_2'] : ''; ?>
+                </textarea>
+            </div>
+        </form>
+    </div><!-- /content -->
+
+</div><!-- ui-grid-a -->
+
+
+<script id="panel-init">
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove(); 
+    }; 
+});
+$('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
+$('#mod_ft_comentarios').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+function savedata(){
+    $.mobile.loading("show");
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    var a = $('#comentario01').val();
+    var b = $('#comentario02').val();
+    $.post('/modelos/actions/savecomentarios',{c1 : a, c2 : b})
+    .done(function(data){
+        var result = JSON.parse(data);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-success').html(result[0].msg_retorno);
+        $('#answer').slideDown().delay(5000).slideUp();
+    })
+    .fail(function(err){
+        var result = JSON.parse(err);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-danger').html(result[0].msg_retorno);
+        $('#answer').slideDown().delay(5000).slideUp();
+    });
+}
+</script>        

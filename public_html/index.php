@@ -11,8 +11,15 @@ defined('APPLICATION_PATH')
 defined('LIBRARY_PATH')
     || define('LIBRARY_PATH', BASE_PATH . '/../library');
 
-defined('APP_NAME')
+/*defined('APP_NAME')
     || define('APP_NAME', 'saneabc');
+*/
+/*
+defined('_MPDF_PATH')
+    || define('_MPDF_PATH', LIBRARY_PATH . '/SC/Plugins/pdf/');
+
+defined('_MPDF_URI')
+    || define('_MPDF_URI', _MPDF_PATH);*/
 
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', getenv('APPLICATION_ENVIROMENT') ? getenv('APPLICATION_ENVIROMENT') : 'development');

@@ -18,6 +18,6 @@ handlers:
 
 - url: /font
   static_dir: public_html/font
-
+  
 - url: /.*
   script: public_html/index.php

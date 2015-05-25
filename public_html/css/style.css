@@ -414,7 +414,11 @@ h1{
 .content .cont-form .height-text-area{
 	height: 200px !important;
 }
-
+.holderimgs{
+	overflow: auto;
+	height: 197px;
+	overflow: hidden;
+}
 .content .cont-form .label-line{
 	color: #454343;
 	line-height: 1.5;
@@ -422,7 +426,31 @@ h1{
 	text-transform: uppercase;
 	text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
 }
+.content .cont-form .label-line span{
+	color: white;
+	background:#3BA7BF;
+	padding: 5px;
+	font-size:10px;
+	text-transform: none;
+}
+.content .cont-form #foto-principal{
+	width: 68%;
+  	border-radius: 10px;
+}
 
+.content .cont-form #vinheta{
+	width: 34%;
+  	border-radius: 10px;
+}
+
+.content .cont-form .grid-fotoprincipal, .grid-vinheta{
+	float:left;
+	height: 220px;
+  	width: 466px;
+}
+.grid-fotoprincipal .ui-input-text, .grid-vinheta .ui-input-text{
+	visibility: hidden;
+}
 /***************************************************/
 /***************** FICHA TECNICA *******************/
 /***************************************************/
@@ -832,6 +860,8 @@ h1{
 	text-shadow: none;
 	font-weight: normal;
 	display: block;
+	word-wrap: break-word;
+	line-height: 1.1;
 }
 
 #walk-around .row-01 .dragg-bullet .pop-dragg li p{
@@ -1357,12 +1387,29 @@ h1{
 	text-transform: uppercase;
 	line-height: 1;
 }
-.itens-wa .ui-block-b input{
+.itens-wa .ui-block-b a{
 	font-size: 12px;
 	height: 25px;
 	width: 100%;
 }
 
+.itens-wa .wa-pop-titulo, .itens-wa .wa-pop-desc{
+	width: 568px;
+	display: block;
+	line-height: 1.1em;
+	padding-top: 12px;
+	border: 1px solid #1d1d1d;
+	color: #fff;
+	text-shadow: 0 1px 0 #111;
+	background-color: #2a2a2a;
+	padding-left: 9px;
+}
+.waanswer{
+	margin-top: 25px;
+	margin-left: 5px;
+	display: none;
+	font-size: 12px;
+}
 
 
 /************** SEGURANÇA - USUÁRIO **************/

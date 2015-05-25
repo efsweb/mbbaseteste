@@ -1,8 +1,13 @@
 <div class="ui-grid-a">
     <div class="title">
         <h1>Ficha Técnica - Geral</h1>
+<<<<<<< HEAD
 <!--         <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 120px;"><span class="icon-ok-3"></span>imprimir gráfica</a>
         <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 323px;"><span class="icon-ok-3"></span>imprimir site</a> -->
+=======
+        <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 120px;"><span class="icon-ok-3"></span>imprimir gráfica</a>
+        <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 323px;"><span class="icon-ok-3"></span>imprimir site</a>
+>>>>>>> v1
         <a onclick="savedata();" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
     </div>
     <div id="answer" class="resposta">
@@ -15,7 +20,11 @@
                 <div class="holderimgs">
                     <div class="grid-fotoprincipal">
                         <label for="foto-principal" class="label-line">Foto Principal: <span>Formato 2197px X 1162px (300dpi)</span></label>
+<<<<<<< HEAD
                         <img id="foto-principal" onclick="activenext('imgfotoprincipal');" src="<?=  $this->foto; ?>" />
+=======
+                        <img id="foto-principal" onclick="activenext('imgfotoprincipal');" src="<?= $this->foto; ?>" />
+>>>>>>> v1
                         <input type="file" name="imgfotoprincipal" id="imgfotoprincipal" accept="image/*" onchange="getbase64('foto-principal');" />
                     </div>
                     <div class="grid-vinheta">
@@ -84,6 +93,7 @@ $( "#datepicker" ).datepicker({
 $('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
 $('#mnulateralesquerdo').children('div:first').children('ul').children('li:first').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
 
+<<<<<<< HEAD
 //VALIDA A DIMENSAO DA IMAGEM
 function ativafigura(id) {
     if (id == 'foto-principal'){
@@ -108,19 +118,26 @@ function ativafigura(id) {
     }
 }
 
+=======
+>>>>>>> v1
 function activenext(obj){
     var id = '#' + obj;
     $(id).trigger('click');
 }
+<<<<<<< HEAD
 
 function getbase64(id){
     ativafigura(id);
+=======
+function getbase64(id){
+>>>>>>> v1
     var reader = new FileReader();
     reader.onload = function(e){
         document.getElementById(id).src = e.target.result;
     };
     reader.readAsDataURL(event.target.files[0]);
 }
+<<<<<<< HEAD
 
 function savedata(){
     $.mobile.loading("show");
@@ -209,6 +226,36 @@ function savedata(){
 }  
 
 function gravadata(){
+=======
+function savedata(){
+    $.mobile.loading("show");
+    visao  = $('#imgfotoprincipal').attr('data-visao');
+    modelo = $('#meumodelo option:selected').text();
+    modelo = modelo.replace(/ /g,'').replace(/\//g,'_').toLowerCase();
+    nomeim = [modelo,visao,'pic_1.jpg'];
+    filename = nomeim.join("");
+
+    var frm  = document.getElementById('imgfotoprincipal');
+    var arq  = frm.files[0];
+    var info = new FormData();
+    info.append('arquivo',arq);
+    info.append('nomefile',filename);
+    $.ajax({
+        url: '/modelos/fichatecnica/uploadimg',
+        type: 'POST',
+        data: info,
+        cache: false,
+        processData: false,
+        contentType: false
+    }).done(function(data){
+        console.log(data);
+        $.mobile.loading("hide");
+    }).fail(function(anw){
+        console.log('falhou')
+    });
+
+    /*$.mobile.loading("show");
+>>>>>>> v1
     if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
         $('#answer').slideUp('fast');
         $('#answer').children('div').removeClass('alert-danger');
@@ -234,6 +281,7 @@ function gravadata(){
         $.mobile.loading("hide");
         $('#answer').children('div').addClass('alert-danger').html(result[0].msg_retorno);
         $('#answer').delay(5000).slideDown();
+<<<<<<< HEAD
     });
 }
 
@@ -306,4 +354,8 @@ function savedata_img_vinheta(){
         return true;
     }        
 }
+=======
+    });*/
+}        
+>>>>>>> v1
 </script>

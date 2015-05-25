@@ -12,7 +12,8 @@
 	<link rel="stylesheet" href="/css/default.css"/>
 	<link rel="stylesheet" href="/css/style.css"/>
 	<link rel="stylesheet" href="/css/jquery-ui.css" />
-    <link rel="stylesheet" href="/css/fontello.css">
+    <link rel="stylesheet" href="/css/fontello.css" />
+    <link rel="stylesheet" href="/css/jQMProgressBar.css" />
 
 	<script src="/js/jquery.js"></script>
 	<script src="/js/jquery.mobile-1.4.4.js"></script>
@@ -22,6 +23,7 @@
 	<script src="/js/jquery-ui.js"></script>
     <script src="/js/jquery.infinitescroll.js"></script>
     <script src="/js/modelos_ctrl.js"></script>
+    <script src="/js/jQMProgressBar.js"></script>
 
 	<script id="panel-init">
 		$(document).on("pageinit", "body", function(event){
@@ -358,33 +360,34 @@
     <!-- Popup UP -->
     <div data-role="popup" id="popWA" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
         <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-        
         <div data-role="header" data-theme="b" class="header-popup">
             <h3>Conteúdo Walk Around</h3>
         </div>
-    
         <div role="main" class="ui-content content-popup itens-wa">
-            
             <div class="ui-grid-a">
                 <div class="ui-block-a">
-                    <img src="/images/img-pop-wa.png"/>
+                    <img id="popwaimgshowing" onclick="activenext(this);" src="/images/img-pop-wa.png" width="264px" height="264px" style="cursor: pointer;" />
+                    <input type="file" style="visibility: hidden;" accept="image/*" id="popwaimg" onchange="getbase64();" />
+                    <input type="hidden" id="urlaction" value="<?= $this->upload_url; ?>" />
                 </div>
                 <div class="ui-block-b">
-                    <!-- <input type="text" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-mini ui-textinput-autogrow" /> -->
-                    <textarea disabled="disabled" style="height: 250px;" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-mini ui-textinput-autogrow" cols="40" rows="8" name="textarea-6" id="textarea-6" data-mini="true">Descrição</textarea>
+                    <a id="popwatitulo" href="#SelectItem" onclick='opensearch(this);' style="margin-bottom: 5px;" data-tipo="0" data-vlr="0" data-rel="popup" data-position-to="window" data-transition="pop" class="wa-pop-titulo">Selecione o título do popup</a>
+                    <a id="popwadesc" href="#SelectItem" onclick='opensearch(this);' style="height: 250px;" class="wa-pop-desc">Descrição</a>
                 </div>                
             </div>
-
             <div class="traco-b"></div>
-            
             <div class="ui-grid-a">
-                <a href="#" data-rel="back" data-transition="flow" class="ui-btn btn-azul pull-right">gravar</a>
+                <div class="ui-block-a">
+                    <div id="wapopanswer" class="waanswer">
+                        Enviando arquivo...
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <a onclick="gravapopuupinfo();" class="ui-btn btn-azul pull-right" style="width: 100px; height: 15px;">gravar</a>
+                </div>
             </div>
-            
         </div> <!-- /content-popup -->                           
-        
     </div> <!-- /Popup UP -->  
-    
     <!-- Popup UP Foto -->
     <div data-role="popup" id="popWAfoto" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
         <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
@@ -398,14 +401,21 @@
             <div class="ui-grid-a">
                 <label for="file">Escolha a imagem:</label>
                 <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-mini">
-                    <input name="file" id="file" value="" type="file" data-mini="true">
+                    <input data-visao="externo" id="fileuploadfotowa" onchange="getbase641('ext');" accept="image/*" type="file" data-mini="true">
                 </div>
             </div>
 
             <div class="traco-b"></div>
             
             <div class="ui-grid-a">
-                <a href="#" data-rel="back" data-transition="flow" class="ui-btn btn-azul pull-right"><span class="icon-ok-3">&nbsp;</span>Enviar</a>
+                <div class="ui-block-a">
+                    <div class="waanswer">
+                        Processando imagem...
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <a href="#" onclick="uploadwafoto();" style="width: 113px;" data-transition="flow" class="ui-btn btn-azul pull-right"><span class="icon-ok-3">&nbsp;</span>Enviar</a>
+                </div>
             </div>
             
         </div> <!-- /content-popup -->                           

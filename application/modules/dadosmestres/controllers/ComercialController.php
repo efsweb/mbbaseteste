@@ -11,4 +11,7 @@ class Dadosmestres_ComercialController extends Zend_Controller_Action{
 	public function aliasAction(){
 
 	}
+	public function modelosAction(){
+
+	}
 }
