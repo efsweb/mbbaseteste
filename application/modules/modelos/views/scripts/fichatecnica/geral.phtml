@@ -1,6 +1,8 @@
 <div class="ui-grid-a">
     <div class="title">
         <h1>Ficha Técnica - Geral</h1>
+<!--         <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 120px;"><span class="icon-ok-3"></span>imprimir gráfica</a>
+        <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 323px;"><span class="icon-ok-3"></span>imprimir site</a> -->
         <a onclick="savedata();" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
     </div>
     <div id="answer" class="resposta">
@@ -10,6 +12,19 @@
         
         <form id="frm_ft" method="post">
             <div class="ui-grid-a cont-form">
+                <div class="holderimgs">
+                    <div class="grid-fotoprincipal">
+                        <label for="foto-principal" class="label-line">Foto Principal: <span>Formato 2197px X 1162px (300dpi)</span></label>
+                        <img id="foto-principal" onclick="activenext('imgfotoprincipal');" src="<?=  $this->foto; ?>" />
+                        <input type="file" name="imgfotoprincipal" id="imgfotoprincipal" accept="image/*" onchange="getbase64('foto-principal');" />
+                    </div>
+                    <div class="grid-vinheta">
+                        <label for="vinheta" class="label-line">Vinheta: <span>Formato 829px X 879px (300dpi)</span></label>
+                        <img id="vinheta" onclick="activenext('imgvinheta');" src="<?= $this->vinheta; ?>" />
+                        <input type="file" name="imgvinheta" id="imgvinheta" accept="image/*" onchange="getbase64('vinheta');" />
+                    </div>
+                </div>
+                <div class="traco"></div>
                     <label for="complemento" class="label-line">Complemento:</label>
                     <input type="text" name="complemento_modelo" id="complemento" value="<?= (isset($this->content[0]['complemento_modelo'])) ? $this->content[0]['complemento_modelo'] : ''; ?>" data-mini="true">
                 <div class="traco"></div>
@@ -45,12 +60,17 @@
 
 
 <script id="panel-init">
+//INICIALIZA AS VARIAVEIS PARA VERIFICACAO DO UPLOAD
+var img_principal = false; 
+var img_vinheta = false;
+
 $(document).on('pagehide', 'div', function (event, ui) { 
     var page = jQuery(event.target);
     if (page.attr('data-cache') == 'never') { 
         page.remove(); 
     }; 
 });
+
 $( "#datepicker" ).datepicker({
     dateFormat: 'dd/mm/yy',
     dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
@@ -64,21 +84,143 @@ $( "#datepicker" ).datepicker({
 $('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
 $('#mnulateralesquerdo').children('div:first').children('ul').children('li:first').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
 
+//VALIDA A DIMENSAO DA IMAGEM
+function ativafigura(id) {
+    if (id == 'foto-principal'){
+        var largura = document.getElementById('foto-principal').naturalWidth;
+        var altura = document.getElementById('foto-principal').naturalHeight;        
+    }else if(id == 'vinheta'){
+        var largura = document.getElementById('vinheta').naturalWidth;
+        var altura = document.getElementById('vinheta').naturalHeight;          
+    }
+
+    if (largura == 2197 && altura == 1162 && id == 'foto-principal' ){ //FOTO PRINCIPAL
+        img_principal = true;
+    }else if(largura == 829 && altura == 879 && id == 'vinheta'){ //VINHETA
+        img_vinheta = true;
+    }else if(largura == 512 && altura == 271){ //IMAGEM PADRAO - QUE NÃO FOI ALTERADA
+        return false; //PARA NÃO REALIZAR O UPLOAD DA  IMAGEM
+    }else{
+        //alert("FORMATO DA IMAGEM INVALIDO !");
+        $('#answer').children('div').addClass('alert-danger').html('FORMATO DE IMAGEM INVALIDO!');
+        $('#answer').slideDown().delay(5000).slideUp();        
+        return false;
+    }
+}
+
+function activenext(obj){
+    var id = '#' + obj;
+    $(id).trigger('click');
+}
+
+function getbase64(id){
+    ativafigura(id);
+    var reader = new FileReader();
+    reader.onload = function(e){
+        document.getElementById(id).src = e.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+
 function savedata(){
     $.mobile.loading("show");
+    
+    if((img_principal === true) || (img_vinheta === true)){
+        visao  = $('#imgfotoprincipal').attr('data-visao');
+        modelo = $('#meumodelo option:selected').text();
+        modelo = modelo.replace(/ /g,'_').replace(/_\/_/g,'_').toLowerCase();
+        
+        nomeft = [modelo,visao,'_pic_1.jpg'];
+        nomevi = [modelo,visao,'_pic_2.jpg'];
+        filename = nomeft.join("");
+        vinheta  = nomevi.join("");
+
+        $('#answer').children('div').addClass('alert-success').html('Detectamos alteração nas imagens. Iniciando upload!');
+        $('#answer').slideDown();
+        if((img_principal === true) && (img_vinheta === true)){
+            var inputfoto = document.getElementById('imgfotoprincipal');
+            var inputvinh = document.getElementById('imgvinheta');
+            var foto = inputfoto.files[0];
+            var vinh = inputvinh.files[0];
+            var frmfoto = new FormData();
+            var frmvinh = new FormData();
+            frmfoto.append('arquivo',foto);
+            frmfoto.append('nomefile', filename);
+            frmvinh.append('arquivo',vinh);
+            frmvinh.append('nomefile', vinheta);
+            $('#answer').children('div').html('Gravando primeiro a foto!');
+            $.ajax({
+                url: '/modelos/fichatecnica/uploadimg',
+                type: 'POST',
+                data: frmfoto,
+                cache: false,
+                processData: false,
+                contentType: false
+            }).done(function(data){
+                $('#answer').children('div').html('Fazendo upload da vinheta!');
+                $.ajax({
+                    url: '/modelos/fichatecnica/uploadimg',
+                    type: 'POST',
+                    data: frmvinh,
+                    cache: false,
+                    processData: false,
+                    contentType: false
+                }).done(function(data){
+                    $('#answer').children('div').html('Gravando dados!');
+                    console.log(data);
+                    img_principal = false;
+                    img_vinheta   = false;
+                    gravadata();
+                }).fail(function(arg){
+                    console.log(arg);
+                });
+            }).fail(function(msg){
+                console.log(msg);
+            });
+        }else{
+            var frm  = (img_principal === true) ? document.getElementById('imgfotoprincipal') : document.getElementById('imgvinheta');
+            var arq  = frm.files[0];
+            var info = new FormData();
+            arquivo  = (img_principal === true) ? filename : vinheta;
+            info.append('arquivo',arq);
+            info.append('nomefile',arquivo);
+            $.ajax({
+                url: '/modelos/fichatecnica/uploadimg',
+                type: 'POST',
+                data: info,
+                cache: false,
+                processData: false,
+                contentType: false
+            }).done(function(data){
+                $('#answer').html('Gravando dados!');
+                console.log(data);
+                img_principal = false;
+                img_vinheta   = false;
+                gravadata();
+            }).fail(function(anw){
+                console.log('falhou');
+                $('#answer').children('div').addClass('alert-danger').html('ERRO AO FAZER O UPLOAD DA IMAGEM! TENTE NOVAMENTE');
+                $('#answer').slideDown().delay(5000).slideUp();
+            });
+        }
+    }else{
+        gravadata();
+    }
+}  
+
+function gravadata(){
     if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
         $('#answer').slideUp('fast');
         $('#answer').children('div').removeClass('alert-danger');
         $('#answer').children('div').removeClass('alert-success');
     }
-    console.log(document.getElementById('complemento').value);
     var a = $('#complemento').val();
     var b = $('#tracao').val();
     var c = $('#classificacao').val();
     var d = $('#aplicacao').val();
     var e = $('#b09').val();
     var f = $('#datepicker').val();
-    console.log('Antes ' + a + ' | ' + b + ' | ' + c + ' | ' + d + ' | ' + e + ' | ' + f);
+    //console.log('Antes ' + a + ' | ' + b + ' | ' + c + ' | ' + d + ' | ' + e + ' | ' + f);
     $.post('/modelos/actions/savegeral',{complemento : a, tracao : b,classificacao : c,aplicacao: d,b09: e,data_da_publicacao: f})
     .done(function(data){
         console.log(data);
@@ -93,5 +235,75 @@ function savedata(){
         $('#answer').children('div').addClass('alert-danger').html(result[0].msg_retorno);
         $('#answer').delay(5000).slideDown();
     });
-}        
+}
+
+function savedata_img_principal(){
+    if(img_principal){
+        visao  = $('#imgfotoprincipal').attr('data-visao');
+        modelo = $('#meumodelo option:selected').text();
+        modelo = modelo.replace(/ /g,'').replace(/\//g,'_').toLowerCase();
+        nomeim = [modelo,visao,'_pic_1.jpg'];
+        filename = nomeim.join("");
+        var frm  = document.getElementById('imgfotoprincipal');
+        var arq  = frm.files[0];
+        var info = new FormData();
+        info.append('arquivo',arq);
+        info.append('nomefile',filename);
+        $.ajax({
+            url: '/modelos/fichatecnica/uploadimg',
+            type: 'POST',
+            data: info,
+            cache: false,
+            processData: false,
+            contentType: false
+        }).done(function(data){
+            console.log(data);
+            img_principal = false;
+            return true;
+        }).fail(function(anw){
+            console.log('falhou');
+            $('#answer').children('div').addClass('alert-danger').html('ERRO AO FAZER O UPLOAD DA IMAGEM! TENTE NOVAMENTE');
+            $('#answer').slideDown().delay(5000).slideUp();
+            return false;          
+        });
+    }else{
+        return true;
+    }
+}
+
+function savedata_img_vinheta(){
+    console.log('pre - img_vinheta');
+    if(img_vinheta){
+        visao  = $('#imgvinheta').attr('data-visao');
+        modelo = $('#meumodelo option:selected').text();
+        modelo = modelo.replace(/ /g,'').replace(/\//g,'_').toLowerCase();
+        nomeim = [modelo,visao,'_pic_2.jpg'];
+        filename = nomeim.join("");
+        var frm  = document.getElementById('imgvinheta');
+        var arq  = frm.files[0];
+        var info = new FormData();
+        info.append('arquivo',arq);
+        info.append('nomefile',filename);
+        $.ajax({
+            url: '/modelos/fichatecnica/uploadimg',
+            type: 'POST',
+            data: info,
+            cache: false,
+            processData: false,
+            contentType: false
+        }).done(function(data){
+            console.log(data);
+            img_vinheta= false;
+            return true;
+        }).fail(function(anw){
+            console.log('falhou');
+            $('#answer').children('div').addClass('alert-danger').html('ERRO AO FAZER O UPLOAD DA IMAGEM! TENTE NOVAMENTE');
+            $('#answer').slideDown().delay(5000).slideUp();
+            return false;  
+        });
+        return true;            
+    }else{
+        return true;
+    }        
+}
 </script>
