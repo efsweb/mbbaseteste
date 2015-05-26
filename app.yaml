@@ -1,5 +1,5 @@
 application: mb-base
-version: v1-0-0 #versao da api - atualizacao da api - correcao de bug
+version: v1-0-2 #versao da api - atualizacao da api - correcao de bug
 runtime: php55
 api_version: 1
 

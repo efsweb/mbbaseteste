@@ -37,6 +37,26 @@
                     <label for="datadepublicacao" class="label-line">Data de publicação:</label>
                     <input type="text" name="data_da_publicacao" id="datepicker" value="<?= $this->content[0]['data_publicacao_dados']; ?>" data-mini="true">
                     <input type="hidden" name="modelo" id="modelo" value="" />
+
+                <div class="traco"></div>
+
+                    <label for="nome_arquivo_print" class="label-line">Nome do arquivo impressão:</label>
+                    <input type="text" name="nome_arquivo_print" id="nome_arquivo_print" value="<?= (isset($this->content[0]['nome_arquivo_print'])) ? $this->content[0]['nome_arquivo_print'] : ''; ?>" data-mini="true">
+ 
+               <!--  <div class="traco"></div>
+
+                    <label for="comentario_1" class="label-line">Comentário 1:</label>
+                    <textarea id="comentario_1" name="comentario_1" class="height-text-area ui-input-text ui-textinput-autogrow" rows="50" cols="90">
+                        <?= (isset($this->content[0]['comentario_1'])) ? trim($this->content[0]['comentario_1']) : ''; ?>
+                    </textarea>
+
+                <div class="traco"></div>
+
+                    <label for="comentario_2" class="label-line">Comentário 2:</label>
+                    <textarea id="comentario_2" name="comentario_2" class="height-text-area ui-input-text ui-textinput-autogrow" rows="50" cols="90">
+                        <?= (isset($this->content[0]['comentario_2'])) ? trim($this->content[0]['comentario_2']) : ''; ?>
+                    </textarea> -->
+            
             </div>
         </form>
     </div><!-- /content -->
@@ -78,8 +98,9 @@ function savedata(){
     var d = $('#aplicacao').val();
     var e = $('#b09').val();
     var f = $('#datepicker').val();
+    var g = $('#nome_arquivo_print').val();
     console.log('Antes ' + a + ' | ' + b + ' | ' + c + ' | ' + d + ' | ' + e + ' | ' + f);
-    $.post('/modelos/actions/savegeral',{complemento : a, tracao : b,classificacao : c,aplicacao: d,b09: e,data_da_publicacao: f})
+    $.post('/modelos/actions/savegeral',{complemento : a, tracao : b,classificacao : c,aplicacao: d,b09: e,data_da_publicacao: f, nome_do_arquivo: g})
     .done(function(data){
         console.log(data);
         var result = JSON.parse(data);
