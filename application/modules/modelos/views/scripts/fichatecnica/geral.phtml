@@ -1,13 +1,8 @@
 <div class="ui-grid-a">
     <div class="title">
         <h1>Ficha Técnica - Geral</h1>
-<<<<<<< HEAD
 <!--         <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 120px;"><span class="icon-ok-3"></span>imprimir gráfica</a>
         <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 323px;"><span class="icon-ok-3"></span>imprimir site</a> -->
-=======
-        <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 120px;"><span class="icon-ok-3"></span>imprimir gráfica</a>
-        <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 323px;"><span class="icon-ok-3"></span>imprimir site</a>
->>>>>>> v1
         <a onclick="savedata();" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
     </div>
     <div id="answer" class="resposta">
@@ -20,11 +15,7 @@
                 <div class="holderimgs">
                     <div class="grid-fotoprincipal">
                         <label for="foto-principal" class="label-line">Foto Principal: <span>Formato 2197px X 1162px (300dpi)</span></label>
-<<<<<<< HEAD
                         <img id="foto-principal" onclick="activenext('imgfotoprincipal');" src="<?=  $this->foto; ?>" />
-=======
-                        <img id="foto-principal" onclick="activenext('imgfotoprincipal');" src="<?= $this->foto; ?>" />
->>>>>>> v1
                         <input type="file" name="imgfotoprincipal" id="imgfotoprincipal" accept="image/*" onchange="getbase64('foto-principal');" />
                     </div>
                     <div class="grid-vinheta">
@@ -61,6 +52,26 @@
                     <label for="datadepublicacao" class="label-line">Data de publicação:</label>
                     <input type="text" name="data_da_publicacao" id="datepicker" value="<?= $this->content[0]['data_publicacao_dados']; ?>" data-mini="true">
                     <input type="hidden" name="modelo" id="modelo" value="" />
+
+                <div class="traco"></div>
+
+                    <label for="nome_arquivo_print" class="label-line">Nome do arquivo impressão:</label>
+                    <input type="text" name="nome_arquivo_print" id="nome_arquivo_print" value="<?= (isset($this->content[0]['nome_arquivo_print'])) ? $this->content[0]['nome_arquivo_print'] : ''; ?>" data-mini="true">
+ 
+               <!--  <div class="traco"></div>
+
+                    <label for="comentario_1" class="label-line">Comentário 1:</label>
+                    <textarea id="comentario_1" name="comentario_1" class="height-text-area ui-input-text ui-textinput-autogrow" rows="50" cols="90">
+                        <?= (isset($this->content[0]['comentario_1'])) ? trim($this->content[0]['comentario_1']) : ''; ?>
+                    </textarea>
+
+                <div class="traco"></div>
+
+                    <label for="comentario_2" class="label-line">Comentário 2:</label>
+                    <textarea id="comentario_2" name="comentario_2" class="height-text-area ui-input-text ui-textinput-autogrow" rows="50" cols="90">
+                        <?= (isset($this->content[0]['comentario_2'])) ? trim($this->content[0]['comentario_2']) : ''; ?>
+                    </textarea> -->
+            
             </div>
         </form>
     </div><!-- /content -->
@@ -93,21 +104,26 @@ $( "#datepicker" ).datepicker({
 $('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
 $('#mnulateralesquerdo').children('div:first').children('ul').children('li:first').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
 
-<<<<<<< HEAD
 //VALIDA A DIMENSAO DA IMAGEM
 function ativafigura(id) {
+    //alert(id);
     if (id == 'foto-principal'){
         var largura = document.getElementById('foto-principal').naturalWidth;
         var altura = document.getElementById('foto-principal').naturalHeight;        
     }else if(id == 'vinheta'){
+
         var largura = document.getElementById('vinheta').naturalWidth;
         var altura = document.getElementById('vinheta').naturalHeight;          
     }
+    //alert(largura+" x "+altura);
 
     if (largura == 2197 && altura == 1162 && id == 'foto-principal' ){ //FOTO PRINCIPAL
         img_principal = true;
-    }else if(largura == 829 && altura == 879 && id == 'vinheta'){ //VINHETA
+        return true;
+    }else if((largura >= 800 && altura >= 800 && id == 'vinheta'){ //VINHETA
+    //}else if(largura == 829 && altura == 879 && id == 'vinheta'){ //VINHETA
         img_vinheta = true;
+        return true;
     }else if(largura == 512 && altura == 271){ //IMAGEM PADRAO - QUE NÃO FOI ALTERADA
         return false; //PARA NÃO REALIZAR O UPLOAD DA  IMAGEM
     }else{
@@ -118,26 +134,21 @@ function ativafigura(id) {
     }
 }
 
-=======
->>>>>>> v1
 function activenext(obj){
     var id = '#' + obj;
     $(id).trigger('click');
 }
-<<<<<<< HEAD
 
 function getbase64(id){
-    ativafigura(id);
-=======
-function getbase64(id){
->>>>>>> v1
-    var reader = new FileReader();
-    reader.onload = function(e){
-        document.getElementById(id).src = e.target.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
+    if(ativafigura(id)){
+        var reader = new FileReader();
+        reader.onload = function(e){
+            document.getElementById(id).src = e.target.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);        
+    }
+
 }
-<<<<<<< HEAD
 
 function savedata(){
     $.mobile.loading("show");
@@ -151,7 +162,12 @@ function savedata(){
         nomevi = [modelo,visao,'_pic_2.jpg'];
         filename = nomeft.join("");
         vinheta  = nomevi.join("");
-
+        
+        if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+            $('#answer').slideUp('fast');
+            $('#answer').children('div').removeClass('alert-danger');
+            $('#answer').children('div').removeClass('alert-success');
+        }
         $('#answer').children('div').addClass('alert-success').html('Detectamos alteração nas imagens. Iniciando upload!');
         $('#answer').slideDown();
         if((img_principal === true) && (img_vinheta === true)){
@@ -165,7 +181,7 @@ function savedata(){
             frmfoto.append('nomefile', filename);
             frmvinh.append('arquivo',vinh);
             frmvinh.append('nomefile', vinheta);
-            $('#answer').children('div').html('Gravando primeiro a foto!');
+            $('#answer').children('div').html('Realizando upload da foto principal ...');
             $.ajax({
                 url: '/modelos/fichatecnica/uploadimg',
                 type: 'POST',
@@ -174,7 +190,7 @@ function savedata(){
                 processData: false,
                 contentType: false
             }).done(function(data){
-                $('#answer').children('div').html('Fazendo upload da vinheta!');
+                $('#answer').children('div').html('Realizando upload da vinheta ...');
                 $.ajax({
                     url: '/modelos/fichatecnica/uploadimg',
                     type: 'POST',
@@ -183,7 +199,7 @@ function savedata(){
                     processData: false,
                     contentType: false
                 }).done(function(data){
-                    $('#answer').children('div').html('Gravando dados!');
+                    $('#answer').children('div').html('Upload realizado com Sucesso');
                     console.log(data);
                     img_principal = false;
                     img_vinheta   = false;
@@ -226,36 +242,6 @@ function savedata(){
 }  
 
 function gravadata(){
-=======
-function savedata(){
-    $.mobile.loading("show");
-    visao  = $('#imgfotoprincipal').attr('data-visao');
-    modelo = $('#meumodelo option:selected').text();
-    modelo = modelo.replace(/ /g,'').replace(/\//g,'_').toLowerCase();
-    nomeim = [modelo,visao,'pic_1.jpg'];
-    filename = nomeim.join("");
-
-    var frm  = document.getElementById('imgfotoprincipal');
-    var arq  = frm.files[0];
-    var info = new FormData();
-    info.append('arquivo',arq);
-    info.append('nomefile',filename);
-    $.ajax({
-        url: '/modelos/fichatecnica/uploadimg',
-        type: 'POST',
-        data: info,
-        cache: false,
-        processData: false,
-        contentType: false
-    }).done(function(data){
-        console.log(data);
-        $.mobile.loading("hide");
-    }).fail(function(anw){
-        console.log('falhou')
-    });
-
-    /*$.mobile.loading("show");
->>>>>>> v1
     if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
         $('#answer').slideUp('fast');
         $('#answer').children('div').removeClass('alert-danger');
@@ -267,8 +253,9 @@ function savedata(){
     var d = $('#aplicacao').val();
     var e = $('#b09').val();
     var f = $('#datepicker').val();
+    var g = $('#nome_arquivo_print').val();
     //console.log('Antes ' + a + ' | ' + b + ' | ' + c + ' | ' + d + ' | ' + e + ' | ' + f);
-    $.post('/modelos/actions/savegeral',{complemento : a, tracao : b,classificacao : c,aplicacao: d,b09: e,data_da_publicacao: f})
+    $.post('/modelos/actions/savegeral',{complemento : a, tracao : b,classificacao : c,aplicacao: d,b09: e,data_da_publicacao: f,nome_do_arquivo: g})
     .done(function(data){
         console.log(data);
         var result = JSON.parse(data);
@@ -281,7 +268,6 @@ function savedata(){
         $.mobile.loading("hide");
         $('#answer').children('div').addClass('alert-danger').html(result[0].msg_retorno);
         $('#answer').delay(5000).slideDown();
-<<<<<<< HEAD
     });
 }
 
@@ -354,8 +340,4 @@ function savedata_img_vinheta(){
         return true;
     }        
 }
-=======
-    });*/
-}        
->>>>>>> v1
 </script>

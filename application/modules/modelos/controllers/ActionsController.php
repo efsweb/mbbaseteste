@@ -12,12 +12,13 @@ class Modelos_ActionsController extends Zend_Controller_Action{
     	$aplicacao 			= $this->getRequest()->getParam('aplicacao', ''); 
     	$b09 				= $this->getRequest()->getParam('b09', ''); 
     	$data_da_publicacao = $this->getRequest()->getParam('data_da_publicacao', '');
+        $nome_do_arquivo    = $this->getRequest()->getParam('nome_do_arquivo', '');
         
         $modelo = new Zend_Session_Namespace('modeloselecionado');
         $model = new Model_Comentarios();
 
     	$model = new Model_Geralft();
-    	$return = $model->atualizar($modelo->id,$complemento, $tracao, $classificacao, $aplicacao, $b09, $data_da_publicacao);
+    	$return = $model->atualizar($modelo->id,$complemento, $tracao, $classificacao, $aplicacao, $b09, $data_da_publicacao, $nome_do_arquivo);
     	echo json_encode($return);
         //echo $modelo->id . ' - ' . $complemento . ' - ' . $tracao . ' - ' . $classificacao . ' - ' . $aplicacao . ' - ' . $b09 . ' - ' . $data_da_publicacao;
     }
