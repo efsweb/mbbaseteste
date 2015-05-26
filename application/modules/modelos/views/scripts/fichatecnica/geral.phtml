@@ -1,8 +1,8 @@
 <div class="ui-grid-a">
     <div class="title">
         <h1>Ficha Técnica - Geral</h1>
-<!--         <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 120px;"><span class="icon-ok-3"></span>imprimir gráfica</a>
-        <a onclick="" class="btn-azul pull-right btn-save" style="margin-right: 323px;"><span class="icon-ok-3"></span>imprimir site</a> -->
+        <a onclick="generatepdf('grafica');" class="btn-azul pull-right btn-save" style="margin-right: 120px;"><span class="icon-ok-3"></span>imprimir gráfica</a>
+        <a onclick="generatepdf('imprimir');" class="btn-azul pull-right btn-save" style="margin-right: 323px;"><span class="icon-ok-3"></span>imprimir site</a>
         <a onclick="savedata();" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
     </div>
     <div id="answer" class="resposta">
@@ -75,7 +75,7 @@
             </div>
         </form>
     </div><!-- /content -->
-
+<a id="downloadfile" style="visibility: hidden;">&nbsp;</a>
 </div><!-- ui-grid-a -->
 
 
@@ -339,5 +339,51 @@ function savedata_img_vinheta(){
     }else{
         return true;
     }        
+}
+
+function generatepdf(tipo){
+    $.mobile.loading("show");
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    $('#answer').children('div').addClass('alert-success');
+    $('#answer').children('div').html('Reunindo dados!');
+    $('#answer').slideDown();
+    $.post('/modelos/pdf/index',{versao: tipo})
+    .done(function(data){
+        console.log(data);
+        var result = JSON.parse(data);
+        var nomepdf= result.arquivo;
+        if(tipo == 'imprimir'){
+            nomepdf = nomepdf + ' Site.pdf';
+        }else{
+            nomepdf = nomepdf + ' Grafica.pdf';
+        }
+        $('#answer').children('div').html('Informações obtidas, gerando o pdf...');
+        $.post('/modelos/pdf/generator',{nome: nomepdf, temp: result.temp, versao: tipo})
+        .done(function(funfo){
+            $.mobile.loading("hide");
+            var nomedown = 'http://storage.googleapis.com/mb-fichas-tecnicas/' + nomepdf;
+            $('#downloadfile').attr('href', nomedown).attr('download', nomepdf);
+            btninvisivel = document.getElementById('downloadfile');
+            btninvisivel.click(true);
+            console.log(funfo);
+            $('#answer').children('div').addClass('alert-success').html('Iniciando download!');
+            $('#answer').slideDown().delay(5000).slideUp();
+        })
+        .fail(function(err){
+            $.mobile.loading("hide");
+            $('#answer').children('div').addClass('alert-danger').html('Não é possível reunir os dados no momento! Tente mais tarde.');
+            $('#answer').slideDown().delay(5000).slideUp();
+        });
+    })
+    .fail(function(err){
+        var result = JSON.parse(err);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-danger').html('Não é possível reunir os dados no momento! Tente mais tarde.');
+        $('#answer').slideDown().delay(5000).slideUp();
+    });
 }
 </script>

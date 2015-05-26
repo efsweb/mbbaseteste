@@ -1,7 +1,7 @@
 <?php
 class SC_Plugins_Utils extends Zend_Controller_Plugin_Abstract{
     
-    private $_meses = array(
+    protected $_meses = array(
         01 => 'Janeiro',
         02 => 'Fevereiro',
         03 => 'Março',
@@ -52,7 +52,27 @@ class SC_Plugins_Utils extends Zend_Controller_Plugin_Abstract{
         $data = preg_replace('/^(\d{4})-(\d{2})-(\d{2})$/', '$3/$2/$1', $data);
         return $data;
     }
-    
+    public function dataExtenso($data){
+        $meses = array(
+        '01' => 'Janeiro',
+        '02' => 'Fevereiro',
+        '03' => 'Março',
+        '04' => 'Abril',
+        '05' => 'Maio',
+        '06' => 'Junho',
+        '07' => 'Julho',
+        '08' => 'Agosto',
+        '09' => 'Setembro',
+        '10' => 'Outubro',
+        '11' => 'Novembro',
+        '12' => 'Dezembro');
+        $a = explode(' ', $data);
+        $b = explode('-', $a[0]);
+        $c = $b[1];
+        $d = $meses[$c];
+        $e = $b[2] . ' de ' . $d . ' de ' . $b[0];
+        return $e;
+    }
     public function telToBd($tel){
         if(strlen($tel) >= 10){
             $tel = preg_replace('/^(\d{2}) (\d{4,5})-(\d{4})$/', '$1$2$3', $tel);

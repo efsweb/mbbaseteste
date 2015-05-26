@@ -1,4 +1,5 @@
 <?php
+use google\appengine\api\cloud_storage\CloudStorageTools;
 class Modelos_PdfController extends Zend_Controller_Action{
 	
 	public function init(){
@@ -7,13 +8,14 @@ class Modelos_PdfController extends Zend_Controller_Action{
     }
     public function indexAction(){
     	$pgid = 'mod_ft_geral';
+
         $modeloid = new Zend_Session_Namespace('modeloselecionado');
         $mdid = $this->_getParam('id', $modeloid->id);
         $idsys= 1;
         if($mdid != $modeloid->id){
             $modeloid->id = $mdid;
         }
-        $versao = '';
+        $versao = $this->getRequest()->getParam('versao', '');
         $content  = file_get_contents('modelos_ficha/modelo_grafica.html');
 		if($versao == 'imprimir')
 			$content  = file_get_contents('modelos_ficha/modelo_pdf.html');
@@ -68,14 +70,23 @@ class Modelos_PdfController extends Zend_Controller_Action{
 				case 'load_inicial':
 					$item    = $item[0];
 					$titulo  = ucfirst($item['coluna6']);
-					$titulo2 = ucfirst($item['coluna7']);
+					$titulo2 = ucfirst(explode(' ',$item['coluna7'])[0]);
 					$sub 	 = ucfirst($item['coluna10']);
 					$sub2	 = ucfirst($item['coluna11']);
-					$lateral = $item['coluna8'];
+					$util = new SC_Plugins_Utils();
+					$queb = explode(' - ',$item['coluna8']);
+					$k = explode(' ', $queb[2]);
+					if(count($k) > 1){
+						$lateral = $item['coluna8'];
+					}else{
+						$lateral = $queb[0] . ' - ' . $queb[1] . ' - ' . $util->dataExtenso($queb[2]);
+					}
 					$rodape  = $item['coluna5'];
 					$partes = (!is_null($lateral)) ? explode(' - ', $lateral) : '';
 					$codigo = (isset($partes[1])) ? $partes[1] : '';
 					$nome_do_arquivo = str_replace("_"," ",$item['coluna3']);
+					$img  = CloudStorageTools::getPublicUrl('gs://mb-ft-images/' . strtolower($item['coluna1']) . '_' . strtolower($item['coluna2']) . '_pic_1.jpg',true);
+					$img2 = CloudStorageTools::getPublicUrl('gs://mb-ft-images/' . strtolower($item['coluna1']) . '_' . strtolower($item['coluna2']) . '_pic_2.jpg',true);
 					if($versao == 'jpg')
 						$nome_do_arquivo = strtolower($item['coluna1']) . '_' . $item['coluna2'];
 					break;
@@ -166,11 +177,12 @@ class Modelos_PdfController extends Zend_Controller_Action{
 					break;
 				case 'mod_ft_cabina':
 					foreach($item as $row){
-						if($value == 'Cabina' && $row->coluna4 == 'cabecalho'){
+						if($value == 'mod_ft_cabina' && $row['coluna4'] == 'cabecalho'){
 							$item4 .= $row['coluna6'] . ' <span>' . $row['coluna7'] . $row['coluna8'] . '</span>';
 							continue;
 						}
-						if($value == 'Cabina' && $row['coluna4'] == 'obs'){
+						//if($value == 'mod_ft_cabina' && $row['coluna4'] == 'obs'){
+						if($row['coluna7'] == '' && $row['coluna8'] == '' && $row['coluna9'] == '' && $row['coluna10'] == '' && $row['coluna11'] == ''){
 							$cabina .= '<tr><td colspan="6">' . $row['coluna6'] . '</td></tr>';
 							continue;
 						}
@@ -184,11 +196,12 @@ class Modelos_PdfController extends Zend_Controller_Action{
 					break;
 				case 'mod_ft_motor':
 					foreach($item as $row){
-						if($value == 'Motor' && $row['coluna4'] == 'cabecalho'){
+						if($value == 'mod_ft_motor' && $row['coluna4'] == 'cabecalho'){
 							$item5 .= $row['coluna6'] . ' <span>' . $row['coluna7'] . $row['coluna8'] . '</span>';
 							continue;
 						}
-						if($value == 'Motor' && $row['coluna4'] == 'obs'){
+						//if($value == 'mod_ft_motor' && $row['coluna4'] == 'obs'){
+						if($row['coluna7'] == '' && $row['coluna8'] == '' && $row['coluna9'] == '' && $row['coluna10'] == '' && $row['coluna11'] == ''){
 							$motor .= '<tr><td colspan="6">' . $row['coluna6'] . '</td></tr>';
 							continue;
 						}
@@ -202,11 +215,12 @@ class Modelos_PdfController extends Zend_Controller_Action{
 					break;
 				case 'mod_ft_sistema eletrico':
 					foreach($item as $row){
-						if($value == 'Sistema Eletrico' && $row['coluna4'] == 'cabecalho'){
+						if($value == 'mod_ft_sistema eletrico' && $row['coluna4'] == 'cabecalho'){
 							$item6 .= $row['coluna6'] . ' <span>' . $row['coluna7'] . $row['coluna8'] . '</span>';
 							continue;
 						}
-						if($value == 'Sistema Eletrico' && $row['coluna4'] == 'obs'){
+						//if($value == 'mod_ft_sistema eletrico' && $row['coluna4'] == 'obs'){
+						if($row['coluna7'] == '' && $row['coluna8'] == '' && $row['coluna9'] == '' && $row['coluna10'] == '' && $row['coluna11'] == ''){
 							$sistema .= '<tr><td colspan="6">' . $row['coluna6'] . '</td></tr>';
 							continue;
 						}
@@ -219,14 +233,14 @@ class Modelos_PdfController extends Zend_Controller_Action{
 					}
 					break;
 				case 'mod_ft_caixa_transferencia':
-						
+						$t = count($item);
 						foreach($item as $row){
-							if($value == 'Caixa de transferência' && $row['coluna4'] == 'cabecalho'){
+							if($value == 'mod_ft_caixa_transferencia' && $row['coluna4'] == 'cabecalho'){
 								$caixa  = '<div class="linha"><div class="item_title">' . $row['coluna6'] . ' <span>' . $row['coluna7'] . $row['coluna8'] . '</span></div>';
 								$caixa .= '<div class="dv_item_tabela"><table class="item_tabela" cellpadding="0" cellspacing="0" border="0">';
 								continue;
 							}
-							if($value == 'Caixa de transferência' && $row['coluna4'] == 'item'){
+							if($value == 'mod_ft_caixa_transferencia' && $row['coluna4'] == 'item'){
 								$caixa .= '<tr><td class="item_atributo2">' . $row['coluna6'] . '</td>';
 								$caixa .= '<td>' . $row['coluna7'] . '</td>';
 								$caixa .= '<td>' . $row['coluna8'] . '</td>';
@@ -241,11 +255,12 @@ class Modelos_PdfController extends Zend_Controller_Action{
 					break;
 				case 'mod_ft_transmissao':
 					foreach($item as $row){
-						if($value == 'Transmissao' && $row['coluna4'] == 'cabecalho'){
+						if($value == 'mod_ft_transmissao' && $row['coluna4'] == 'cabecalho'){
 							$item7 .= $row['coluna6'] . ' <span>' . $row['coluna7'] . $row['coluna8'] . '</span>';
 							continue;
 						}
-						if($value == 'Transmissao' && $row['coluna4'] == 'obs'){
+						if($row['coluna7'] == '' && $row['coluna8'] == '' && $row['coluna9'] == '' && $row['coluna10'] == '' && $row['coluna11'] == ''){
+							//if($value == 'mod_ft_transmissao' && $row['coluna4'] == 'obs'){
 							$trans .= '<tr><td colspan="6">' . $row['coluna6'] . '</td></tr>';
 							continue;
 						}
@@ -259,11 +274,12 @@ class Modelos_PdfController extends Zend_Controller_Action{
 					break;
 				case 'mod_ft_eixos':
 					foreach($item as $row){
-						if($value == 'Eixos' && $row['coluna4'] == 'cabecalho'){
+						if($value == 'mod_ft_eixos' && $row['coluna4'] == 'cabecalho'){
 							$item8 .= $row['coluna6'] . ' <span>' . $row['coluna7'] . $row['coluna8'] . '</span>';
 							continue;
 						}
-						if($value == 'Eixos' && $row['coluna4'] == 'obs'){
+						//if($value == 'mod_ft_eixos' && $row['coluna4'] == 'obs'){
+						if($row['coluna7'] == '' && $row['coluna8'] == '' && $row['coluna9'] == '' && $row['coluna10'] == '' && $row['coluna11'] == ''){
 							$eixo .= '<tr><td colspan="6">' . $row['coluna6'] . '</td></tr>';
 							continue;
 						}
@@ -278,11 +294,11 @@ class Modelos_PdfController extends Zend_Controller_Action{
 				case 'mod_ft_chassis':
 					$index = 0;
 					foreach($item as $row){
-						if($value == 'Chassis' && $row['coluna4'] == 'cabecalho'){
+						if($value == 'mod_ft_chassis' && $row['coluna4'] == 'cabecalho'){
 							$item9 .= $row['coluna6'] . ' <span>' . $row['coluna7'] . $row['coluna8'] . '</span>';
 							continue;
 						}
-						if($value == 'Chassis' && $row['coluna4'] == 'obs' && $obs_chassi == 0){
+						if($row['coluna7'] == '' && $row['coluna8'] == '' && $row['coluna9'] == '' && $row['coluna10'] == '' && $row['coluna11'] == '' && $obs_chassi == 0){
 							$obs_chassi = 1;
 							$chassi .= '<tr><td colspan="6">' . $row['coluna6'] . '</td></tr>';
 							continue;
@@ -293,7 +309,7 @@ class Modelos_PdfController extends Zend_Controller_Action{
 							$chassi .= '<td colspan="5" class="item_atributo">' . $row['coluna7'] . '</td></tr>';
 							continue;
 						}
-						if($value == 'Chassis' && $row['coluna4'] == 'item' && $row['coluna6'] == ''){
+						if($value == 'mod_ft_chassis' && $row['coluna4'] == 'item' && $row['coluna6'] == ''){
 							$chassi .= '<td colspan="5" class="item_atributo">' . $row['coluna7'] . '</td></tr>';
 							continue;
 						}
@@ -306,11 +322,11 @@ class Modelos_PdfController extends Zend_Controller_Action{
 					break;
 				case 'mod_ft_desempenho':
 					foreach($item as $row){
-						if($value == 'Desempenho' && $row['coluna4'] == 'cabecalho'){
+						if($value == 'mod_ft_desempenho' && $row['coluna4'] == 'cabecalho'){
 							$item10 .= $row['coluna6'] . ' <span>' . $row['coluna7'] . $row['coluna8'] . '</span>';
 							continue;
 						}
-						if($value == 'Desempenho' && $row['coluna4'] == 'obs'){
+						if($row['coluna7'] == '' && $row['coluna8'] == '' && $row['coluna9'] == '' && $row['coluna10'] == '' && $row['coluna11'] == ''){
 							$desem .= '<tr><td colspan="6">' . $row['coluna6'] . '</td></tr>';
 							continue;
 						}
@@ -329,11 +345,11 @@ class Modelos_PdfController extends Zend_Controller_Action{
 					break;
 				case 'mod_ft_freios':
 					foreach($item as $row){
-						if($value == 'Freios' && $row['coluna4'] == 'cabecalho'){
+						if($value == 'mod_ft_freios' && $row['coluna4'] == 'cabecalho'){
 							$item11 .= $row['coluna6'] . ' <span>' . $row['coluna7'] . $row['coluna8'] . '</span>';
 							continue;
 						}
-						if($value == 'Freios' && $row['coluna4'] == 'obs'){
+						if($row['coluna7'] == '' && $row['coluna8'] == '' && $row['coluna9'] == '' && $row['coluna10'] == '' && $row['coluna11'] == ''){
 							$freios .= '<tr><td colspan="6">' . $row['coluna6'] . '</td></tr>';
 							continue;
 						}
@@ -352,8 +368,8 @@ class Modelos_PdfController extends Zend_Controller_Action{
 			'#TITULO2#',
 			'#SUBTITULO#',
 			'#SUBTITULO2#',
-			'accelo_815_pic_1',
-			'accelo_815_pic_2',
+			'novas/accelo_815_pic_1.jpg',
+			'novas/accelo_815_pic_2.jpg',
 			'#DIMENSOES#',
 			'#PESOS#',
 			'#NOTA#',
@@ -415,19 +431,28 @@ class Modelos_PdfController extends Zend_Controller_Action{
 		);
 		
 		$content = str_replace($arr,$sub,$content);
-		echo $content;
-		/*$myfile  = fopen('temp.html', 'w');
+		$flopn 	 = md5(date("YmdHis")) . '.html';
+		$bucket    = 'mb-fichas-tecnicas/';
+        $root_path = 'gs://' . $bucket . $flopn;
+
+		$myfile  = fopen("$root_path", 'w');
 		fwrite($myfile,$content);
 		fclose($myfile);
-		return $nome_do_arquivo;*/
-    	/*$content = file_get_contents('modelos_ficha/modelo_grafica.html');
-    	echo 'funcionando';*/ //$ficha->loadData('loadinicial','');
+		$return = array('arquivo' => $nome_do_arquivo, 'temp' => $root_path);
+		echo json_encode($return);
     }
 
     public function generatorAction(){
     	header ('Content-type: text/html; charset=UTF-8');
-
-		$mpdf = new SC_Plugins_Pdf_pdf('utf8-s','A4','8','corpos' , 0 , 0 , 0 , 0 , 0 , 10);
+    	$file = $this->getRequest()->getParam('temp', '');
+    	$nome = $this->getRequest()->getParam('nome', '');
+    	$tipo = $this->getRequest()->getParam('versao', '');
+    	if($tipo == 'grafica'){
+    		$mpdf = new SC_Plugins_Pdf_pdf('utf8-s',array(225.98, 313.01),'8','corpos' , 0 , 0 , 0 , 0 , 0 , 10);
+    	}else{
+    		$mpdf = new SC_Plugins_Pdf_pdf('utf8-s','A4','8','corpos' , 0 , 0 , 0 , 0 , 0 , 10);
+    	}
+		
 		$mpdf->useOddEven = 0;
 		$mpdf->SetDisplayMode('fullpage');
 		$mpdf->list_indent_first_level = 0;  // 1 or 0 - whether to indent the first level of a list
@@ -435,10 +460,10 @@ class Modelos_PdfController extends Zend_Controller_Action{
 		$bucket    = 'mb-fichas-tecnicas';
         $root_path = 'gs://' . $bucket;
 
-		$content  = file_get_contents('modelos_ficha/temp.html');
+		$content  = file_get_contents("$file");
 		$mpdf->WriteHTML($content);
-		$a = $mpdf->Output("$root_path/teste.pdf",'F');
-		//unlink('temp.html');
+		$a = $mpdf->Output("$root_path/$nome",'F');
+		unlink("$file");
 		echo $a;
     }
 }
