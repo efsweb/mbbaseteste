@@ -1,0 +1,182 @@
+@charset "UTF-8";
+/*
+* ÔÇö Style from DadosMestres ~modelosÔÇö
+*/
+/* ---------->>> CSS BASE <<<-----------*/
+.content {
+  text-shadow: none; }
+
+/* ---------->>> TABS <<<-----------*/
+#tabs {
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+  #tabs ul {
+    list-style: none; }
+  #tabs .ui-tabs-anchor {
+    float: left;
+    position: relative;
+    padding: 0 40px;
+    height: 0;
+    line-height: 30px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    border-right: 30px solid transparent;
+    border-bottom: 30px solid #3D3D3D;
+    border-bottom-color: #777 \9; }
+  #tabs li {
+    float: left;
+    margin: 0 -15px 0 0;
+    opacity: 0.8; }
+  #tabs .ui-state-default {
+    opacity: 0.6 !important; }
+  #tabs .ui-state-active, #tabs .ui-widget-content .ui-state-active, #tabs .ui-widget-header .ui-state-active {
+    opacity: 1 !important; }
+    #tabs .ui-state-active a, #tabs .ui-widget-content .ui-state-active a, #tabs .ui-widget-header .ui-state-active a {
+      border-right: 30px solid transparent !important;
+      border-bottom: 30px solid #dddd !important;
+      color: #2ac7e1 !important;
+      opacity: 1.9 !important; }
+  #tabs .ui-state-hover {
+    opacity: 1 !important; }
+    #tabs .ui-state-hover a {
+      border-right: 30px solid transparent !important;
+      border-bottom: 30px solid #3CA0AF !important;
+      opacity: 1.9 !important; }
+  #tabs .content-tabs {
+    float: left;
+    width: 100%;
+    border-top: 2px solid #3d3d3d; }
+    #tabs .content-tabs .search {
+      background: #2a2a2a !important;
+      color: #ddd !important;
+      border: 0;
+      border-radius: 0px;
+      font-size: 14px; }
+  #tabs a:focus {
+    outline: 0; }
+  #tabs .ui-input-text {
+    width: 246px;
+    margin: 11px;
+    border: 1px solid #000 !important; }
+  #tabs .ui-focus {
+    box-shadow: none !important; }
+  #tabs input {
+    color: #ddd !important;
+    text-shadow: #000 !important;
+    -moz-box-shadow: inset 0 0 5px -1px #000;
+    -webkit-box-shadow: inset 0 0 5px -1px #000;
+    box-shadow: inset 0 0 5px -1px #000; }
+  #tabs .ui-body-inherit, #tabs .ui-corner-all, #tabs .ui-shadow-inset {
+    border-radius: 0px !important;
+    text-shadow: 0 1px 0 #111; }
+
+.modelos-caminhoes {
+  width: 250px;
+  margin: 10px;
+  height: 215px;
+  float: left; }
+  .modelos-caminhoes thead {
+    background: #333 !important;
+    font-size: 14px;
+    line-height: 31px;
+    height: 35px;
+    position: relative;
+    padding: 0;
+    color: #3BA7BF;
+    text-transform: uppercase;
+    font-weight: bolder;
+    text-align: center; }
+  .modelos-caminhoes tbody {
+    color: #ddd;
+    text-transform: uppercase;
+    font-size: 12px;
+    background: #4E4D4D;
+    text-align: center;
+    font-family: Arial;
+    border-bottom: 1px solid #333; }
+  .modelos-caminhoes .btn-azul {
+    float: left;
+    width: 193px;
+    text-align: center; }
+
+/*
+* ÔÇö Style from An├ílise ~modelosÔÇö
+*/
+/* ---------->>> CSS AN├üLISE DO TERMO <<<----------*/
+#analise {
+  /* ---------->>> TABS GERAL <<<-----------*/
+  /* ---------->>> TABS MODELOS <<<-----------*/ }
+  #analise .holder-search {
+    width: 50%;
+    float: right;
+    margin: -9px; }
+    #analise .holder-search .search-analise {
+      background: #2a2a2a !important;
+      color: #ddd !important;
+      border: 0;
+      border-radius: 0px;
+      font-size: 14px; }
+    #analise .holder-search a:focus {
+      outline: 0; }
+    #analise .holder-search .ui-input-text {
+      width: 246px;
+      margin: 11px;
+      border: 1px solid #000 !important; }
+    #analise .holder-search .ui-focus {
+      box-shadow: none !important; }
+    #analise .holder-search input {
+      color: #ddd !important;
+      text-shadow: #000 !important;
+      -moz-box-shadow: inset 0 0 5px -1px #000;
+      -webkit-box-shadow: inset 0 0 5px -1px #000;
+      box-shadow: inset 0 0 5px -1px #000; }
+    #analise .holder-search .ui-body-inherit, #analise .holder-search .ui-corner-all, #analise .holder-search .ui-shadow-inset {
+      border-radius: 0px !important;
+      text-shadow: 0 1px 0 #111;
+      width: 97%; }
+  #analise .cont-form {
+    overflow: hidden;
+    margin-top: 19px;
+    width: 100%;
+    padding: 0px !important; }
+  #analise #analise-geral {
+    width: 97% !important;
+    display: none; }
+    #analise #analise-geral tbody {
+      line-height: 15px; }
+  #analise #agrupamentos {
+    width: 23% !important;
+    padding: 8px !important; }
+    #analise #agrupamentos tbody {
+      line-height: 15px; }
+      #analise #agrupamentos tbody tr:hover {
+        cursor: pointer;
+        background: #7f7f7f; }
+  #analise .ui-btn, #analise .ui-icon-carat-d, #analise .ui-btn-icon-right {
+    padding: 0;
+    margin: 0px !important;
+    line-height: 1.3;
+    font-family: Tahoma;
+    background: transparent;
+    border: none !important;
+    color: #3BA7BF;
+    text-shadow: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bolder;
+    text-align: center;
+    box-shadow: none; }
+  #analise #analise-table-modelos {
+    width: 360px !important; }
+  #analise .btn-azul {
+    width: 360px; }
+
+/*
+* -ÔÇö Style from ComparativosÔÇö
+*/
+.height-comparativos {
+  min-height: 298px; }

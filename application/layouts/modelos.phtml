@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/select2.min.css"/>
 	<link rel="stylesheet" href="/css/default.css"/>
 	<link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/style-modified.css"/>
 	<link rel="stylesheet" href="/css/jquery-ui.css" />
     <link rel="stylesheet" href="/css/fontello.css" />
     <link rel="stylesheet" href="/css/jQMProgressBar.css" />
@@ -79,7 +80,7 @@
 
 <body>
 
-    <header id="hhead" data-role="header" data-position="fixed" class="header">
+    <header data-role="header" data-position="fixed" class="header">
         <div class="ui-grid-b">
         	<div class="ui-block-a">
             	<div class="logo"><img src="/images/logo.jpg"/></div>
@@ -378,7 +379,7 @@
             <div class="traco-b"></div>
             <div class="ui-grid-a">
                 <div class="ui-block-a">
-                    <div id="wapopanswer" class="waanswer">
+                    <div id="wapopanswer">
                         Enviando arquivo...
                     </div>
                 </div>
@@ -401,21 +402,14 @@
             <div class="ui-grid-a">
                 <label for="file">Escolha a imagem:</label>
                 <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-mini">
-                    <input data-visao="externo" id="fileuploadfotowa" onchange="getbase641('ext');" accept="image/*" type="file" data-mini="true">
+                    <input name="file" id="file" value="" type="file" data-mini="true">
                 </div>
             </div>
 
             <div class="traco-b"></div>
             
             <div class="ui-grid-a">
-                <div class="ui-block-a">
-                    <div class="waanswer">
-                        Processando imagem...
-                    </div>
-                </div>
-                <div class="ui-block-b">
-                    <a href="#" onclick="uploadwafoto();" style="width: 113px;" data-transition="flow" class="ui-btn btn-azul pull-right"><span class="icon-ok-3">&nbsp;</span>Enviar</a>
-                </div>
+                <a href="#" data-rel="back" data-transition="flow" class="ui-btn btn-azul pull-right"><span class="icon-ok-3">&nbsp;</span>Enviar</a>
             </div>
             
         </div> <!-- /content-popup -->                           
