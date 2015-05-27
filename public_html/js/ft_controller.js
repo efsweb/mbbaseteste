@@ -1,3 +1,4 @@
+
 $(document).on("click", ".btn-del-col", function() {
     var i = 0;
     var l = $(this).closest('table').parent().attr('data-linha');
@@ -54,8 +55,8 @@ function addRowToContent() {
     var row  = 'linha_' + r;
     var col1 = 'col_' + r + '_0';
     var col2 = 'col_' + r + '_1';
-    var cont = "<div class='row-cont-ficha' id='" + row + "' data-linha='" + r + "'>";
-    cont    += "<table width='100%' border='0' cellpadding='0' cellspacing='2'><tbody>";
+    var cont = "<li class='row-cont-ficha' id='" + row + "' data-linha='" + r + "'>";
+    cont    += "<div class='not-dragg'><table width='100%' border='0' cellpadding='0' cellspacing='2'><tbody>";
     cont    += "<tr><td><div class='ui-field-contain'>";
     cont    += "<a id='" + col1 + "' aria-expanded='false' aria-owns='SelectItem' aria-haspopup='true' href='#SelectItem' data-rel='popup' data-position-to='window' data-transition='pop' onclick='opensearch(this);' class='btn-ficha btn-ficha-label ui-link'><span class='icon-plus'>&nbsp;</span>Adicionar</a>";
     cont    += "</div></td>";
@@ -63,7 +64,7 @@ function addRowToContent() {
     cont    += "<a href='#' class='pull-left icon-cancel-2 link-icon del-row ui-link'></a>";
     cont    += "</div></td></tr></tbody></table>";
     cont    += "<table data-colunas='1' width='100%' border='0' cellpadding='0' cellspacing='2'><tbody><tr><td><div class='ui-field-contain'><button class='icon-cancel-2 btn-del-col ui-btn ui-shadow ui-corner-all'></button>";
-    cont    += "<a id='" + col2 + "' aria-expanded='false' aria-owns='SelectItem' aria-haspopup='true' href='#SelectItem' data-rel='popup' data-position-to='window' data-transition='pop' onclick='opensearch(this);' class='btn-ficha ui-link'><span class='icon-plus'>&nbsp;</span>Adicionar</a></div></td><td class='acoes-col'><div class='ui-field-contain'><a onclick='addColumnToDesc(this);' href='#' class='pull-left icon-plus link-icon add-icon ui-link'></a></div></td></tr></tbody></table></div>";
+    cont    += "<a id='" + col2 + "' aria-expanded='false' aria-owns='SelectItem' aria-haspopup='true' href='#SelectItem' data-rel='popup' data-position-to='window' data-transition='pop' onclick='opensearch(this);' class='btn-ficha ui-link'><span class='icon-plus'>&nbsp;</span>Adicionar</a></div></td><td class='acoes-col'><div class='ui-field-contain'><a onclick='addColumnToDesc(this);' href='#' class='pull-left icon-plus link-icon add-icon ui-link'></a></div></td></tr></tbody></table></div></li>";
     $("#listcontent").append(cont);
 }
 

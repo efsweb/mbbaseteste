@@ -1,117 +1,190 @@
 <!DOCTYPE html> 
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>MBase - Em Construção</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="/images/favicon.ico">
-	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <meta charset="utf-8">
+    <title>MBase - Em Construção</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/jquery.mobile.theme-1.4.4.css"/>
+    <link rel="stylesheet" href="/css/jquery.mobile-1.4.4.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/select2.min.css"/>
+    <link rel="stylesheet" href="/css/default.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+    <link rel="stylesheet" href="/css/jQMProgressBar.css" />
+    <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 
-	<link rel="stylesheet" href="css/jquery.mobile-1.4.4.css" />
-	<link rel="stylesheet" href="css/default.css" />
-	<link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/fontello.css" />
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.mobile-1.4.4.js"></script>
+    <script src="/js/dragandrop.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/draggable.js"></script>
+    <script src="/js/touch-dnd.js"></script>
+    <script src="/js/select2.full.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/js/jquery.infinitescroll.js"></script>
+    <script src="/js/modelos_ctrl.js"></script>
+    <script src="/js/jQMProgressBar.js"></script>
 
-	<script src="js/jquery.js"></script>
-	<script src="js/jquery.mobile-1.4.4.js"></script>
-
-	<script id="panel-init">
-		$( document ).on( "pageinit", "#page", function( event ) {
-			$( "body>[data-role='popup']" ).popup();
-			$( "body>#page>[data-role='panel']>[data-role='collapsibleset']" ).collapsibleset();
-			$( "body>#page>[data-role='panel']>[data-role='collapsibleset']>[data-role='collapsible']" ).collapsible();
-		});
-    
-		$(document).ready(function() { 
-			///MENU DE CONFIGURAÇÕES
-			$( "#btn-panel-config" ).click(function() {
-				$("#panel-config").toggleClass( "panel-config-aberto" );
-			});
-		});
-	</script>
+    <script id="panel-init">
+        $(document).on("pageinit", "body", function(event){
+            $( "[data-role='header']" ).toolbar({ theme: "b" });
+            $( "[data-role='panel']" ).panel({ theme: "b" });
+            $( "[data-role='collapsibleset']" ).collapsibleset({
+                theme: "b",
+                collapsedIcon: false,
+                expandedIcon: false
+            });
+            $( "[data-role='listview']" ).listview({ theme: "b" });
+            $( "[data-role='controlgroup']" ).controlgroup({ theme: "b" });
+            $( "[data-role='popup']" ).popup({ theme: "b" });
+            $("input[type='radio']").checkboxradio({ theme: "b" });
+            $('[data-toggle="tooltip"]').tooltip();
+            
+            $('input[type="radio"]').click(function(){
+                if($(this).attr("value")=="vincular-item-nao"){
+                    $(".novo-alias-item-three").hide();
+                }
+                if($(this).attr("value")=="vincular-item-sim"){
+                    $(".novo-alias-item-three").show();
+                }
+            });
+            
+            $( "#collapsible .lista .ui-btn" ).click(function() {
+                $( "#collapsible .lista .ui-btn" ).css("background","#5f5d5d");
+                $(this).css("background","url('/images/arrow-menu-left.png')no-repeat right");
+                $('#mnulateralesquerdo').children('div').each(function(){
+                    $(this).attr('data-collapsed', 'true');
+                });
+                //$(this).closest('#collapsible').trigger( "expand" );
+            });
+            $(".js-example-basic-multiple").select2();
+            $(".pop-itens-engenharia").hide();
+            $(".add-item-engenharia").click(function() {
+                $(".pop-itens-engenharia").fadeIn();
+            });
+            $(".btn-close").click(function() {
+                $(".pop-itens-engenharia").fadeOut();
+            });
+        });
+        $("#meumodelo").select2();
+        $(document).on("pagebeforeshow", "#pgconteudo", function(event,data){
+            //console.log(data.prevPage);
+            /*if(data.xhr.status == 0){
+                window.location.reload();
+            }*/
+        });
+    </script>
     
 </head>
 
 <body>
 
-    <div id="page" data-theme="b">
-    
-        <header data-role="header" class="ui-header-fixed" data-theme="b">
-            <section class="ui-grid-a">
-            
-                <div class="ui-block-a">
-                    <div class="logo text-center"><img src="images/logo.jpg"/></div>
-                    <div class="select-style pull-left">
-                        <a id="lkb_linha" href="#pop-linha" data-rel="popup" data-transition="pop" >Linha<span class="icon-down-open-1"></span></a>
-                    </div>
-                    
-                    <div class="select-style pull-left">
-                        <a id="lkb_modelo" href="#pop-modelo" data-rel="popup" data-transition="pop" >Modelo<span class="icon-down-open-1"></span></a>
-                    </div>
-                </div>
-                
-                <div class="ui-block-b">
-                    <div class="name-user">
-                        <ul>
-                        	<li><a href="/modelos" title="Principal" data-ajax="false"><span class="icon-home-2"></span></a></li>
-                        	<li><a data-ajax="false" href="/" title="Sair"><span class="icon-logout"></span></a></li>
-                        	<li><a href="#"><?= $this->usuario_nome; ?></a></li>
-                        </ul>
-                    </div>
-                    <ul class="menu-topo">
-                        <li><a href="/modelos" data-ajax="false">modelos</a></li>
-                        <li><a href="/dadosmestre" data-ajax="false">dados mestre</a></li>
-                        <li><a href="/concorrentes" data-ajax="false">concorrentes</a></li>
-                        <li><a href="/seguranca" data-ajax="false">segurança</a></li>
-                        <li><a href="/analise" data-ajax="false">análise</a></li>
-                    </ul>	
-                </div>            
-            </section>
-        </header>
-        
-        <div data-role="page">
-        	<div data-role="content" data-theme="b">
-			    <section class="ui-grid-a modelos-geral">
-			        <div class="ui-block-a">
-			        	<h1>Em Desenvolvimento</h1>
-			        </div>
-			        
-			        <div class="ui-block-b">
-			        </div>            
-			    </section>
-			    
-			</div> 
+    <header data-role="header" data-position="fixed" class="header">
+        <div class="ui-grid-b">
+            <div class="ui-block-a">
+                <div class="logo"><img src="/images/logo.jpg"/></div>
+            </div>
+            <div class="ui-block-b">
+                <?php echo $this->action('mnutopo', 'index', 'default') ?>
+            </div>
+            <div class="ui-block-c">
+                <div data-role="navbar">
+                    <ul id="menu-user">
+                        <li><a href="#" class="name-user"><?= $this->usuarionome; ?></a></li>
+                        <li><a href="/modelos" data-ajax="false" class="icon-home-2"></a></li>
+                        <li><a href="/logout" data-ajax="false" class="icon-logout"></a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div>
         </div>
-
-    </div><!-- #PAGE -->
+    </header>  
     
-    <!-- MENU DE CONFIGURAÇÕES -->
-    <div id="panel-config">
-    	<div class="icon-cog-alt" id="btn-panel-config"></div>
+    <div id="pgconteudo" data-role="page" class="page-content" data-cache="never">
+        <div style="color:#ddd; text-shadow:none!important; padding: 50px 10px; font-family: roboto;  margin: 0 auto;
+  width: 495px; font-size: 40px; font-weight:900;">
+    <div style="width:100%;">
+        <img src="/images/construcao.png" style="padding: 0px 151px 18px;" />
     </div>
-    <!-- /MENU DE CONFIGURAÇÕES -->
-    <script>
-    	$('#pop-linha').children().click(function(e){
-    		var linha = $(this).data('linha');
-    		$('#pop-modelo').find('li').each(function(){
-    			if($(this).data('linha') == linha){
-    				$(this).removeClass('hide');
-    			}else{
-    				if(!$(this).hasClass('hide')){
-    					$(this).addClass('hide');
-    				}
-    			}
-    		});
-    		$('#lkb_modelo').html('Modelo <span class="icon-down-open-1"></span>');
-    		$('#lkb_linha').html(linha + ' <span class="icon-down-open-1"></span>');
-    		$('#pop-linha').popup('close');
-    	});
-    	$('#pop-modelo').children().click(function(e){
-    		if($(this).data('linha') != 'nenhuma'){
-    			$('#lkb_modelo').html($(this).data('modelo') + ' <span class="icon-down-open-1"></span>');
-    		}
-    		$('#pop-modelo').popup('close');
-    	});
-    </script>
+  PÁGINA <span style="color:#F8BF18">EM CONSTRUÇÃO</span></div>
+    </div>
+    
+    
+    
+    
+
+
+<script id="panel-init">
+
+$('input:radio[name=filtro1]').click(function(){
+    $('#param_tipo').val($(this).val());
+    search();
+});
+$('input:radio[name=filtro2]').click(function(){
+    $('#param_finalidade').val($(this).val());
+    search();
+});
+$('input:radio[name=label-alias]').click(function(){
+    $('#param_novo_tipo_finalidade').val($(this).val());
+});
+
+$('#SelectItem').popup({
+    afteropen: function(e){
+        $('body').css('overflow','hidden');
+    },
+    afterclose: function(e){
+        $('body').css('overflow','auto');
+    }
+});
+
+var vezes = 0;
+function clearbeforeme(obj){
+    var referencia = $(obj).closest('.select2').prev().attr('id');
+    if(referencia == 'myclassifications'){
+        console.log('saindo do clear');
+        return;
+    }
+    vezes = vezes + 1;
+    if(vezes > 4){
+        vezes = 1;
+    }
+    if(referencia == 'meumodelo' && vezes == 1){
+        var text = $("#meumodelo option:selected").text();
+        var id   = $('#meumodelo').val();
+        if(text != ''){
+            $(obj).attr('data-anterior', text);
+            $(obj).attr('data-id-anterior', text);
+        }
+        //console.log('No focus ' + $(obj).attr('data-anterior'));
+        $(obj).parent().prev().remove();
+        $('#meumodelo').children("option:selected").removeAttr('selected');
+    }
+}
+function verificame(obj){
+    var referencia = $(obj).closest('.select2').prev().attr('id');
+    if(referencia == 'myclassifications'){
+        console.log('saindo');
+        return;
+    }
+    if($('#meumodelo').next().hasClass('select2-container--open')){
+        //console.log('tem a classe');
+        /*var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)){
+            vezes = 0;
+        }*/
+    }else{
+        var text  = $("#meumodelo option:selected").text();
+        //console.log('No blur ' + $(obj).attr('data-anterior'));
+        if(text == ''){
+            text = $(obj).attr('data-anterior');
+        }
+        var item  = '<li class="select2-selection__choice" title="' + text + '"><span class="select2-selection__choice__remove" role="presentation">×</span>' + text + '</li>';
+        $(obj).closest('ul').prepend(item);
+        vezes = 0;
+    }
+}
+</script>
+
 </body>
 </html>

@@ -6,28 +6,30 @@
     <div id="answer" class="resposta">
         <div class="alert" role="alert"></div>
     </div>
-    <div id="listcontent" class="content">
+    <ul id="listcontent" class="content">
         <?php foreach($this->content as $row): ?>
-        <div class="row-cont-ficha" id="linha_<?= $row['bmb_nr_linha']; ?>" data-linha="<?= $row['bmb_nr_linha']; ?>">
-            <table width="100%" border="0" cellspacing="2" cellpadding="0">
-                <tr>
-                    <td>
-                        <div class="ui-field-contain">
-                            <a id="col_<?= $row['bmb_nr_linha']; ?>_0" onclick='opensearch(this);' href="#SelectItem" data-rel="popup" data-idlabel="<?= $row['id_label']; ?>" data-position-to="window" data-transition="pop" class="btn-ficha btn-ficha-label">
-                                &nbsp;<?= $row['desc_label']; ?>
-                            </a>
-                        </div>
-                    </td>
-                    <td class="acoes-col acoes-col-azul">
-                        <div class="ui-field-contain">
-                            <a href="#" class="pull-left icon-cancel-2 link-icon del-comment" data-toggle="tooltip" title="Deletar linha"></a>
-                        </div>                                        
-                    </td>
-                </tr>
-            </table>
-        </div><!-- /row-cont-ficha -->
+        <li class="row-cont-ficha" id="linha_<?= $row['bmb_nr_linha']; ?>" data-linha="<?= $row['bmb_nr_linha']; ?>">
+            <div class="not-dragg">
+                <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                    <tr>
+                        <td>
+                            <div class="ui-field-contain">
+                                <a id="col_<?= $row['bmb_nr_linha']; ?>_0" onclick='opensearch(this);' href="#SelectItem" data-rel="popup" data-idlabel="<?= $row['id_label']; ?>" data-position-to="window" data-transition="pop" class="btn-ficha btn-ficha-label">
+                                    &nbsp;<?= $row['desc_label']; ?>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="acoes-col acoes-col-azul">
+                            <div class="ui-field-contain">
+                                <a href="#" class="pull-left icon-cancel-2 link-icon del-comment" data-toggle="tooltip" title="Deletar linha"></a>
+                            </div>                                        
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </li><!-- /row-cont-ficha -->
         <?php endforeach; ?> 
-    </div><!-- /content -->
+    </ul><!-- /content -->
 
     <a href="#" onclick="addRowToContentComments();" class="btn-azul pull-right" id="add-row-ficha"><span class="icon-plus"></span>adicionar</a>
 
@@ -63,14 +65,14 @@ function addRowToContentComments(){
     var row  = 'linha_' + r;
     var col1 = 'col_' + r + '_0';
     var col2 = 'col_' + r + '_1';
-    var cont = "<div class='row-cont-ficha' id='" + row + "' data-linha='" + r + "'>";
-    cont    += "<table width='100%' border='0' cellpadding='0' cellspacing='2'><tbody>";
+    var cont = "<li class='row-cont-ficha' id='" + row + "' data-linha='" + r + "'>";
+    cont    += "<div class='not-dragg'><table width='100%' border='0' cellpadding='0' cellspacing='2'><tbody>";
     cont    += "<tr><td><div class='ui-field-contain'>";
     cont    += "<a id='" + col1 + "' aria-expanded='false' aria-owns='SelectItem' aria-haspopup='true' href='#SelectItem' data-rel='popup' data-position-to='window' data-transition='pop' onclick='opensearch(this);' class='btn-ficha btn-ficha-label ui-link'><span class='icon-plus'>&nbsp;</span>Adicionar</a>";
     cont    += "</div></td>";
     cont    += "<td class='acoes-col'><div class='ui-field-contain'>";
     cont    += "<a href='#' class='pull-left icon-cancel-2 link-icon del-comment ui-link'></a>";
-    cont    += "</div></td></tr></tbody></table>";
+    cont    += "</div></td></tr></tbody></table></div></li>";
     $("#listcontent").append(cont);
 }
 
@@ -87,7 +89,7 @@ function savethis(){
         str += $(this).attr('data-linha');
         str += ',mod_ft_comentarios';
         str += ',' + 0;
-        str += ',' + $(this).children('table:first').children('tbody').children('tr').children('td').children('div').children('a').attr('data-idlabel');
+        str += ',' + $(this).children('div').children('table:first').children('tbody').children('tr').children('td').children('div').children('a').attr('data-idlabel');
         post.push(str);
         str = '';
     });

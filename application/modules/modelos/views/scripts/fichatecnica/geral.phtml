@@ -111,7 +111,6 @@ function ativafigura(id) {
         var largura = document.getElementById('foto-principal').naturalWidth;
         var altura = document.getElementById('foto-principal').naturalHeight;        
     }else if(id == 'vinheta'){
-
         var largura = document.getElementById('vinheta').naturalWidth;
         var altura = document.getElementById('vinheta').naturalHeight;          
     }
@@ -205,9 +204,11 @@ function savedata(){
                     img_vinheta   = false;
                     gravadata();
                 }).fail(function(arg){
+                    $.mobile.loading("hide");
                     console.log(arg);
                 });
             }).fail(function(msg){
+                $.mobile.loading("hide");
                 console.log(msg);
             });
         }else{
@@ -225,12 +226,13 @@ function savedata(){
                 processData: false,
                 contentType: false
             }).done(function(data){
-                $('#answer').html('Gravando dados!');
+                $('#answer').children('div').html('Gravando dados!');
                 console.log(data);
                 img_principal = false;
                 img_vinheta   = false;
                 gravadata();
             }).fail(function(anw){
+                $.mobile.loading("hide");
                 console.log('falhou');
                 $('#answer').children('div').addClass('alert-danger').html('ERRO AO FAZER O UPLOAD DA IMAGEM! TENTE NOVAMENTE');
                 $('#answer').slideDown().delay(5000).slideUp();
@@ -271,76 +273,6 @@ function gravadata(){
     });
 }
 
-function savedata_img_principal(){
-    if(img_principal){
-        visao  = $('#imgfotoprincipal').attr('data-visao');
-        modelo = $('#meumodelo option:selected').text();
-        modelo = modelo.replace(/ /g,'').replace(/\//g,'_').toLowerCase();
-        nomeim = [modelo,visao,'_pic_1.jpg'];
-        filename = nomeim.join("");
-        var frm  = document.getElementById('imgfotoprincipal');
-        var arq  = frm.files[0];
-        var info = new FormData();
-        info.append('arquivo',arq);
-        info.append('nomefile',filename);
-        $.ajax({
-            url: '/modelos/fichatecnica/uploadimg',
-            type: 'POST',
-            data: info,
-            cache: false,
-            processData: false,
-            contentType: false
-        }).done(function(data){
-            console.log(data);
-            img_principal = false;
-            return true;
-        }).fail(function(anw){
-            console.log('falhou');
-            $('#answer').children('div').addClass('alert-danger').html('ERRO AO FAZER O UPLOAD DA IMAGEM! TENTE NOVAMENTE');
-            $('#answer').slideDown().delay(5000).slideUp();
-            return false;          
-        });
-    }else{
-        return true;
-    }
-}
-
-function savedata_img_vinheta(){
-    console.log('pre - img_vinheta');
-    if(img_vinheta){
-        visao  = $('#imgvinheta').attr('data-visao');
-        modelo = $('#meumodelo option:selected').text();
-        modelo = modelo.replace(/ /g,'').replace(/\//g,'_').toLowerCase();
-        nomeim = [modelo,visao,'_pic_2.jpg'];
-        filename = nomeim.join("");
-        var frm  = document.getElementById('imgvinheta');
-        var arq  = frm.files[0];
-        var info = new FormData();
-        info.append('arquivo',arq);
-        info.append('nomefile',filename);
-        $.ajax({
-            url: '/modelos/fichatecnica/uploadimg',
-            type: 'POST',
-            data: info,
-            cache: false,
-            processData: false,
-            contentType: false
-        }).done(function(data){
-            console.log(data);
-            img_vinheta= false;
-            return true;
-        }).fail(function(anw){
-            console.log('falhou');
-            $('#answer').children('div').addClass('alert-danger').html('ERRO AO FAZER O UPLOAD DA IMAGEM! TENTE NOVAMENTE');
-            $('#answer').slideDown().delay(5000).slideUp();
-            return false;  
-        });
-        return true;            
-    }else{
-        return true;
-    }        
-}
-
 function generatepdf(tipo){
     $.mobile.loading("show");
     if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
@@ -374,12 +306,20 @@ function generatepdf(tipo){
             $('#answer').slideDown().delay(5000).slideUp();
         })
         .fail(function(err){
+            if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+                $('#answer').children('div').removeClass('alert-danger');
+                $('#answer').children('div').removeClass('alert-success');
+            }
             $.mobile.loading("hide");
             $('#answer').children('div').addClass('alert-danger').html('Não é possível reunir os dados no momento! Tente mais tarde.');
             $('#answer').slideDown().delay(5000).slideUp();
         });
     })
     .fail(function(err){
+        if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+            $('#answer').children('div').removeClass('alert-danger');
+            $('#answer').children('div').removeClass('alert-success');
+        }
         var result = JSON.parse(err);
         $.mobile.loading("hide");
         $('#answer').children('div').addClass('alert-danger').html('Não é possível reunir os dados no momento! Tente mais tarde.');
