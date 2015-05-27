@@ -112,14 +112,13 @@
 .modelos-caminhoes{
     width: 250px;
     margin: 10px;
-    height: 215px;
+    line-height: 1em;
     float:left;
 
     thead{
       background: #333 !important;
       font-size: 14px;
       line-height: 31px;
-      height: 35px;
       position: relative;
       padding: 0;
       color: #3BA7BF;
@@ -256,11 +255,3 @@
     width: 360px;
   }  
 }
-
-/*
-* -— Style from Comparativos—
-*/
-
-.height-comparativos{
-    min-height: 298px;
-  }

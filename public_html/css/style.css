@@ -414,7 +414,11 @@ h1{
 .content .cont-form .height-text-area{
 	height: 200px !important;
 }
-
+.holderimgs{
+	overflow: auto;
+	height: 247px;
+	overflow: hidden;
+}
 .content .cont-form .label-line{
 	color: #454343;
 	line-height: 1.5;
@@ -422,7 +426,58 @@ h1{
 	text-transform: uppercase;
 	text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
 }
+.content .cont-form .label-line span{
+	color: white;
+	background:#3BA7BF;
+	padding: 5px;
+	font-size:10px;
+	text-transform: none;
+}
+.content .cont-form #foto-principal{
+	width: 68%;
+  	border-radius: 10px;
+}
 
+.content .cont-form #vinheta{
+	width: 34%;
+  	border-radius: 10px;
+}
+.content .cont-form .label-line span{
+	color: white;
+	background:#3BA7BF;
+	padding: 5px;
+	font-size:10px;
+	text-transform: none;
+}
+
+.content .cont-form #foto-principal{
+	width: 68%;
+  	border-radius: 10px;
+}
+
+.content .cont-form #vinheta{
+	width: 34%;
+  	border-radius: 10px;
+}
+
+.content .cont-form .grid-fotoprincipal, .grid-vinheta{
+	float:left;
+	height: 220px;
+  	width: 50%;
+}
+
+.grid-fotoprincipal .ui-input-text, .grid-vinheta .ui-input-text{
+	visibility: hidden;
+}
+
+.content .cont-form .grid-fotoprincipal, .grid-vinheta{
+	float:left;
+	height: 220px;
+  	width: 466px;
+}
+.grid-fotoprincipal .ui-input-text, .grid-vinheta .ui-input-text{
+	visibility: hidden;
+}
 /***************************************************/
 /***************** FICHA TECNICA *******************/
 /***************************************************/
@@ -1376,7 +1431,7 @@ h1{
 	background-color: #2a2a2a;
 	padding-left: 9px;
 }
-#wapopanswer{
+.waanswer{
 	margin-top: 25px;
 	margin-left: 5px;
 	display: none;

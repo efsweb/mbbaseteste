@@ -33,7 +33,7 @@ class Modelos_ComparativosController extends Zend_Controller_Action{
     	$this->view->concorrentes = $return;
     	$this->view->modelos 	  = $modelos;
     }
-    public function geralbkpAction(){
+    public function resumoAction(){
         $model    = new Model_Comparativos();
         $modeloid = new Zend_Session_Namespace('modeloselecionado');
         $mdid = $this->_getParam('id', $modeloid->id);
@@ -55,9 +55,7 @@ class Modelos_ComparativosController extends Zend_Controller_Action{
         $this->view->concorrentes = $return;
         $this->view->modelos      = $modelos;
     }
-    public function testeAction(){
-        Zend_Layout::resetMvcInstance();
-        $this->_helper->viewRenderer->setNoRender(true);
+    public function cabinaAction(){
         $model    = new Model_Comparativos();
         $modeloid = new Zend_Session_Namespace('modeloselecionado');
         $mdid = $this->_getParam('id', $modeloid->id);
@@ -65,24 +63,283 @@ class Modelos_ComparativosController extends Zend_Controller_Action{
             $modeloid->id = $mdid;
         }
         $return   = $model->loadinicial($mdid);
-        /*echo '<pre>';
-        print_r($return);
-        echo '</pre>';*/
         $modelos = array();
+        $dados   = array();
         foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
             $concorrente = $model->loaddados($modeloid->id,$item[0]);
             $modelos[$item[0]] = $concorrente;
         }
-        echo '<pre>';
-        print_r($modelos);
-        echo '</pre>';
-        /*$dados    = $model->mbdados($modeloid->id);
+        
         $this->view->mbdados      = $dados;
         $this->view->concorrentes = $return;
-        $this->view->modelos      = $modelos;*/
+        $this->view->modelos      = $modelos;
     }
-    public function itensconcorrentesAction(){}
-    public function marcaconcorrenteAction(){}
-    public function modelosconcorrentesAction(){}
+    public function motorAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function cambioAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function embreagemAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function eixotraseiroAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function pneusAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function freiosAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function retardadorAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function suspensaodianteiraAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function suspensaotraseiraAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function chassisAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function capacidadeAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
+    public function garantiaAction(){
+        $model    = new Model_Comparativos();
+        $modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
+        $return   = $model->loadinicial($mdid);
+        $modelos = array();
+        $dados   = array();
+        foreach($return as $item){
+            if(empty($dados)){
+                $dados   = $model->loaddados($modeloid->id,$item[0]);
+            }
+            $concorrente = $model->loaddados($modeloid->id,$item[0]);
+            $modelos[$item[0]] = $concorrente;
+        }
+        
+        $this->view->mbdados      = $dados;
+        $this->view->concorrentes = $return;
+        $this->view->modelos      = $modelos;
+    }
     
 }
