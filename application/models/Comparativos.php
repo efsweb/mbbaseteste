@@ -246,13 +246,13 @@ class Model_Comparativos{
         return $myarr;
     }
 
-    public function clearBeforeSave($idmodelo, $idcp){
+    public function clearBeforeSave($idmodelo, $idcp, $idpg){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
         $arr;
         $return = '';
-        $del = array('D',1,$idmodelo,$idcp,'', '', '', '', '', '');
+        $del = array('D',1,$idmodelo,$idcp,$idpg, '', '', '', '', '');
         $return = $db->query("CALL sp_fe_com_mod_cp_geral(?,?,?,?,?,?,?,?,?,?)", $del);
         return $return->fetchAll();
     }

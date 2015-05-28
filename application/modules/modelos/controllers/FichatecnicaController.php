@@ -188,8 +188,15 @@ class Modelos_FichatecnicaController extends Zend_Controller_Action{
         if($mdid != $modeloid->id){
             $modeloid->id = $mdid;
         }
+        $modelo = new Model_ModelosMapper();
+        $this->view->content = $modelo->visaomodelos($mdid,$pgid);
+        /*$modeloid = new Zend_Session_Namespace('modeloselecionado');
+        $mdid = $this->_getParam('id', $modeloid->id);
+        if($mdid != $modeloid->id){
+            $modeloid->id = $mdid;
+        }
         $modelo = new Model_Comentarios();
-        $this->view->content = $modelo->lista($mdid);
+        $this->view->content = $modelo->lista($mdid);*/
     }
 
     /**

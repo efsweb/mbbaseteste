@@ -75,7 +75,6 @@
                             <?php endforeach; }?>
                         </div>
                     
-
                     </div><!-- /item -->
                     <?php endforeach; ?>
                 </div><!-- /carousel-inner -->
@@ -172,6 +171,7 @@ function savecp(){
         ids.push(pt[pt.length-1]);
     });
     var arr = [];
+    var pgi = '';
     for(i=0; i < ids.length; i++){
         var item = '#' + ids[i];
         //console.log(item);
@@ -184,6 +184,9 @@ function savecp(){
                 console.log(agrupamento);
                 if(agrupamento == 'mod_cp_capacidade'){
                     agrupamento = 'mod_cp_capacidades';
+                }
+                if(pgi == ''){
+                    pgi = agrupamento;
                 }
                 var col01 = $(this).children('tbody').children('tr').children('td:first').children('a').attr('data-vlr');
                 var col02 = $(this).children('tbody').children('tr').children('td:first').next().children('a').attr('data-vlr');
@@ -207,10 +210,9 @@ function savecp(){
             });
         });
     }
-    //console.log(arr);
-    $.post('/modelos/actions/savecomparativos',{comparativos: arr})
+    $.post('/modelos/actions/savecomparativos',{comparativos: arr, pgid: pgi})
     .done(function(data){
-        console.log(data);
+        //console.log(data);
         //var result = JSON.parse(data);
         $.mobile.loading("hide");
         $('#answer').children('div').addClass('alert-success').html('Informações atualizadas com sucesso!');

@@ -67,9 +67,10 @@ class Modelos_ActionsController extends Zend_Controller_Action{
 
     public function savecomparativosAction(){
         $itens    = $this->getRequest()->getParam('comparativos');
+        $pgidme   = $this->getRequest()->getParam('pgid');
         $idmodel  = new Zend_Session_Namespace('modeloselecionado');
         $modelo   = new Model_Comparativos();
-        //echo count($itens);
+        //echo $pgidme;
         $concorrentes = array();
         foreach($itens as $k => $v){
             $pieces = explode(',',$v);
@@ -77,7 +78,8 @@ class Modelos_ActionsController extends Zend_Controller_Action{
             $concorrentes[$x][] = $v;
         }
         foreach($concorrentes as $cp => $lns){
-            $exclude   = $modelo->clearBeforeSave($idmodel->id,$cp);
+            //print_r($lns);
+            $exclude   = $modelo->clearBeforeSave($idmodel->id,$cp,$pgidme);
             $resultado = $modelo->addConcorrenteLine($idmodel->id,$cp,$lns);
             print_r($resultado);
         }
