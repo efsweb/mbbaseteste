@@ -74,8 +74,10 @@ function savethis(){
     }
     var str = '';
     var post = [];
+    var linha = 0;
     $('.content').find('.row-cont-ficha').each(function(){
-        str += $(this).attr('data-linha');
+        linha = linha + 1;
+        str += linha;//$(this).attr('data-linha');
         str += ',mod_ft_pesos_adminissiveis';
         str += ',' + $(this).children('div').children('table:last').attr('data-colunas');
         str += ',' + $(this).children('div').children('table:first').children('tbody').children('tr').children('td').children('div').children('a').attr('data-idlabel');

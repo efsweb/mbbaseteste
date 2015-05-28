@@ -70,7 +70,12 @@ class Modelos_ActionsController extends Zend_Controller_Action{
         $pgidme   = $this->getRequest()->getParam('pgid');
         $idmodel  = new Zend_Session_Namespace('modeloselecionado');
         $modelo   = new Model_Comparativos();
-        //echo $pgidme;
+        if($pgidme == ''){
+            foreach($itens as $k => $v){
+                $parts = explode(',',$v);
+                $modelo->clearBeforeSave($idmodel->id,$parts[0],$parts[1]);
+            }
+        }
         $concorrentes = array();
         foreach($itens as $k => $v){
             $pieces = explode(',',$v);
@@ -78,8 +83,9 @@ class Modelos_ActionsController extends Zend_Controller_Action{
             $concorrentes[$x][] = $v;
         }
         foreach($concorrentes as $cp => $lns){
-            //print_r($lns);
-            $exclude   = $modelo->clearBeforeSave($idmodel->id,$cp,$pgidme);
+            if($pgidme != ''){
+                $exclude   = $modelo->clearBeforeSave($idmodel->id,$cp,$pgidme);
+            }
             $resultado = $modelo->addConcorrenteLine($idmodel->id,$cp,$lns);
             print_r($resultado);
         }

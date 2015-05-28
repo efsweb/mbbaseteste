@@ -661,7 +661,7 @@ function savecp(){
         });
     }
     //console.log(arr);
-    $.post('/modelos/actions/savecomparativos',{comparativos: arr})
+    $.post('/modelos/actions/savecomparativos',{comparativos: arr, pgid: ''})
     .done(function(data){
         console.log(data);
         //var result = JSON.parse(data);
