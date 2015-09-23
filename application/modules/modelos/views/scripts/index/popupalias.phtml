@@ -1,0 +1,278 @@
+<div data-role="popup" id="SelectItem" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+    <a href="#" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+    <div data-role="header" data-theme="b" class="header-popup">
+        <h1>Pesquisa Descrição Comercial</h1>
+    </div>
+    <div role="main" class="ui-content content-popup" style="padding-bottom: 39px;">
+        <div id="tabs">
+            <ul>
+                <li><a href="#tab-pesquisa">Pesquisa</a></li>
+                <li><a href="#tab-alias">Alias</a></li>
+                <!-- <li><a href="#tab-detalhes">Detalhes</a></li> -->
+            </ul>
+
+            <div class="content-tabs" id="tab-pesquisa">
+
+                <form data-theme="b">
+                    <div class="ui-grid-b radios-filtro">
+                        <div class="ui-block-a">
+                            <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                <input type="radio" name="filtro1" id="alias" value="alias" checked="checked">
+                                <label for="alias">Alias</label>
+                                <input type="radio" name="filtro1" id="item" value="item">
+                                <label for="item">Item</label>
+                                <input type="hidden" id="param_tipo" value="alias" />
+                            </fieldset>
+                        </div>
+
+                        <div class="ui-block-b">
+                            <div class="option-alias">
+                                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                    <input type="radio" name="filtro2" id="label" value="label" checked="checked">
+                                    <label for="label">Label</label>
+                                    <input type="radio" name="filtro2" id="valor" value="valor">
+                                    <label for="valor">Valor</label>
+                                    <input type="hidden" id="param_finalidade" value="label" />
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="ui-block-c busca-ficha">
+                            <div class="ui-block-a">
+                                <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset" style="float: left; width: 80%;">
+                                    <input title="Pressione enter para realizar a busca" id="param_desc_alias" onkeypress="if((event.keyCode || event.which) == 13){search(); return false;}" type="search" placeholder="Precione a tecla enter para realizar a busca" data-mini="true">
+                                </div>
+                                <div class="ui-block-b" style="float: right; display:none;">
+                                    <a href="#" onclick="showalias();" data-rel="popup" data-position-to="window" data-transition="pop" data-toggle="tooltip" title="adicionar alias" class="ui-btn btn-azul icon-plus"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="traco-b"></div>
+                    <div id="tbl_resultado_header" class="ui-grid-a tabela-item-label">
+                        <table width="98%" border="0" cellspacing="2" cellpadding="0" data-filter="true" data-input="select-native-2">
+                            <thead>
+                                <tr class="title-table-pop">
+                                    <td class="acoes" style="width: 85px;"><p>Ações</p></td>
+                                    <td width="270"><p>Descrição Alias</p></td>
+                                    <td width="105">
+                                        <p>Grupo</p>
+                                        <!-- <div data-role="fieldcontain" class="ui-field-contain ui-nodisc-icon">
+                                            <select  style="width: 105px;" onchange="search();" data-native-menu="false" name="select-native-2" id="select-native-2" data-mini="true" class="ui-nodisc-icon popupselectclass">
+                                                <option value="Todos">Grupo</option>
+                                                <option value="Todos">Todos</option>
+                                                <?php //echo $this->action('loadfiltrogrupo', 'index', 'modelos'); ?>
+                                            </select>
+                                        </div> -->
+                                    </td>
+                                    <td width="150">
+                                        <p>Classificação</p>
+                                        <!-- <div data-role="fieldcontain" class="ui-field-contain ui-nodisc-icon">
+                                            <select style="width: 150px;" onchange="search();" data-native-menu="true" id="select-classificacao" name="select-classificacao" data-mini="true" class="ui-nodisc-icon popupselectclass">
+                                                <option value="Todos">Classificação</option>
+                                                <option value="Todos">Todos</option>
+                                                <?php //echo $this->action('loadfiltroclassificacao', 'index', 'modelos'); ?>
+                                            </select>
+                                        </div> -->
+                                    </td>
+                                    <td><p>Item Engenharia</p></td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="dvscroller" style="width: 100%; height: 300px; overflow-y: scroll; display: block;" class="ui-grid-a tabela-item-label">
+                        <table id="tbl_resultado" width="100%" border="0" cellspacing="2" cellpadding="0"></table>
+                    </div>
+
+                    <div class="traco-b"></div>
+                </form>
+
+            </div>
+
+            <div class="content-tabs" id="tab-alias" style="padding-top:15px;">
+
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <p>Descritivo Comercial</p>
+                        <textarea id="desc_alias_new" class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset"></textarea>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="row-01">
+                            <p style="float:left; padding-top: 12px;">Código: <span>152582</span></p> 
+                        </div>
+
+
+                        <div style="float:right;">
+                            <p style="float:left; padding-top: 12px;">Finalidade</p>
+                            <fieldset class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                <div class="ui-controlgroup-controls">
+                                    <div class="ui-radio">
+                                        <label class="ui-btn ui-corner-all ui-btn-inherit ui-radio-off" for="new-alias">Label</label>
+                                        <input data-cacheval="false" name="label-alias" id="new-alias" value="label" checked="checked" type="radio">
+                                    </div>
+                                    <div class="ui-radio">
+                                        <label class="ui-btn ui-corner-all ui-btn-inherit ui-first-child ui-radio-off" for="new-label">Valor</label>
+                                        <input data-cacheval="true" name="label-alias" id="new-label" value="valor" type="radio">
+                                    </div>
+                                    <input type="hidden" id="param_novo_tipo_finalidade" value="label" />
+                                    <input type="hidden" id="param_novo_tipo_alias" value="alias" />
+                                    <input type="hidden" id="param_id_alias" value="0" />
+                                </div>
+                            </fieldset>            
+                        </div>
+                        <div style="clear: both;"></div>
+
+                        <div class="traco-b"></div>
+
+                        <div class="row-02">
+                            <div id="popengitem" class="pop-itens-engenharia">
+                                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right btn-close">Close</a>
+                                <div data-role="header" class="header-popup"><h3>item / descritivo</h3></div>
+                                <ul id="list_itens_vinculados" class="itens-descricao">
+                                    <?php echo $this->action('loaditemengenharia', 'index', 'modelos') ?>
+                                </ul>
+                            </div>
+                            <div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-notext ui-nodisc-icon" data-toggle="tooltip" data-placement="top" title="deletar item">
+                                <input onclick="backtonormal(this);" type="button" data-enhanced="true" value="<span class='icon-plus'>&nbsp;</span>adicionar item engenharia">
+                            </div>        
+                            <a href="#" id="btn_add_item_vinculado" class="ui-btn add-item-engenharia"><span class="icon-plus">&nbsp;</span>adicionar item engenharia</a>
+                            <input type="hidden" id="itemvinculado" />
+                        </div>
+
+                        <div class="traco-b"></div>
+
+                        <div class="row-03">
+                            <p>Classificação</p>
+                            <div class="ui-select select">
+                                <select id="myclassifications" class="js-example-basic-multiple " multiple="multiple">
+                                    <?php echo $this->action('loadclassificacao', 'index', 'modelos') ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn-azul pull-right btn-save ui-link"><span class="icon-cancel-2"></span>cancelar</a>
+                <a href="#" class="btn-azul pull-right btn-save ui-link" style=" margin-right: 5px;"><span class="icon-ok-3"></span>gravar</a>
+            </div>
+
+            <!-- <div class="content-tabs" id="tab-detalhes">
+
+                <div class="ui-grid-a" style="padding-top: 10px;">
+                    <section class="ui-block-a" style="width:48%;  margin: 7px;">
+                        <div class="titleCheckbox">
+                            <h2>Agrupamento</h2>
+                        </div>
+
+                        <div class="holderCheckbox">
+                            <ul class"list">
+                                <li class="ui-checkbox masterChecked" style="display:none;">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Dados</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox masterChecked">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Dados</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Dados</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Dados</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Chassis</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Desempenho</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                            </ul>
+                            <ul class"list">
+                                <li class="ui-checkbox masterChecked">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Ficha Técnica</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Teste</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Dados</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Chassis</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Desempenho</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                            </ul>
+                            <ul class"list">
+                                <li class="ui-checkbox masterChecked">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Ficha Técnica</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-theme="b"> 
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Teste</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Dados</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Chassis</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Desempenho</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="ui-block-b" style="width:48%;  margin: 7px;">
+                        <div class="titleCheckbox">
+                            <h2>Modelos</h2>
+                        </div>
+
+                        <div class="holderCheckbox">
+                            <ul class"list">
+                                <li class="ui-checkbox masterChecked">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Ficha Técnica</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li> 
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Cabina</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Dados</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Chassis</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                                <li class="ui-checkbox childCheckbox">
+                                    <label for="checkbox-enhanced" class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off">Desempenho</label>
+                                    <input type="checkbox" name="checkbox-enhanced" id="checkbox-enhanced" data-enhanced="true"  data-theme="b">
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+
+</div>

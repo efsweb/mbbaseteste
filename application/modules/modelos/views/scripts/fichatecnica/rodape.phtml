@@ -1,0 +1,111 @@
+<div class="ui-grid-a">
+    <div class="title">
+        <h1>Ficha Técnica - Rodapé Página 1</h1>
+        <a onclick="savethis();" href="#" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
+    </div>
+    <div id="answer" class="resposta">
+        <div class="alert" role="alert"></div>
+    </div>
+    <ul id="listcontent" class="content">
+        <?php foreach($this->content as $row): ?>
+        <li class="row-cont-ficha" id="linha_<?= $row['bmb_nr_linha']; ?>" data-linha="<?= $row['bmb_nr_linha']; ?>">
+            <div class="not-dragg">
+                <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                    <tr>
+                        <td>
+                            <div class="ui-field-contain">
+                                <a id="col_<?= $row['bmb_nr_linha']; ?>_0" onclick='opensearch(this);' href="#SelectItem" data-rel="popup" data-idlabel="<?= $row['id_label']; ?>" data-position-to="window" data-transition="pop" class="btn-ficha btn-ficha-label">
+                                    &nbsp;<?= $row['desc_label']; ?>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="acoes-col acoes-col-azul">
+                            <div class="ui-field-contain">
+                                <a href="#" class="pull-left icon-cancel-2 link-icon del-comment" data-toggle="tooltip" title="Deletar linha"></a>
+                            </div>                                        
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </li><!-- /row-cont-ficha -->
+        <?php endforeach; ?> 
+    </ul><!-- /content -->
+
+    <a href="#" onclick="addRowToContentComments();" class="btn-azul pull-right" id="add-row-ficha"><span class="icon-plus"></span>adicionar</a>
+
+</div><!-- ui-grid-a -->
+
+<script id="panel-init">
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove(); 
+    }; 
+});
+$('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
+$('#mod_ft_comentarios').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+$(document).on("click", ".del-comment", function() {
+    var cn = parseInt($(this).closest('table').attr('data-colunas'));
+    cn = cn - 1;
+    $(this).closest('table').attr('data-colunas',cn);
+    $(this).parent().parent().parent().parent().parent().parent().remove();
+});
+
+
+function addRowToContentComments(){
+    var id   = $("#listcontent").children('div:last').attr('id');
+    var r    = '';
+    if(typeof id === 'undefined'){
+        r = '1';
+    }else{
+        r = parseInt(id.replace('linha_','')) + 1;
+    }
+    
+    var row  = 'linha_' + r;
+    var col1 = 'col_' + r + '_0';
+    var col2 = 'col_' + r + '_1';
+    var cont = "<li class='row-cont-ficha' id='" + row + "' data-linha='" + r + "'>";
+    cont    += "<div class='not-dragg'><table width='100%' border='0' cellpadding='0' cellspacing='2'><tbody>";
+    cont    += "<tr><td><div class='ui-field-contain'>";
+    cont    += "<a id='" + col1 + "' aria-expanded='false' aria-owns='SelectItem' aria-haspopup='true' href='#SelectItem' data-rel='popup' data-position-to='window' data-transition='pop' onclick='opensearch(this);' class='btn-ficha btn-ficha-label ui-link'><span class='icon-plus'>&nbsp;</span>Adicionar</a>";
+    cont    += "</div></td>";
+    cont    += "<td class='acoes-col'><div class='ui-field-contain'>";
+    cont    += "<a href='#' class='pull-left icon-cancel-2 link-icon del-comment ui-link'></a>";
+    cont    += "</div></td></tr></tbody></table></div></li>";
+    $("#listcontent").append(cont);
+}
+
+function savethis(){
+    $.mobile.loading("show");
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    var str = '';
+    var post = [];
+    $('.content').find('.row-cont-ficha').each(function(){
+        str += $(this).attr('data-linha');
+        str += ',mod_ft_comentarios';
+        str += ',obs';
+        str += ',' + 0;
+        str += ',' + $(this).children('div').children('table:first').children('tbody').children('tr').children('td').children('div').children('a').attr('data-idlabel');
+        post.push(str);
+        str = '';
+    });
+    $.post('/modelos/actions/savecomentarios',{lines: post,pg:'mod_ft_comentarios'})
+    .done(function(data){
+        var result = JSON.parse(data);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-success').html('Informações atualizadas com sucesso!');
+        $('#answer').slideDown().delay(5000).slideUp();
+    })
+    .fail(function(err){
+        var result = JSON.parse(err);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-danger').html('Houve um erro, tente mais tarde!');
+        $('#answer').delay(5000).slideDown();
+    });
+}
+</script>

@@ -172,21 +172,48 @@ h1{
 	text-shadow: none;
 	box-shadow: none;
 }
-
+.mnu-user-pai{
+	overflow: auto;
+	padding-top: 15px;
+}
 #menu-user{
-	margin-top: 16px;
+	margin-top: 20px;
+	list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: block;
+    border: 0;
+    max-width: 100%;
+    overflow: auto;
 }
 
 #menu-user .ui-block-a{
-	width: 80%;
+	text-align: right;
+	width: 53%;
 }
-
-#menu-user .ui-block-b,
+#menu-user .ui-block-b{
+	width: 27%;
+	padding-top: 3px;
+	text-align: left;
+}
+#menu-user .ui-block-b a{
+	text-align: left;
+	padding-left: 5px;
+}
 #menu-user .ui-block-c{
-	width: 8%;
+	padding-top: 6px;
+	width: 10%;
+	text-align: right;
+}
+#menu-user .ui-block-c a{
+	color: #888;
+	margin-top: -3px;
+	font-size: 20px;
 }
 
 #menu-user .ui-btn{
+	box-shadow: none;
 	background: transparent;
 	color: #888;
 	font-weight: normal;
@@ -204,6 +231,36 @@ h1{
 #menu-user .icon-home-2,
 #menu-user .icon-logout{
 	font-size: 15px;
+}
+#menu-user .mnu-sys-version{
+	display: none;
+	position: relative;
+	left: 42%;
+	overflow: auto;
+	width: 170px;
+	background-color: #333;
+}
+.mnu-sys-version .mnu-version{
+	list-style-type: none;
+	padding: 0;
+	display: block;
+}
+.mnu-sys-version .mnu-version li{
+	line-height: 1.3em;
+	font-size: 12px;
+	color: #888;
+	font-weight: normal;
+	border-top: 1px dotted #777;
+	cursor: pointer;
+	padding: 5px;
+	text-align: center;
+}
+.mnu-sys-version .mnu-version :first-child{
+	border-top: 0px;
+}
+.mnu-sys-version .mnu-version :last-child{
+	border-top: 1px solid #999;
+	color: #FFF;
 }
 
 /***************************************************/
@@ -414,7 +471,11 @@ h1{
 .content .cont-form .height-text-area{
 	height: 200px !important;
 }
-
+.holderimgs{
+	overflow: auto;
+	height: 247px;
+	overflow: hidden;
+}
 .content .cont-form .label-line{
 	color: #454343;
 	line-height: 1.5;
@@ -422,12 +483,68 @@ h1{
 	text-transform: uppercase;
 	text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
 }
+.content .cont-form .label-line span{
+	color: white;
+	background:#3BA7BF;
+	padding: 5px;
+	font-size:10px;
+	text-transform: none;
+}
+.content .cont-form #foto-principal{
+	width: 68%;
+  	border-radius: 10px;
+}
 
+.content .cont-form #vinheta{
+	width: 34%;
+  	border-radius: 10px;
+}
+.content .cont-form .label-line span{
+	color: white;
+	background:#3BA7BF;
+	padding: 5px;
+	font-size:10px;
+	text-transform: none;
+}
+
+.content .cont-form #foto-principal{
+	width: 68%;
+  	border-radius: 10px;
+}
+
+.content .cont-form #vinheta{
+	width: 34%;
+  	border-radius: 10px;
+}
+
+.content .cont-form .grid-fotoprincipal, .grid-vinheta{
+	float:left;
+	height: 220px;
+  	width: 50%;
+}
+
+.grid-fotoprincipal .ui-input-text, .grid-vinheta .ui-input-text{
+	visibility: hidden;
+}
+
+.content .cont-form .grid-fotoprincipal, .grid-vinheta{
+	float:left;
+	height: 220px;
+  	width: 466px;
+}
+.grid-fotoprincipal .ui-input-text, .grid-vinheta .ui-input-text{
+	visibility: hidden;
+}
 /***************************************************/
 /***************** FICHA TECNICA *******************/
 /***************************************************/
+#listcontentnew, #listcontent{
+	list-style-type: none;
+	padding-top: 50px;
+}
+
 .row-cont-ficha{
-	margin: 0px auto 10px auto;
+	margin: 0px auto 40px auto;
 	padding: 7px;
 	background: rgba(255, 255, 255, 0.4);
 	box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.2);
@@ -521,6 +638,49 @@ h1{
 .btn-adicionar{
 	margin-right: 40px;
 	margin-top: -55px;
+}
+.handlearrasta{
+	width: 28px;
+	background: rgba(255, 255, 255, 0.4);
+	padding-left: 10px;
+}
+.handlearrasta span{
+	color: #555;
+	font-size: 12px;
+}
+.ft-list-row-title{
+	display: block;
+	line-height: 1.7em;
+	margin-top: -36px;
+	margin-left: -7px;
+}
+.mnutipoholder{
+	font-size: 11px;
+	font-family: verdana;
+	color: #28889d;
+	width: 100px;
+	height: 29px;
+	text-align: center;
+	background: rgba(255, 255, 255, 0.4);
+}
+.mnutipo{
+	background-color: #afafaf;
+	position: relative;
+	z-index: 90;
+	line-height: 2.3em;
+	display: none;
+}
+.mnutipo-item{
+	cursor: pointer;
+	border-bottom: 1px dotted #333;
+}
+.row-placeholder{
+	list-style: none;
+	border: 1px dashed #fff;
+	width: 100%;
+	margin: 10px 0;
+	border: 1px dotted #FFFFFF;
+	height: 90px;
 }
 
 /***************************************************/
@@ -753,6 +913,8 @@ h1{
 	box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.8);
 	position: absolute;
 	margin: 10px;
+	/*z-index: 15;*/
+	float:left;
 }
 
 #walk-around .row-01 .nav-tabs{
@@ -798,7 +960,9 @@ h1{
 }
 
 #walk-around .row-01 .dragg-bullet .pop-dragg{
-	width: 150px;
+	position: relative;
+	z-index: 100;
+	width: 155px;
 	background: rgba(255, 255, 255, 0.8);
 	border: 1px solid #fff;
 	box-shadow: 1px 1px 1px #000;
@@ -820,18 +984,24 @@ h1{
 
 #walk-around .row-01 .dragg-bullet .pop-dragg li{
 	display: block;
+	width: 130px;
+	min-height: 15px;
 	padding: 5px 9px;
 	list-style: none;
 	border-bottom: 1px solid #fff;
 }
 #walk-around .row-01 .dragg-bullet .pop-dragg li a,
 #walk-around .row-01 .dragg-bullet .pop-dragg li p{
+	display: block;
+	line-height: 1.1;
+	word-wrap: break-word;
+	width: 150px;
+	min-height: 15px;
 	font-size: 11px;
 	text-transform: uppercase;
 	color: #454343;
 	text-shadow: none;
 	font-weight: normal;
-	display: block;
 }
 
 #walk-around .row-01 .dragg-bullet .pop-dragg li p{
@@ -1122,7 +1292,7 @@ h1{
 }
 
 .tabela-item-label table tr .acoes{
-	width: 8%;
+	width: 90px;
 }
 
 .tabela-item-label table tr td .btn-acoes-ficha,
@@ -1142,7 +1312,7 @@ h1{
 	text-shadow: none !important;
 	text-transform: uppercase;
 	font-size: 12px;
-	margin: 0 4px;
+	margin: 0 2px;
 	color: #0F9DBC;
 	padding: 2px 4px;
 	line-height: 16px;
@@ -1357,12 +1527,29 @@ h1{
 	text-transform: uppercase;
 	line-height: 1;
 }
-.itens-wa .ui-block-b input{
+.itens-wa .ui-block-b a{
 	font-size: 12px;
 	height: 25px;
 	width: 100%;
 }
 
+.itens-wa .wa-pop-titulo, .itens-wa .wa-pop-desc{
+	width: 568px;
+	display: block;
+	line-height: 1.1em;
+	padding-top: 12px;
+	border: 1px solid #1d1d1d;
+	color: #fff;
+	text-shadow: 0 1px 0 #111;
+	background-color: #2a2a2a;
+	padding-left: 9px;
+}
+.waanswer{
+	margin-top: 25px;
+	margin-left: 5px;
+	display: none;
+	font-size: 12px;
+}
 
 
 /************** SEGURANÇA - USUÁRIO **************/
@@ -1439,11 +1626,11 @@ h1{
 
 @media (max-width: 1380px) {
 	.header .ui-grid-b .ui-block-b{
-		width: 55%;
+		width: 50%;
 	}
 	
 	.header .ui-grid-b .ui-block-c{
-		width: 20%;
+		width: 25%;
 	}
 	
 	.menu-topo .ui-grid-d > .ui-block-a,
@@ -1454,6 +1641,10 @@ h1{
 		width: auto;
 	}
 	
+	#menu-user .ui-block-b{
+		width: 34%;
+	}
+
 	#dados-alias .row-01 .ui-block-a,
 	#dados-alias .row-01 .ui-block-b{
 		width: 20%;
@@ -1461,8 +1652,16 @@ h1{
 	
 	#dados-alias .row-01 .ui-block-c{
 		width: 60%;
-	}	
-		
+	}
+	.exp_holder_models{
+		width: 520px !important;
+	}
+	.exp_models_list{
+		width: 520px !important;
+	}
+	.exp_models_scroll{
+		width: 460px !important;
+	}
 	@-moz-document url-prefix() { 
 		#walk-around .row-01 .ui-controlgroup-controls .ui-radio:last-child{
 			 margin-top: -5px;
@@ -1518,6 +1717,9 @@ h1{
  * São os efeitos de alerta no momento de gravar informações
  * 
  */
+.hide{
+	display: none;
+}
 .ui-collapsible-inset.ui-collapsible-themed-content .ui-collapsible-content{
 	border-left-width: 0;
 	border-right-width: 0;
@@ -1569,6 +1771,405 @@ h1{
   background-color: #f2dede;
   border-color: #ebccd1;
 }
+.labelimg{
+	color: white;
+	background: #3BA7BF;
+	padding: 10px;
+	font-size: 10px;
+	text-transform: none;
+	width: 170px;
+}
+
+
+/**
+ * Analise > Exportar > Ficha Tecncia
+ */
+.exp_holder_content{
+	display: block;
+	clear: both;
+	overflow: auto;
+}
+.exp_title{
+	display: block;
+	clear: both;
+	font-family: verdana;
+	font-size: 14px;
+	text-transform: uppercase;
+	color: #3ba7bf;
+	padding: 7px;
+	font-weight: bold;
+	padding-left: 25px;
+}
+.exp_holder_list{
+	width: 570px;
+	overflow: auto;
+	background-image: url('/images/exp_quina_esquerda.png');
+	background-repeat: no-repeat;
+	background-position-x: 5px;
+}
+.exp_family_list{
+	display: block;
+	list-style-type: none;
+	margin: 30px 20px 20px 50px;
+	height: 42px;
+	background-image: url('/images/exp_quina_direita.png');
+	background-repeat: no-repeat;
+	background-position-x: 100%;
+	background-position-y: -13px;
+}
+.exp_family_list_child{
+	display: inline-block;
+	text-align: left;
+	margin-left: 10px;
+	font-family: verdana;
+	font-size: 12px;
+	text-transform: uppercase;
+	color: #ffffff;
+	width: 72px;
+	cursor: pointer;
+}
+.exp_family_list_child:hover{
+	color: #3ba7bf;
+}
+.checked_family{
+	color: #3ba7bf;
+}
+.checked_family::before{
+	content: ' ';
+	position: absolute;
+	margin-top: -6px;
+	margin-left: -15px;
+	width: 12px;
+	height: 12px;
+	background-image: url('/images/check.png');
+}
+.exp_divider{
+	display: block;
+	height: 20px;
+	clear: both;
+}
+
+
+.exp_holder_models{
+	height: 430px;
+	width: 570px;
+	background-image: url('/images/exp_quina_esquerda.png');
+	background-repeat: no-repeat;
+	background-position-x: 5px;
+	background-position-y: 14px;
+}
+.exp_models_list{
+	height: 400px;
+	width: 550px;
+	background-image: url('/images/exp_quina_direita.png');
+	background-repeat: no-repeat;
+	background-position-x: 100%;
+	background-position-y: bottom;
+}
+.exp_models_scroll{
+	overflow: auto;
+	height: 365px;
+	margin-top: 10px;
+	width: 505px;
+	padding-left: 28px;
+	padding-right: 10px;
+	padding-top: 10px;
+}
+.exp_model_title{
+	display: block;
+	clear: both;
+	height: 7px;
+	padding-left: 15px;
+	font-family: verdana;
+	font-size: 12px;
+	text-transform: uppercase;
+	color: #FFFFFF;
+	border-bottom: 1px solid #3BA7BF;
+}
+.exp_model_list_holder{
+	margin-bottom: 25px;
+	padding-left: 15px;
+}
+.exp_model_list_table{
+	display: table;
+}
+.exp_model_cell{
+	height: 30px;
+	width: 150px;
+	line-height: 1.3;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: left;
+	font-size: 11px;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+.exp_model_cell:hover{
+	color: #3BA7BF;
+}
+.exp_model_checked{
+	color: #3BA7BF;
+}
+.exp_model_checked::before{
+	content: ' ';
+	position: relative;
+	float: left;
+	margin-left: -15px;
+	width: 12px;
+	height: 12px;
+	background-image: url('/images/check.png');
+}
+.line_row{
+	padding-top: 0px !important;
+	border-bottom: 1px solid #3BA7BF;
+}
+
+#list_items{
+	display: none;
+}
+.exp_top_files{
+	height: 20px;
+	background-image: url('/images/exp_border_bottom01.png');
+	background-repeat: no-repeat;
+}
+.exp_bottom_files{
+	height: 20px;
+	background-image: url('/images/exp_border_bottom02.png');
+	background-repeat: no-repeat;
+}
+.exp_files{
+	height: 450px;
+	width: 380px;
+	overflow: auto;
+	padding-left: 40px;
+	padding-right: 20px;
+}
+.exp_line_file{
+	display: block;
+	padding: 10px 0px 10px 10px;
+	line-height: 1.3;
+	background-color: #2a2929;
+	margin-top: 5px;
+	color: #FFFFFF;
+	font-size: 11px;
+	text-transform: uppercase;
+}
+.exp_concluido{
+	color: #0fdd2c !important;
+}
+.exp_andamento{
+	color: #3ba7bf;
+}
+.exp_del_item{
+	padding-right: 10px;
+	color: #555;
+	font-weight: bold;
+	cursor: pointer;
+}
+.exp_del_item:hover{
+	color: #ff0000;
+}
+.exp_download_session{
+	padding-right: 5px;
+}
+.exp_download_session a{
+	float: right;
+	margin-right: 10px;
+}
+.exp_download_item{
+	color: #0fdd2c !important;
+	font-weight: normal !important;
+}
+/**
+ * FIM Analise > Exportar > Ficha Tecncia
+ */
+
+.novisible{
+	visibility: hidden !important;
+}
+
+
+/**
+ * DATEPICKER
+ */
+.ui-datepicker {
+	width: 17em;
+	padding: .2em .2em 0;
+	display: none;
+	line-height: 0.8em;
+	background-color: #333;
+}
+.ui-datepicker .ui-datepicker-header {
+	position: relative;
+	padding: .2em 0;
+}
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next {
+	position: absolute;
+	top: 2px;
+	width: 1.8em;
+	height: 1.8em;
+	text-shadow: none;
+	color: #999;
+}
+.ui-datepicker .ui-datepicker-prev-hover,
+.ui-datepicker .ui-datepicker-next-hover {
+	top: 1px;
+}
+.ui-datepicker .ui-datepicker-prev {
+	left: 2px;
+}
+.ui-datepicker .ui-datepicker-next {
+	right: 2px;
+}
+.ui-datepicker .ui-datepicker-prev-hover {
+	left: 1px;
+}
+.ui-datepicker .ui-datepicker-next-hover {
+	right: 1px;
+}
+.ui-datepicker .ui-datepicker-prev span,
+.ui-datepicker .ui-datepicker-next span {
+	display: block;
+	position: absolute;
+	left: 50%;
+	margin-left: -8px;
+	top: 50%;
+	margin-top: -8px;
+}
+.ui-datepicker .ui-datepicker-title {
+	margin: 0 2.3em;
+	line-height: 1.8em;
+	text-align: center;
+	text-shadow: none;
+	color: #999;
+}
+.ui-datepicker .ui-datepicker-title select {
+	font-size: 1em;
+	margin: 1px 0;
+}
+.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year {
+	width: 45%;
+}
+.ui-datepicker table {
+	width: 100%;
+	font-size: .9em;
+	border-collapse: collapse;
+	margin: 0 0 .4em;
+}
+.ui-datepicker th {
+	padding: .7em .3em;
+	text-align: center;
+	font-weight: bold;
+	border: 0;
+	text-shadow: none;
+	color: #999;
+}
+.ui-datepicker td {
+	border: 0;
+	padding: 1px;
+}
+.ui-datepicker td span,
+.ui-datepicker td a {
+	display: block;
+	padding: .2em;
+	text-align: right;
+	text-decoration: none;
+	text-shadow: none;
+	color: #999;
+}
+.ui-datepicker .ui-datepicker-buttonpane {
+	background-image: none;
+	margin: .7em 0 0 0;
+	padding: 0 .2em;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 0;
+}
+.ui-datepicker .ui-datepicker-buttonpane button {
+	float: right;
+	margin: .5em .2em .4em;
+	cursor: pointer;
+	padding: .2em .6em .3em .6em;
+	width: auto;
+	overflow: visible;
+}
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
+	float: left;
+}
+
+/* with multiple calendars */
+.ui-datepicker.ui-datepicker-multi {
+	width: auto;
+}
+.ui-datepicker-multi .ui-datepicker-group {
+	float: left;
+}
+.ui-datepicker-multi .ui-datepicker-group table {
+	width: 95%;
+	margin: 0 auto .4em;
+}
+.ui-datepicker-multi-2 .ui-datepicker-group {
+	width: 50%;
+}
+.ui-datepicker-multi-3 .ui-datepicker-group {
+	width: 33.3%;
+}
+.ui-datepicker-multi-4 .ui-datepicker-group {
+	width: 25%;
+}
+.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,
+.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {
+	border-left-width: 0;
+}
+.ui-datepicker-multi .ui-datepicker-buttonpane {
+	clear: left;
+}
+.ui-datepicker-row-break {
+	clear: both;
+	width: 100%;
+	font-size: 0;
+}
+
+/* RTL support */
+.ui-datepicker-rtl {
+	direction: rtl;
+}
+.ui-datepicker-rtl .ui-datepicker-prev {
+	right: 2px;
+	left: auto;
+}
+.ui-datepicker-rtl .ui-datepicker-next {
+	left: 2px;
+	right: auto;
+}
+.ui-datepicker-rtl .ui-datepicker-prev:hover {
+	right: 1px;
+	left: auto;
+}
+.ui-datepicker-rtl .ui-datepicker-next:hover {
+	left: 1px;
+	right: auto;
+}
+.ui-datepicker-rtl .ui-datepicker-buttonpane {
+	clear: right;
+}
+.ui-datepicker-rtl .ui-datepicker-buttonpane button {
+	float: left;
+}
+.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current,
+.ui-datepicker-rtl .ui-datepicker-group {
+	float: right;
+}
+.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header,
+.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header {
+	border-right-width: 0;
+	border-left-width: 1px;
+}
+
+
 /**
  * Fim de adição por Eliel
  */

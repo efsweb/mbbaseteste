@@ -1,0 +1,235 @@
+<div class="ui-grid-a">
+	<div class="title">
+        <h1>Modelos - Comparativos - Capacidade</h1>
+        <a onclick="savecp();" href="#" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
+    </div>
+    <div id="answer" class="resposta">
+        <div class="alert" role="alert"></div>
+    </div>
+    <div id="comparativos" class="content">
+    	<div class="ui-grid-a cont-form" style="padding: 0;">
+        <?php if(isset($this->concorrentes[0][2])):?>
+            <div id="carousel" class="carousel slide meio-backgrond height-comparativos" data-ride="carousel">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                	<div class="ui-grid-a">
+                    
+                        <div class="ui-block-a select-concorrentes pull-right">
+                            <ul class="menu-concorrentes">
+                                <li>
+                                    <div>
+                                        <span><img src="/images/comparativos/<?= $this->concorrentes[0][1]; ?>"></span>
+                                        <?= $this->concorrentes[0][2]; ?>
+                                    </div>
+                                    <ul class="sub-concorrentes">
+                                        <?php foreach($this->concorrentes as $k => $v): ?>
+                                        <li data-target="#carousel" data-slide-to="<?= $k; ?>" onclick="changeme(this);" data-img="<?= $v[1]; ?>" data-modelo-id="<?= $v[0]; ?>" data-modelo="<?= $v[2]; ?>">
+                                            <span><img src="/images/comparativos/<?= $v[1]; ?>"/></span><?= $v[2]; ?>
+                                        </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="traco"></div>
+                        </div>
+                        
+                    </div>
+                    <?php $ac = 0; foreach($this->modelos as $k => $v): ?>
+                    <div class="item<?php if($ac == 0){$ac = 1; echo ' active';} ?>" id="<?= $k; ?>">
+                        
+                    	<div id="mb-capacidade-<?= $k; ?>" class="ui-grid-a itens-comparativos mb-capacidade">
+                        	<div class="ui-header">
+                            	<div class="ui-block-a">
+                                	<h3>Capacidade</h3>
+                                </div>
+                            	<div class="ui-block-b">
+                                    <a  onclick="addline('capacidade','<?= $k; ?>');" href="#" data-toggle="tooltip" data-placement="left" title="" class="btn-azul ui-btn-right add-item ui-btn" data-role="button" role="button" data-original-title="adicionar item"><span class="icon-plus"></span>adicionar item</a>
+                                </div>
+                            </div>
+                            <?php if(isset($v['capacidades'])){ foreach($v['capacidades'] as $a => $b): ?>
+                            <table id="capacidade_<?= $k . '_' . $a; ?>" width="100%" border="0" cellspacing="4" cellpadding="0">
+                                <tr>
+                                    <td width="20%">
+                                        <a id="mb_capacidade_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-vlr="<?= $b[1]; ?>" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-link">
+                                        <?= $b[2]; ?>
+                                        </a>
+                                    </td>
+                                    <td width="30%">
+                                        <a id="mb_capacidade_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-vlr="<?= $b[3]; ?>" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-link">
+                                        <?= $b[4]; ?>
+                                        </a>
+                                    </td>
+                                    <td width="15%">
+                                        <a id="cp_capacidade_<?= $k . '_' . $a; ?>_1" onclick="opensearch(this);" href="#SelectItem" data-vlr="<?= $b[5]; ?>" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-link">
+                                        <?= $b[6]; ?>
+                                        </a>
+                                    </td>
+                                    <td width="32%">
+                                        <a id="cp_capacidade_<?= $k . '_' . $a; ?>_2" onclick="opensearch(this);" href="#SelectItem" data-vlr="<?= $b[7]; ?>" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-link">
+                                        <?= $b[8]; ?>
+                                        </a>
+                                    </td>
+                                    <td width="3%" class="enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="" class="icon-cancel-2 ui-link" data-original-title="Excluir item"></a></td>
+                                </tr>
+                            </table>
+                            <?php endforeach; }?>
+                        </div>
+                        
+                    </div><!-- /item -->
+                    <?php endforeach; ?>
+                </div><!-- /carousel-inner -->
+            </div>     <!-- /carousel -->           
+        </div><!-- /ui-grid-a -->
+        <?php else: ?>
+        <h3 style="color: #FFF;">Sem concorrentes cadastrados!</h3>
+        <?php endif; ?>
+    </div><!-- /content -->
+</div><!-- ui-grid-a -->
+
+<script src="/js/cp_controller.js"></script>
+<script type="text/javascript">
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove();
+    };
+});
+$('#mnulateralesquerdo').children('div:last').attr('data-collapsed', 'false');
+$('#mod_cp_capacidade').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+$('.carousel').carousel({
+    pause: true,
+    interval: false
+});
+function changeme(obj){
+    var pth = "/images/comparativos/" + $(obj).attr('data-img');
+    var img = '<span><img src="' + pth + '"></span>';
+    var mod = $(obj).attr('data-modelo');
+    var ctt  = img + mod;
+    $(obj).closest('ul').prev().html(ctt);
+}
+
+function addline(tipo,cp){
+    var mbclass = '.mb-' + tipo;
+    var idprinc = '#mb-' + tipo + '-' + cp;
+    var ids = [];
+    $('.carousel-inner').find(mbclass).each(function(){
+        var sp = $(this).attr('id');
+        var pt = sp.split('-');
+        ids.push(pt[pt.length-1]);
+    });
+    var linenm = 0;
+    var tblidc = $(idprinc).children('table:last').attr('id');
+    //console.log(tblidc);
+    if(typeof tblidc !== 'undefined'){
+        linenm = parseInt(tblidc.split('_')[2]) + 1;
+    }
+    newtblname = tipo + '_' + cp + '_' + linenm;
+    col01 = 'mb_' + tipo + '_' + cp + '_' + linenm + '_1';
+    col02 = 'mb_' + tipo + '_' + cp + '_' + linenm + '_2';
+    col03 = 'cp_' + tipo + '_' + cp + '_' + linenm + '_1';
+    col04 = 'cp_' + tipo + '_' + cp + '_' + linenm + '_2';
+
+    tblnew = '<table id="' + newtblname + '" width="100%" border="0" cellspacing="4" cellpadding="0">';
+    tblnew += '<tr><td width="20%">';
+    tblnew += '<a id="' + col01 + '" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-link">';
+    tblnew += '<span class="icon-plus"></span>Item';
+    tblnew += '</a></td><td width="30%">';
+    tblnew += '<a id="' + col02 + '" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-link">';
+    tblnew += '<span class="icon-plus"></span>Descritivo MB';
+    tblnew += '</a></td><td width="15%">';
+    tblnew += '<a id="' + col03 + '" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-link">';
+    tblnew += '<span class="icon-plus"></span>Descritivo Concorrente';
+    tblnew += '</a></td><td width="32%">';
+    tblnew += '<a id="' + col04 + '" onclick="opensearch(this);" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-link">';
+    tblnew += '<span class="icon-plus"></span>Argumento de Vendas';
+    tblnew += '</a></td>';
+    tblnew += '<td width="3%" class="enable"><a onclick="excludeme(this);" href="#" data-toggle="tooltip" title="" class="icon-cancel-2 ui-link" data-original-title="Excluir item"></a></td>';
+    tblnew += '</tr>';
+    tblnew += '</table>';
+    
+    $(idprinc).append(tblnew);
+}
+
+function excludeme(obj){
+    var tblcp = '#' + $(obj).closest('table').attr('id');
+    $(tblcp).remove();
+}
+
+function savecp(){
+    loading('show');
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    var mbclass = '.mb-capacidade';
+    var ids = [];
+    $('.carousel-inner').find(mbclass).each(function(){
+        var sp = $(this).attr('id');
+        var pt = sp.split('-');
+        ids.push(pt[pt.length-1]);
+    });
+    var arr = [];
+    for(i=0; i < ids.length; i++){
+        var item = '#' + ids[i];
+        //console.log(item);
+        $(item).children('.ui-grid-a').each(function(){
+            $(this).children('table').each(function(){
+                var agrupamento = 'mod_cp_' + $(this).attr('id').split('_')[0];
+                var idtolinenm  = $(this).attr('id');
+                var linenm = idtolinenm.split('_')[idtolinenm.split('_').length - 1];
+                //agrupamento = agrupamento.replace('-','_');
+                console.log(agrupamento);
+                if(agrupamento == 'mod_cp_capacidade'){
+                    agrupamento = 'mod_cp_capacidades';
+                }
+                var col01 = $(this).children('tbody').children('tr').children('td:first').children('a').attr('data-vlr');
+                var col02 = $(this).children('tbody').children('tr').children('td:first').next().children('a').attr('data-vlr');
+                var col03 = $(this).children('tbody').children('tr').children('td:last').prev().prev().children('a').attr('data-vlr');
+                var col04 = $(this).children('tbody').children('tr').children('td:last').prev().children('a').attr('data-vlr');
+                if(typeof col01 === 'undefined' || col01 == 0){
+                    col01 = '';
+                }
+                if(typeof col02 === 'undefined' || col02 == 0){
+                    col02 = '';
+                }
+                if(typeof col03 === 'undefined' || col03 == 0){
+                    col03 = '';
+                }
+                if(typeof col04 === 'undefined' || col04 == 0){
+                    col04 = '';
+                }
+                var str = ids[i] + ',' + agrupamento + ',' + linenm + ',' + col01 + ',' + col02 + ',' + col03 + ',' + col04;
+                arr.push(str);
+                //console.log(str);
+            });
+        });
+    }
+    //console.log(arr);
+    $.post('/modelos/actions/savecomparativos',{comparativos: arr})
+    .done(function(data){
+        console.log(data);
+        //var result = JSON.parse(data);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-success').html('Informações atualizadas com sucesso!');
+        $('#answer').slideDown().delay(5000).slideUp();
+    }).fail(
+        function(err){
+        //var result = JSON.parse(err);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-danger').html('Houve um erro, tente mais tarde!');
+        $('#answer').delay(5000).slideDown();
+    });
+}
+
+$(document).on("pageinit", "body", function(event){
+    $('.menu-concorrentes').hover(function(){
+        $('.sub-concorrentes').css({"display":"block"});
+    }, 
+    function(){
+        $('.sub-concorrentes').css({"display":"none"});
+    });
+});
+</script>
+

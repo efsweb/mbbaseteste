@@ -1,9 +1,13 @@
+/**
+ * Arquivo que controla todas as funções principais do link Modelos
+ * Criado por: Eliel Fernandes
+ */
 
 var resultado_da_busca;
 var index = 1;
 /*
-Menu lateral de familia e modelo
- */
+* Menu lateral de familia e modelo
+*/
 function changefamily(obj){
     loading('show');
     $('#select-native-6').prop('disabled','true');
@@ -87,17 +91,29 @@ Fim do Menu lateral de família e modelo
 
 /*
 POPUP QUE SELECIONA ALIAS FUNCOES
- */
+*/
 function loading(ShowOrHide){
     setTimeout(function(){$.mobile.loading(ShowOrHide);},1);
 }
 
+
+/**
+ * Função que abre o popup de alias
+ * Criado por: Eliel Fernandes
+ * Versão: 1.0.0
+ */
 function opensearch(obj){
     id = $(obj).attr('id');
     $('#SelectItem').attr('data-parent',id);
     search();
 }
 
+/**
+ * Função que executa a busca de alias
+ * Criado por: Eliel Fernandes
+ * Atualizado em: 06/08/2015
+ * Versão: 1.1.0
+ */
 function search(){
     loading('show');
     var tbl_resultado = $('#tbl_resultado');
@@ -108,8 +124,8 @@ function search(){
     var p  = 'param_desc_alias=' + $('#param_desc_alias').val();
     p  = p + '&param_finalidade=' + $('#param_finalidade').val();
     p  = p + '&param_tipo=' + $('#param_tipo').val();
-    p  = p + '&param_param_grupo=' + $('#select-native-2').val();
-    p  = p + '&param_clasi=' + $('#select-classificacao').val();
+    p  = p + '&param_param_grupo=Todos';
+    p  = p + '&param_clasi=Todos';
     var ur = '/modelos/fichatecnica/search?' + p;
 
     $.post(ur,function(data){
@@ -140,10 +156,10 @@ function search(){
                     d = resultado_da_busca[i].desc_item_vinculado;
 
                 var row  = '<tr id="ln_pdc_' + resultado_da_busca[i].id_alias + '">';
-                row += '<td class="acoes" style="width: 85px;">';
-                row += '<a href="#" data-id="' + resultado_da_busca[i].id_alias + '" data-desc="' + a + '" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" onclick="selectalias(this);" data-toggle="tooltip" data-placement="top" title="Selecionar alias"></a>';
-                row += '<a href="#" onclick="showalias(\'' + resultado_da_busca[i].id_alias + '\');" data-toggle="tooltip" title="editar" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-pencil-2"></a>';
-                row += '<a href="#" onclick="showalias(\'0\',this);" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a></td>';
+                row += '<td class="acoes">';
+                row += '<a href="#" data-id="' + resultado_da_busca[i].id_alias + '" data-desc="' + a + '" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-ok-3" onclick="selectalias(this);" data-toggle="tooltip" data-placement="right" data-placement="top" title="Selecionar"></a>';
+                row += '<a href="#" onclick="showalias(\'' + resultado_da_busca[i].id_alias + '\',\'1\',this);" data-toggle="tooltip" title="editar" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-pencil-2"></a>';
+                row += '<a href="#" onclick="showalias(\'' + resultado_da_busca[i].id_alias + '\',\'2\',this);" class="ui-corner-all ui-btn-b btn-acoes-ficha icon-plus" data-toggle="tooltip" data-placement="top" title="Criar novo alias"></a></td>';
                 row += '<td width="270px"><p>' + a + '</p></td>';
                 row += '<td width="105px"><p>' + b + '</p></td>';
                 row += '<td width="150px"><p>' + c + '</p></td>';
@@ -159,50 +175,128 @@ function search(){
     });
 }
 
-function showalias(up,obj){
-    $.mobile.loading('show');
-    $('#SelectItem').popup('close');
-    if(typeof up === "undefined"){
-        setTimeout(function(){$('#AddAlias').popup('open');},1000);
-        $.mobile.loading('hide');
-    }else{
-        var x = up;
-        if(up == 0){
-            y = $(obj).closest('tr').attr('id');
-            y = y.split('_');
-            x = y[2];
+/**
+ * Função que exibe a Aba de Alias no POPUP Alias
+ * Criado por: Eliel Fernandes
+ * Atualizado em: 12/08/2015
+ * Versão: 2.1.1
+ */
+function showalias(up,tipo,obj){
+    if(tipo === '2' || tipo === '1'){
+        if(tipo === '1'){
+            html = $(obj).parent().parent().children('td:last').html();
+            if(html != '<p></p>'){
+                alert('Você não pode editar um Item de Engenharia');
+                return;
+            }
         }
-        $.post('/modelos/index/getaliasdata', {id: x}, function(data){
+        $.post('/modelos/index/getaliasdata', {id: up}, function(data){
             var ret = JSON.parse(data);
+            if(tipo === '1'){
+                $('#param_id_alias').val(up);
+                txt = '<p style="float:left; padding-top: 12px;">Código: <span>' + up + '</span></p>';
+                $('#nrcodigo').html(txt);
+            }
+            fina = $('#param_finalidade').val();
+            if(fina == 'valor'){
+                $('#param_novo_tipo_finalidade').val('valor');
+                $("input[name='label-alias']:last").prev().click();
+                $("input[name='label-alias']").checkboxradio("refresh");
+            }
             $('#desc_alias_new').val(ret.desc_alias);
             $('#myclassifications').select2("val", ret.id_classificacao);
-            if(up != 0)
-                $('#param_id_alias').val(up);
             if((ret.cod_item_vinculado !== null) && (ret.desc_item_vinculado !== null)){
                 $('#btn_add_item_vinculado').html(ret.desc_item_vinculado);
                 $('#itemvinculado').val(ret.cod_item_vinculado);
                 $('#param_novo_tipo_alias').val('item');
             }
-            setTimeout(function(){$('#AddAlias').popup('open');},1000);
-            $.mobile.loading('hide');
+            $('#btn-aba-alias').removeClass('hide');
+            $('#btn-aba-alias').trigger('click');
         });
+    }else{
+        $('#btn-aba-alias').removeClass('hide');
+        $('#btn-aba-alias').trigger('click');
     }
 }
 
+/**
+ * Função que limpa os campos de alias ao cancelar, adicionar
+ * Criado por: Eliel Fernandes
+ * Atualizado em: 07/08/2015
+ * Versão 2.0.0
+ */
 function backsearch(){
-    loading('show');
-    $('#AddAlias').popup('close');
-    $("input[name='label-alias']:first").prev().click();
-    $("input[name='label-alias']").checkboxradio("refresh");
-    $('#param_id_alias').val('0');
     $('#param_novo_tipo_finalidade').val('label');
     $('#param_novo_tipo_alias').val('alias');
+    $('#param_id_alias').val('0');
+    $('#nrcodigo').html('<p style="float:left; padding-top: 12px;">Código: <span>Novo</span></p>');
     $('#desc_alias_new').val('');
     $('#itemvinculado').val('');
     $('#myclassifications').select2("val", "");
     $('#btn_add_item_vinculado').html('<span class="icon-plus">&nbsp;</span>adicionar item engenharia');
-    loading('hide');
-    setTimeout(function(){$('#SelectItem').popup('open');},500);
+    $("input[name='label-alias']:first").prev().click();
+    $("input[name='label-alias']").checkboxradio("refresh");
+    $('#btn-aba-search').trigger('click');
+    $('#btn-aba-alias').addClass('hide');
+}
+
+/**
+ * Função que limpa os campos de alias ao trocar de aba
+ * Criado por: Eliel Fernandes
+ * Criado em: 11/08/2015
+ * Versão 1.0.0
+ */
+function closealias(){
+    $('#param_novo_tipo_finalidade').val('label');
+    $('#param_novo_tipo_alias').val('alias');
+    $('#param_id_alias').val('0');
+    $('#nrcodigo').html('<p style="float:left; padding-top: 12px;">Código: <span>Novo</span></p>');
+    $('#desc_alias_new').val('');
+    $('#itemvinculado').val('');
+    $('#myclassifications').select2("val", "");
+    $('#btn_add_item_vinculado').html('<span class="icon-plus">&nbsp;</span>adicionar item engenharia');
+    $("input[name='label-alias']:first").prev().click();
+    $("input[name='label-alias']").checkboxradio("refresh");
+    $('#btn-aba-alias').addClass('hide');
+}
+
+/**
+ * Função que salva o alias
+ * Criado por: Eliel Fernandes
+ * Atualizado em: 07/08/2015
+ * Versão: 1.1.0
+ */
+function savealias(){
+    //loading('show');
+    if(($('#desc_alias_new').val() == '') || ($('#myclassifications').val() == null)){
+        alert('Informe a descrição e a Classificação!');
+        //loading('hide');
+        return;
+    }
+    var paid = $('#param_id_alias').val();
+    var fina = $('#param_novo_tipo_finalidade').val();
+    var tipo = $('#param_novo_tipo_alias').val();
+    var desc = $('#desc_alias_new').val();
+    var vinc = $('#itemvinculado').val();
+    var clas = $('#myclassifications').val();
+    var vinculo = '';
+    if(vinc != ''){
+        vinculo = 'modelo';
+    }
+    console.log(paid + ',' + fina + ',' + tipo + ',' + desc + ',' + vinc + ',' + clas);
+    $.post('/modelos/actions/savealias',{
+        param_id_alias : paid,
+        param_id_classificacao: clas,
+        param_desc_alias:desc,
+        param_finalidade:fina,
+        param_tipo:tipo,
+        param_item_vinculado:vinc,
+        param_nivel_item_vinculado: vinculo
+    },function(data){
+        console.log(data);
+        backsearch();
+        search();
+    });
 }
 
 function backtonormal(obj){
@@ -245,46 +339,6 @@ function setEnter(e){
         e.preventDefault();
         search();
     }
-}
-
-function savealias(){
-    //loading('show');
-    if(($('#desc_alias_new').val() == '') || ($('#myclassifications').val() == '')){
-        alert('Informe a descrição e a Classificação!');
-        loading('hide');
-        return;
-    }
-    var paid = $('#param_id_alias').val();
-    var fina = $('#param_novo_tipo_finalidade').val();
-    var tipo = $('#param_novo_tipo_alias').val();
-    var desc = $('#desc_alias_new').val();
-    var vinc = $('#itemvinculado').val();
-    var clas = $('#myclassifications').val();
-
-    //console.log(paid + ',' + fina + ',' + tipo + ',' + desc + ',' + vinc + ',' + clas);
-    $.post('/modelos/actions/savealias',{
-        param_id_alias : paid,
-        param_id_classificacao: clas,
-        param_desc_alias:desc,
-        param_finalidade:fina,
-        param_tipo:tipo,
-        param_item_vinculado:vinc,
-        param_nivel_item_vinculado: 'modelo'
-    },function(data){
-        
-        //console.log(data);
-        $("input[name='label-alias']:first").prev().click();
-        $("input[name='label-alias']").checkboxradio("refresh");
-        $('#param_id_alias').val('0');
-        $('#param_alias_finalidade').val('valor');
-        $('#param_tipo_alias').val('alias');
-        $('#desc_alias_new').val('');
-        $('#itemvinculado').val('');
-        $('#myclassifications').select2("val", "");
-        $('#btn_add_item_vinculado').html('<span class="icon-plus">&nbsp;</span>adicionar item engenharia');
-        backsearch();
-        search();
-    });
 }
 
 function validaScroll(){
@@ -377,3 +431,57 @@ $(function() {
         }
     });
 });
+
+/**
+ * No load da página ativa o arrastar das funções
+ * Criada por: Eliel Fernandes
+ * Criada em: 03/08/2015
+ */
+$(document).on('pageshow', 'div', function (event, ui) {
+    $('#listcontent').sortable({
+        handle: ".handlearrasta",
+        cancel: '.not-dragg',
+        placeholder: 'row-placeholder',
+        items: "> li",
+        stop: function(){
+            $('.content').find('.row-cont-ficha').each(function(){
+                nlinha = $(this).attr('data-linha');
+            });
+        }
+    });
+    $('#listcontent').disableSelection();
+    $('.mnutipoholder').hover(function(){
+        $(this).children('div:first').stop().fadeIn('fast');
+    },function(){
+        $(this).children('div:first').stop().fadeOut('fast');
+    });
+});
+
+/**
+ * Função que muda o tipo de linha (Item, Cabeçalho ou Observação)
+ * Criado por: Eliel Fernandes
+ * Criado em: 30/07/2015
+ * Atualizada em: 03/08/2015
+ * Versão 1.0.1
+ */
+function changetype(obj){
+    nome = $(obj).html();
+    $.when(
+        $('#listcontent').find('.tipo-linha-title').each(function(){
+            html = $(this).html();
+            if(html == 'Cabeçalho' && nome == 'Cabeçalho'){
+                $(this).html('Item');
+            }
+            /*if(html == 'Observação' && nome == 'Observação'){
+                $(this).html('Item');
+            }*/
+        })
+    ).done(function(){
+        $(obj).parent().parent().children('span:first').html(nome);
+    });
+}
+
+
+
+
+

@@ -10,14 +10,26 @@
     <link rel="stylesheet" href="/css/select2.min.css"/>
     <link rel="stylesheet" href="/css/default.css"/>
     <link rel="stylesheet" href="/css/style.css"/>
-    <link rel="stylesheet" href="/css/jquery-ui.css" />
+    <link rel="stylesheet" href="/css/style-modified.css"/>
+    <link rel="stylesheet" href="/css/lightbox.css"/>
+    <link rel="stylesheet" href="/css/jquery-ui.css" id="jqueryui-style" />
     <link rel="stylesheet" href="/css/fontello.css">
+    <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+
 
     <script src="/js/jquery.js"></script>
     <script src="/js/jquery.mobile-1.4.4.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/select2.full.js"></script>
     <script src="/js/jquery-ui.js"></script>
+    <script src="/js/list.js"></script>
+    <!-- Lightbox Photo -->
+    <script src="/js/lightbox.min.js"></script>
+    
+    <!-- Lightbox Photo -->
+    <script src="/js/html5lightbox.js"></script>
+
+
 
     <script id="panel-init">
         $( document ).on( "pageinit", "body", function( event ) {
@@ -61,13 +73,31 @@
                 $(".pop-itens-engenharia").fadeOut();
             });
         });
+
+        /* ---------->>> TABS <<<-----------*/
+        $(document).on('pageshow', 'div', function (event, ui) {
+            /*Abre as tabs assim que a página carrega*/
+            $("#tabs").tabs();
+
+            /* ---------->>> DISABLE CSS JQUERY UI FOR MY TABS <<<-----------*/
+            $("#tabs").ready(function(){
+                $("#jqueryui-style").attr("disabled", "disabled");
+            });
+
+        });
+
+        /* ---------->>> DISABLE CSS JQUERY UI FOR MY TABS <<<-----------*/
+        $("#tabs").ready(function(){
+            $("#jqueryui-style").attr("disabled", "disabled");
+        });
     </script>
     
 </head>
 
 <body>
-
+<div class="holderAll" style="overflow-x:scroll;">
     <header data-role="header" data-position="fixed" class="header ui-header-fixed">
+    <div class="holderAll">
         <div class="ui-grid-b">
             <div class="ui-block-a">
                 <div class="logo"><img src="/images/logo.jpg"/></div>
@@ -76,22 +106,30 @@
                 <?php echo $this->action('mnutopo', 'index', 'default') ?>
             </div>
             <div class="ui-block-c">
-                <div data-role="navbar">
+                <div style="padding-top: 15px;">
                     <ul id="menu-user">
-                        <li><a href="#" class="name-user"><?= $this->usuarionome; ?></a></li>
-                        <li><a href="/modelos" data-ajax="false" class="icon-home-2"></a></li>
-                        <li><a href="/" data-ajax="false" class="icon-logout"></a></li>
+                        <li class="ui-block-a">
+                            <a id="mnu-versao-sistema" onclick="mnutoggle(this);" href="#" class="name-user ui-link ui-btn"><?= $this->versaoatual; ?> <span class="icon-down-dir"></span></a>
+                            <div id="mnu-open-versao-sistema" class="mnu-sys-version">
+                                <ul class="mnu-version">
+                                    <?php foreach($this->versoes as $row): ?>
+                                    <li data-id="<?= $row[0]; ?>" onclick="changeversionme(this);"><?= $row[1]; ?></li>
+                                    <?php endforeach; ?>
+                                    <li>Gerenciar Versões</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="ui-block-b"><a href="#" class="ui-link ui-btn"><?= $this->usuarionome; ?></a></li>
+                        <li class="ui-block-c"><a href="/logout" data-ajax="false" class="icon-logout ui-link ui-btn"></a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div>
         </div>
+    </div>
     </header>
     
     <div data-role="panel" data-position-fixed="true" data-display="overlay" data-theme="b" id="add-form" class="ui-panel-open menu-left">
-        <?php echo $this->action('selectfamiliamodelo','index','dadosmestres') ?>
         <?php echo $this->action('mnuesquerdo','index','dadosmestres') ?>
-
-
     </div><!-- /panel -->    
     
     <div data-role="page" class="page-content">
@@ -334,7 +372,7 @@
         </div><!-- /content-popup -->
         
     </div> <!-- /POP UP -->  
-    
+</div>
     
 <script id="panel-init">
 $('input:radio[name=filtro1]').click(function(){
@@ -460,6 +498,32 @@ $.post('/modelos/index/loaditemengenharia',function(resposta){
         $('#list_itens_vinculados').append(opt);
     }
 });
+/**
+ * Função que exibe e oculta o menu de versão
+ * Criado por: Eliel Fernandes
+ * Criado em: 14/08/2015
+ * Versão: 1.0.0
+ */
+function mnutoggle(obj){
+    $('#mnu-open-versao-sistema').stop().fadeToggle('fast');
+}
+
+/**
+ * Função que troca a versão do sistema
+ * Criado por: Eliel Fernandes
+ * Criado em: 14/08/2015
+ * Versão: 1.0.0
+ */
+function changeversionme(obj){
+    versao = $(obj).html() + '<span class="icon-down-dir"></span>';
+    idnva  = $(obj).attr('data-id');
+    $.post('/index/changeversion',{id: idnva})
+    .done(function(data){
+        $('#mnu-versao-sistema').html(versao);
+        $('#mnu-open-versao-sistema').stop().fadeToggle('fast');
+        location.reload(true);
+    });
+}
 </script>
 </body>
 </html>

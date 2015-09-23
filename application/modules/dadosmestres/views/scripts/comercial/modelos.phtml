@@ -1,0 +1,386 @@
+<div class="ui-grid-a">
+    <div class="title">
+        <h1>Dados Mestres - Comercial - Modelos</h1>
+    </div>
+    
+    <div class="content" style="padding: 38px 10px;">
+
+    <div id="tabs">
+        <ul>
+            <li><a href="#tab-accelo">Accelo</a></li>
+            <li><a href="#tab-atego">Atego</a></li>
+            <li><a href="#tab-actros">Actros</a></li>
+            <li><a href="#tab-axor">Axor</a></li>
+            <li><a href="#tab-atron">Atron</a></li>
+        </ul>
+
+        <div class="content-tabs" id="tab-accelo">
+            <!--Carousel modelos -->
+            <div id="holdermnu">
+                <ul id="listAccelo" class="list_modelos">
+                    <li class="bg-grey button"><a href="#" onclick="AddNewModelo();" class="green">+</a></li>
+                    <li class="bg-white button"><a href="#" class="green">815 <span>estradeiro</span></a></li>
+                    <li class="bg-grey button"><a href="#" class="green">1016</a></li>
+                </ul>
+            </div>
+
+            <div class="controles">
+                <div class="ClickLeft" onclick="moveTo('left');"><span class="icon-left-open-1"></span></div>
+                <div class="ClickRight" onclick="moveTo('right');"><span class="icon-right-open-1"></span></div>
+            </div>
+
+            <img class="img-responsive" style="margin:0 auto; padding-top: 18px;" src="/images/division-dadosmestres.jpg"/>
+
+        </div><!-- FIM CONTENT-ACCELO -->
+
+        <div class="content-tabs" id="tab-atego">
+            <!--Carousel modelos -->
+            <div id="holdermnu">
+                <ul id="listAtego" class="list_modelos">
+                    <li class="bg-grey button"><a href="#" class="green">+</a></li>
+                    <li class="red bg-white button"><a href="#" class="green">1419</a></li>
+                    <li class="red bg-grey button"><a href="#" class="green">1719 <span>estradeiro</span></a></li>
+                    <li class="green bg-grey button"><a href="#" class="green">1726</a></li>
+                    <li class="green bg-grey button"><a href="#" class="green">1716<br/> <span>4x4</span></a></li>
+                    <li class="green bg-grey button"><a href="#" class="green">1729<br/> <span>col. de lixo</span></a></li>
+                    <li class="green bg-grey button"><a href="#" class="green">1726<br/> <span>cav. mecânico</span></a></li>
+                    <li class="green bg-grey button"><a href="#" class="green">2426</a></li>
+                    <li class="green bg-grey button"><a href="#" class="green">2430</a></li>
+                </ul>
+            </div>
+
+            <div class="controles">
+                <div class="ClickLeft" onclick="moveTo('left');"><span class="icon-left-open-1"></span></div>
+                <div class="ClickRight" onclick="moveTo('right');"><span class="icon-right-open-1"></span></div>
+            </div>
+
+            <img class="img-responsive" style="margin:0 auto; padding-top: 18px;" src="/images/division-dadosmestres.jpg"/>
+        </div><!--Fim content-Atego -->
+
+        <div class="content-tabs" id="tab-actros"><p>Container 3</p></div>
+
+        <div class="content-tabs" id="tab-axor">
+            <div id="holdermnu">
+                <ul id="listAxor" class="list_modelos">
+                    <li class="bg-grey button"><a href="#" class="green">+</a></li>
+                    <li class="bg-white button"><a href="#" class="green">1933</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">2599 <span>estradeiro</span></a></li>
+                    <li class="bg-grey button"><a href="#" class="green">2533 <span>estradeiro</span></a></li>
+                    <li class="bg-grey button"><a href="#" class="green">2999 <span>estradeiro</span></a></li>
+                    <li class="bg-grey button"><a href="#" class="green">2444 <span>multiuso</span></a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 6</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 7</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 8</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 9</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 10</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 11</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 12</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 13</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 14</a></li>
+                    <li class="bg-grey button"><a href="#" class="green">Item 15</a></li>
+                </ul>
+            </div>
+
+                <div class="controles">
+                    <div class="ClickLeft" onclick="moveTo('left');"><span class="icon-left-open-1"></span></div>
+                    <div class="ClickRight" onclick="moveTo('right');"><span class="icon-right-open-1"></span></div>
+                </div>
+
+                <img class="img-responsive" style="margin:0 auto; padding-top: 18px;" src="/images/division-dadosmestres.jpg"/>
+        </div><!--Content Axor -->
+
+        <div class="content-tabs" id="tab-atron"><p>Container 5</p></div>
+
+    </div><!-- tabs -->
+
+    <!-- Collapse div Configurações do Modelo -->
+    <div id="collapseBlack" data-role="collapsible-set" class="ui-collapsible-set">
+        <div data-role="collapsible" data-collapsed="false" class="ui-collapsible ui-collapsible-inset">
+            <h3>Configurações do Modelo</h3>
+            <div class="ui-collapsible-content first-Config" aria-hidden="false">
+
+                <!--Fomulario de dados -->
+                <div class="holder-left formsPadrao">
+                    <label for="basic">Nome do Modelo:</label>
+                    <input type="text" name="name_modelos" id="basic" value="815" placeholder="digite o modelo" />
+
+                    <label for="basic">Tração:</label>
+                    <input type="text" name="tracao" id="basic" value="4x4" placeholder="digite a tração">
+
+                    <label for="basic">Aplicação:</label>
+                    <input type="text" name="aplicacao" id="basic" value="lorem" placeholder="digite a aplicação">
+
+                </div><!-- Holder Left -->
+
+                <div class="holder-right formsPadrao">
+                     <label for="basic">Complemento:</label>
+                    <input type="text" name="complemento" id="basic" value="estradeiro" placeholder="digite o complemento" />
+
+                    <label for="basic">Classificação:</label>
+                    <input type="text" name="tracao" id="basic" value="lorem" placeholder="digite a classificação">
+
+                    <label for="basic">Código:</label>
+                    <input type="text" name="b09" id="basic" value="BSUUW5SD78W51" placeholder="digite o b09">
+                </div><!--Holder Right -->
+
+                <div class="line-division"></div>
+
+                <!--Checkbox Modelo Ativo -->
+                <div class="ui-checkbox" style="width: 40%; float:left;">
+                    <label for="checkbox-enhanced" class="labelModeloAtivo ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off modelo-ativo">Modelo Ativo</label>
+                    <input onclick="changeActive(this);" checked="checked" type="checkbox" name="checkbox-enhanced" id="checkbox-modeloativo" data-enhanced="true"  data-theme="b">
+                </div>
+
+                <div style="float:left; width:50%;">
+                    <label for="select-choice-0" class="select labelSelectMultiple">Responsável pelos dados:</label>
+                    <select name="selecResponsavel" multiple="multiple" data-native-menu="false" id="selectResponsavel" style="float:left; width:50%;">
+                      <option value="standard">Cassio Politano</option>
+                      <option value="rush">Eliel Fernandes</option>
+                      <option value="express">Evelise Vazquez</option>
+                      <option value="overnight">Mike Oliveira</option>
+                    </select>
+                </div>
+
+                <div style="clear:both;"></div>
+            </div>
+        </div><!--Configurações do Modelo -->
+
+        <!-- Collapse div Fotos e Vídeos -->
+        <div id="collapseBlack" data-role="collapsible" data-collapsed="true" class="ui-collapsible ui-collapsible-inset">
+            <h3>Fotos e Vídeos</h3>
+            <div class="ui-collapsible-content" aria-hidden="false">
+            <div id="photos">
+                <div id="815_01" class="crop holder">
+                    <div onclick="DeletePhotosVideos(this)" class="delete-button">x</div>
+                    <a href="/images/accelo_1016_pic_1.jpg" data-lightbox="815_photos">
+                        <img src="/images/accelo_1016_pic_1.jpg" />
+                    </a>
+                </div>
+
+                <div id="815_02" class="crop holder">
+                    <div onclick="DeletePhotosVideos(this)" class="delete-button" onclick="">x</div>
+                    <a href="/images/accelo_1016_pic_1.jpg" data-lightbox="815_photos">
+                        <img src="/images/accelo_1016_pic_1.jpg" />
+                    </a>
+                </div>
+
+                <div id="815_03" class="crop holder">
+                    <div onclick="DeletePhotosVideos(this)" class="delete-button">x</div>
+                    <a href="/images/accelo_1016_pic_1.jpg" data-lightbox="815_photos">
+                        <img src="/images/accelo_1016_pic_1.jpg" />
+                    </a>
+                </div>
+            </div>
+            <a href="#" onclick="openPhotoOption();" class="addNewPhoto">+</a>
+            <input type="file" id="file_photo" style="display:none">
+
+            <div style="clear:both;"></div>
+
+            <div class="greenBg"><h4 class="titleFotoseVideos">Vídeos</h4></div>
+
+                <div id="videos">
+                    <div class="holder">
+                        <div onclick="DeletePhotosVideos(this)" class="delete-button">x</div>
+                        <a class="titleVideos html5lightbox" data-group="vid805" href="https://www.youtube.com/watch?v=hV2ideRjDIk">Black Sabbath - NANANANAN</a>
+                    </div>
+
+                    <div class="holder">
+                        <div onclick="DeletePhotosVideos(this)" class="delete-button">x</div>
+                        <a class="titleVideos html5lightbox" data-group="vid805" href="https://www.youtube.com/watch?v=hV2ideRjDIk">Nome do Vídeo Aqui</a>  
+                    </div>    
+
+                    <div class="holder">
+                        <div onclick="DeletePhotosVideos(this)" class="delete-button">x</div>
+                        <a class="titleVideos html5lightbox" data-group="vid805" href="https://www.youtube.com/watch?v=hV2ideRjDIk">Black Sabbath - NANANANAN</a>
+                    </div>
+                </div>
+                    <a href="#" onclick="openVidOption();" class="titleVideos plus">+</a>
+                    <input type="file" id="file_video" style="display:none">
+
+                    <div style="clear:both;"></div>
+
+
+            </div>
+        </div><!--Fim Fotos e Vídeos -->
+
+        <!--Collapse div Item Engenharia -->
+        <div id="collapseBlack" data-role="collapsible" data-collapsed="true" class="ui-collapsible ui-collapsible-inset">
+            <h3 >Item Engenharia</h3>
+            <div class="ui-collapsible-content" aria-hidden="false">
+               Content Here! 
+            </div>
+        </div><!--Fim Item Engenharia -->
+
+        <!-- Collapse div Truck Info -->
+        <div id="collapseBlack" data-role="collapsible" data-collapsed="true" class="ui-collapsible ui-collapsible-inset truckInfo" style="text-align:center;">
+
+            <h3>Truck Info</h3>
+            <div class="ui-collapsible-content" aria-hidden="false">
+               <label class="borderBottom">Deseja Ativar no Truck Info?</label>
+                <select name="flip-1" id="slider_AtivartruckInfo" data-role="slider">
+                    <option value="nao_ativar">Não</option>
+                    <option value="ativar">Sim</option>
+                </select>
+            </div>
+
+            <select name="selectAtiveTruck" multiple="multiple" id="selectAtiveTruck" data-native-menu="false">
+              <option>Onde?</option>
+              <option value="standard">Fotos e Vídeos</option>
+              <option value="rush">Ficha Técnica</option>
+              <option value="express">UP</option>
+              <option value="overnight">Walk Around</option>
+              <option value="overnight">Comparativos</option>
+            </select>
+
+        </div><!--Fim Truck Info -->
+    </div><!-- Fim do Collapse -->
+
+    <a href="" class="btn-azul pull-right btn-save ui-link"><span class="icon-ok-3"></span>salvar</a>
+
+
+    </div><!-- content -->
+
+</div>
+
+</div><!-- ui-grid-a -->
+
+<script>
+$('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
+$('#mnulateralesquerdo').children('div:first').children('ul').children('li:first').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+    var options = {
+      valueNames: [ 'name' ]
+    };
+
+    var userList = new List('filter', options);
+
+//-----------------------------------
+//   Função DE SLIDER                |
+//-----------------------------------
+//Menu de Modelos
+function sizemnu(){
+    count = $('#listAxor').children('li').length;
+    w     = count * 85;
+    $('#listAxor').width(w);
+}
+
+function moveTo(lado){
+    $('#listAxor').stop();
+    mv = (lado === 'left') ? "+=85" : '-=85';
+    c = $('#listAxor').children('li').length;
+    w = c * 85; //width de list_modelos
+    l = $('#listAxor').css('left'); //pega o left de list_modelos
+    l = l.replace('px','');
+    h = $('#holdermnu').width(); //tamanho da janela
+    resultado = (w - h) + 20;
+    if((l >= 0 && lado == 'left') || (parseInt(l.replace('-','')) >= resultado && lado == 'right')){
+        return;
+    }
+    $('#listAxor').animate({
+        left: mv,
+     }, 500);
+}
+
+//ultima linha do js para ser invocada
+sizemnu();
+
+//função de adicionar novo modelo quando clicado no +
+function AddNewModelo(){
+    
+        $.mobile.loading("show");
+
+        setTimeout(function(){
+            $('.first-Config .ui-input-text input[type="text"]').val(''); //reseta valores to input text
+            $('.first-Config [name=name_modelos]').focus(); //focus no input nome melos
+            $('#selectResponsavel-button').empty(); // remover dados do select
+            $('#selectResponsavel-menu').children().attr('aria-selected', false); //desticar
+            $('#selectResponsavel-menu li').children().removeClass('ui-checkbox-on').addClass('ui-checkbox-off');
+            $('#photos').children('div').remove(); //remove as fotos
+            $('#videos').children('div').remove(); //remove os vídeos
+
+            $('#listAccelo').children().removeClass('bg-white').addClass('bg-grey');
+            $('<li class="bg-white button" style="margin-left:5px"><a href="#" class="green">NOVO</a></li>').insertAfter('.list_modelos li:first-child');
+
+            $.mobile.loading("hide");
+        }, 1000);
+
+}
+
+/*Função de trocar a cor do modelo de acordo com a checkbox*/
+function changeActive(obj){
+   if( $(obj).is(':checked') ){
+        $('#listAccelo').children('.bg-white').children('a').removeClass('red').addClass('green');
+    } else {
+        $('#listAccelo').children('.bg-white').children('a').removeClass('green').addClass('red');
+    }
+}
+
+//-----------------------------------
+//   Função DE VIDEOS                |
+//-----------------------------------
+/*Pega o id do input File no botão de + de Vídeos */
+function openVidOption(){
+  document.getElementById("file_video").click();
+}
+
+//Toda vez que adiconar um novo arquivo de vídeo, executa essa função
+$("#file_video").change(function(){
+    var video = document.getElementById("file_video");
+    //Pega o valor da variavel vídeo e tira o caminho da imagem
+    var filenameVideo = video.value.replace(/^.*\\/, "");
+
+    //Acrescenta no html
+    $('div#videos').append("<div class='holder'><div onclick='DeletePhotosVideos(this)' class='delete-button'>x</div><a onclick='alert(\'Não foi feito o upload do arquivo, clique em salvar para poder visualizar.\')' class='titleVideos html5lightbox' data-group='vid805'>"+filenameVideo+"</a></div>");
+});
+
+
+//-----------------------------------
+//   Função DE FOTOS                |
+//-----------------------------------
+/*Pega o id do input File no botão de + de Photos */
+function openPhotoOption(){
+  document.getElementById("file_photo").click();
+}
+
+//Toda vez que adiconar um novo arquivo de Foto, executa essa função
+$("#file_photo").change(function(){
+    var photo = document.getElementById("file_photo");
+    //Pega o valor da variavel photo e tira o caminho da imagem
+    var filenamePhoto = photo.value.replace(/^.*\\/, "");
+
+    //Acrescenta no html
+    $('div#videos').append("<div id='815_01' class='crop holder'><div onclick='DeletePhotosVideos(this)' class='delete-button'>x</div><a href='/images/accelo_1016_pic_1.jpg' data-lightbox='815_photos'><img src='/images/"+filenamePhoto+"'/></a>");
+});
+
+$(document).on('pageshow', 'div', function (event, ui) {
+
+   // $('#myModal').on('shown.bs.modal', function () {
+   //     $('#myInput').focus()
+   // });
+
+    /*Esconde a div de opções para ativar no truckInfo logo que carrega */
+    $('#selectAtiveTruck-button').css('display', 'none');
+
+});
+
+/*Função de deletar a foto apos clicar na div X */
+function DeletePhotosVideos(obj){
+    $(obj).parent().remove();
+}
+
+/*Ativa e Desativa a div de acordo com o valor do slider */
+$(document).on('change', '#slider_AtivartruckInfo', function(){
+
+  var valor = $(this).val();
+
+    if (valor == 'ativar'){
+        $('#selectAtiveTruck-button').toggle( "slow" ).empty();
+
+    }else{
+        $('#selectAtiveTruck-button').toggle( "slow" ).empty();
+        $('#selectAtiveTruck-listbox').children().attr('aria-selected', false); //desticar
+        $('#selectAtiveTruck-listbox li').children().removeClass('ui-checkbox-on').addClass('ui-checkbox-off');
+    }
+});
+
+</script>

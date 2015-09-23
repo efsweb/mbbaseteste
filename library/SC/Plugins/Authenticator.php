@@ -31,7 +31,7 @@ class SC_Plugins_Authenticator{
         $auth = Zend_Auth::getInstance()->authenticate( $authAdapter );
         if(!$auth->isValid()){
             Zend_Auth::getInstance()->clearIdentity();
-            $this->_redirect('/');
+            return null; //$this->_redirect('/');
         } else {
             $usuario = new Zend_Session_Namespace('usuario');
             $identity = $authAdapter->getResultRowObject();

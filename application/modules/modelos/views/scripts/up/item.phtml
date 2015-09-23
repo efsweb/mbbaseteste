@@ -225,7 +225,8 @@ function saveme(){
         });
         arr.push(linha);
     });
-    $.post('/modelos/actions/saveupitem',{linhas: arr})
+console.log(arr);
+    /*$.post('/modelos/actions/saveupitem',{linhas: arr})
     .done(function(data){
         console.log(data);
         loading("hide");
@@ -236,7 +237,7 @@ function saveme(){
         loading("hide");
         $('#answer').children('div').addClass('alert-danger').html('Houve um erro, tente mais tarde!');
         $('#answer').slideDown().delay(5000).slideUp();
-    });
+    });*/
 }
 
 

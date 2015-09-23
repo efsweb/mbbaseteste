@@ -1,0 +1,48 @@
+<div class="ui-grid-a">
+	<div class="title">
+		<h1>Repositório - Fichas Técnicas</h1>
+	</div>
+	<div class="content">
+		<div class="content-tabs" id="tab-disponiveis">
+			<div class="ui-grid-a" style="margin-top: 20px;">
+				<div class="ui-block-a">
+					<div class="exp_holder_content">
+						<div class="exp_holder_models">
+							<div class="exp_title">Versão Site</div>
+							<br /><br />
+							<div class="exp_models_list">
+								<div id="model_list" class="exp_models_scroll">
+									<?php foreach($this->listsite as $i => $v): ?>
+									<div class="exp_line_file"><a href="https://storage.googleapis.com/mb-fichas-tecnicas/<?= $v[0]; ?>" download="<?= $v[1]; ?>" class="exp_download_item"><img align="left" src="/images/pdf-icon.png" height="20px" />&nbsp;&nbsp;<?= $v[1]; ?></a></div>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ui-block-b">
+					<div class="exp_holder_content">
+						<div class="exp_holder_models">
+							<div class="exp_title">Versão Gráfica</div>
+							<br /><br />
+							<div class="exp_models_list">
+								<div id="model_list" class="exp_models_scroll">
+									<?php foreach($this->listgraf as $i => $v): ?>
+									<div class="exp_line_file"><a href="https://storage.googleapis.com/mb-fichas-tecnicas/<?= $v[0]; ?>" download="<?= $v[1]; ?>" class="exp_download_item"><img align="left" src="/images/pdf-icon.png" height="20px" />&nbsp;&nbsp;<?= $v[1]; ?></a></div>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+$('#mnulateralesquerdo').children('div:last').attr('data-collapsed', 'false');
+$('#mnulateralesquerdo').children('div:last').children('ul').children('li:last').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+</script>

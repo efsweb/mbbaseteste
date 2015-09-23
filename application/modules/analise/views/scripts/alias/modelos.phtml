@@ -1,0 +1,109 @@
+<div id="analise-do-termo" class="ui-grid-a">
+    <div class="title">
+        <div class="holder-search">
+            <input class="search-analise" type="text" name="search-title-analise" value="" data-mini="true" placeholder="Busque por um novo termo (Precione a tecla enter para realizar a busca)" style="font-family:fontello, Arial;">
+        </div>
+        <h1>ANÁLISE DO TERMO POR MODELO</h1>
+    </div>
+    <div class="content">
+        <div>
+            <div class="content-tabs" id="tab-modelos">
+                <div id="filter">
+                    <input class="search" placeholder="Filtre por modelo" style="font-family:fontello, Arial;" />
+                    <div class="list">
+                        <table id="analise-table-modelos" class="modelos-caminhoes">
+                            <thead>
+                                <tr>
+                                    <td colspan="2" class="name">805</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Aplicação</td>
+                                    <td>834673467364</td>
+                                </tr>
+                                <tr>
+                                    <td>Qt de Fotos</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>Qt de Concorrentes</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>Ficha Técnica</td>
+                                    <td>Sim</td>
+                                </tr> 
+                                <tr>
+                                    <td>OEE</td>
+                                    <td>OI</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <a href="#" class="btn-azul" data-toggle="tooltip" title="Ver mais informações do modelo">(<span class="icon-info-1"></span>) Ver mais</a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+
+                        <table id="analise-table-modelos" class="modelos-caminhoes">
+                            <thead>
+                                <tr>
+                                    <td colspan="2" class="name">1016</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>OE</td>
+                                    <td>OI</td>
+                                </tr>
+                                <tr>
+                                    <td>OE</td>
+                                    <td>OI</td>
+                                </tr>
+                                <tr>
+                                    <td>OEE</td>
+                                    <td>OI</td>
+                                </tr>
+                                <tr>
+                                    <td>OEE</td>
+                                    <td>OI</td>
+                                </tr> 
+                                <tr>
+                                    <td>OEE</td>
+                                    <td>OI</td>
+                                </tr>   
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <a href="#" class="btn-azul" data-toggle="tooltip" title="Ver mais informações do modelo">(<span class="icon-info-1"></span>) Ver mais</a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+    $('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
+    $('#mnulateralesquerdo').children('div:first').children('ul').children('li:first-child').next().children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+    var options = {
+        valueNames: [ 'name' ]
+    };
+
+    var userList = new List('filter', options);
+
+    $(document).ready(function(){
+        $('.content').css('overflow','auto');
+    });
+    </script>

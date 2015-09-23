@@ -1,6 +1,6 @@
 <div class="ui-grid-a">
 	<div class="title">
-        <h1>Dados Mestre - Comercial - Alias</h1>
+        <h1>Dados Mestres - Comercial - Alias</h1>
         <a href="#" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
     </div>
     
@@ -134,13 +134,13 @@ function searchpg(){
                 if(rows[i].desc_item_vinculado)
                     d = rows[i].desc_item_vinculado;
                 var row  = '<tr id="ln_pdc_' + rows[i].id_alias + '">';
-                row += '<td class="col-acoes">';
+                row += '<td class="col-acoes" style="width: 130px">';
                 row += '<a href="#" onclick="showalias(\'' + rows[i].id_alias + '\');" class="icon-pencil-2 btn-acoes ui-link" data-toggle="tooltip" title="editar" data-original-title="editar"></a>';
                 row += '&nbsp;<a href="#" onclick="showalias(\'0\',this);" data-toggle="tooltip" title="" class="icon-plus btn-acoes ui-link" data-original-title="novo"></a>';
                 row += '&nbsp;<a href="#" data-toggle="tooltip" title="" class="icon-cancel-2 btn-acoes ui-link" data-original-title="excluir"></a>';
                 row += '&nbsp;<a href="#" data-toggle="tooltip" title="" class="icon-check btn-acoes ui-link" data-original-title="checar dependências"></a></td>';
                 row += '<td><p>' + a + '</p></td>';
-                row += '<td><p>' + b + '</p></td>';
+                row += '<td style="width: 200px;"><p>' + b + '</p></td>';
                 row += '<td><p>' + c + '</p></td>';
                 row += '<td><p>' + d + '</p></td>';
                 row += '</tr>';

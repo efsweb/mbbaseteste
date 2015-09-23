@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>PDF Grafica</title>
+	<style>
+		* {
+			font-weight: normal;
+			font-size: 8pt;
+			font-family: corpos;
+		}
+		.f15{
+			font-family: corpoa;
+			font-size: 15pt;
+		}
+		/* Codigo novo */
+		.eufalei{
+			padding-top: 37px;
+			width: 792px;
+			height: 1098px;
+		}
+		.banner, .banner_verniz{
+			display: block;
+			/*background-color: #b2b4b7;*/
+			background: linear-gradient(to left, #b2b4b7, #dfe4e7);
+			width: 666px;
+			margin-left: 43px;
+			height: 100px;
+			border-radius: 10px;
+			padding-top: 5px;
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+		.banner table, .banner_verniz table{
+			height: 100px;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+		}
+		.banner_verniz{
+			background: none;
+			background-color: transparent;
+		}
+		.foto{
+			padding-top: 5px;
+			padding-bottom: 5px;
+			width: 706px;
+			margin-left: 43px;
+		}
+		.foto img{
+			width: 100%;
+		}
+		.titulo{
+			font-family: corpoa;
+			font-size: 33pt !important;
+			line-height: 30pt !important;
+			letter-spacing: -2px;
+		}
+		.subtitulo {
+			font-family: corpoa;
+			font-size: 18pt !important;
+			line-height: 14pt;
+		}
+		.linha{
+			width: 706px;
+			display: block;
+			clear: both;
+			margin: 0;
+			padding: 0;
+			margin-left: 43px;
+			overflow: auto;
+			margin-bottom: 10px;
+		}
+		.item_title{
+			padding-left: 10px;
+			padding-right: 27px;
+			padding-top: 3px;
+			background: linear-gradient(to left, #b2b4b7, #dfe4e7);
+			border-radius: 7px;
+			height: 34px;
+			font-family: corpoa;
+			font-size: 15pt;
+			text-align: left;
+			vertical-align: middle;
+		}
+		.dv_item_tabela{
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+		.item_tabela{
+			width: 100%;
+		}
+		.item_tabela td{
+			line-height: 15px;
+			border-bottom: 0.01em solid #a8a9ad;
+			padding: 2px 3px;
+			vertical-align: middle;
+		}
+		.item_atributo{
+			width: 245px;
+			text-align: left;
+		}
+		.item_atributo2{
+			width: 250px;
+			text-align: left;
+		}
+		.aright{
+			text-align: right !important;
+		}
+		.dimensoes{
+			width: 485px;
+			float: left;
+		}
+		.foto_dimensoes{
+			margin-left: 6px;
+			width: 215px;
+			float: left;
+			right: 0;
+			top: 0;
+		}
+		.foto_dimensoes img{
+			width: 215px;
+		}
+		.pesos{
+			width: 100%;
+		}
+		.pesos-td{
+			width: 348px;
+		}
+		.pesos_separator{
+			width: 10px;
+		}
+		.rodape{
+			padding: 0;
+			width: 687px;
+			margin-left: 43px;
+			border-radius: 10px;
+			border: 1px solid #333;
+			margin-top: 5px;
+			padding: 7px 0 0 0;
+		}
+		.rodape_pg_1{
+			padding: 0;
+			width: 687px;
+			margin-left: 43px;
+			border-radius: 10px;
+			border: 0.01em solid #333;
+			padding: 2px 7px 2px 7px;
+		}
+		span{
+			font-family: corpod;
+			font-size: 10pt;
+		}
+		.side_text{
+			font-family: corpos !important;
+			font-size: 6,5pt !important;
+			font-weight: normal !important;
+			border: none;
+			position: fixed;
+			right: 33px;
+			bottom: 35%;
+			rotate: -90;
+		}
+		.final_grafica{
+			width: 706px;
+			height: 390px;
+			border-radius: 10px;
+			background-color: #000000;
+		}
+	</style>
+</head>
+<body>
+	<div class="eufalei">
+		<div class="banner">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td class="titulo" valign="bottom" width="115px">Accelo</td>
+					<td class="titulo" valign="bottom" width="190px">1016</td>
+					<td rowspan="2" valign="middle" width="200px">
+						<img src="/images/logo_bluetec.png" width="120px" />
+					</td>
+					<td rowspan="2" valign="middle" align="right" width="200px">
+						<img src="/images/logo_mercedes.png" width="190px" />
+					</td>
+				</tr>
+				<tr>
+					<td class="subtitulo" valign="top">4x2</td>
+					<td class="subtitulo" valign="top">Plataforma</td>
+				</tr>
+			</table>
+		</div>
+		<div class="foto">
+			<img src="/images/accelo_1016_pic_1.jpg" />
+		</div>
+		<div class="linha">
+			<div class="dimensoes">
+				<div class="item_title">Dimensões <span>[mm]¹</span></div>
+				<div class="dv_item_tabela">
+					<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+						<tr><td class="item_atributo"></td><td class="aright"><b>1016/31</b></td><td class="aright"><b>1016/37</b></td><td class="aright"><b>1016/44</b></td><td class="aright"><b></b></td></tr><tr><td class="item_atributo">[a] distância entre eixos</td><td class="aright">3100</td><td class="aright">3700</td><td class="aright">4400</td><td class="aright"></td></tr><tr><td class="item_atributo">[b] comprimento total</td><td class="aright">6134</td><td class="aright">7134</td><td class="aright">7964</td><td class="aright"></td></tr><tr><td class="item_atributo">[c] largura</td><td class="aright">2184</td><td class="aright">2184</td><td class="aright">2184</td><td class="aright"></td></tr><tr><td class="item_atributo">[d] altura (descarregado)</td><td class="aright">2494</td><td class="aright">2494</td><td class="aright">2494</td><td class="aright"></td></tr><tr><td class="item_atributo">[e] bitola (eixo dianteiro/eixo traseiro)</td><td class="aright">1.766/1.708</td><td class="aright">1.766/1.708</td><td class="aright">1.766/1.708</td><td class="aright"></td></tr><tr><td class="item_atributo">[f] balanço (dianteiro/traseiro)</td><td class="aright">1.300/1.700</td><td class="aright">1.300/2.100</td><td class="aright">1.300/2.230</td><td class="aright"></td></tr><tr><td class="item_atributo">[g] ângulo de entrada (carregado)</td><td class="aright">22°</td><td class="aright">22°</td><td class="aright">22°</td><td class="aright"></td></tr><tr><td class="item_atributo">[h] ângulo de saída (carregado - com estepe)</td><td class="aright">12°</td><td class="aright">12°</td><td class="aright">12°</td><td class="aright"></td></tr><tr><td class="item_atributo">[i] altura: teto da cabina | chassi</td><td class="aright">1632</td><td class="aright">1632</td><td class="aright">1632</td><td class="aright"></td></tr><tr><td class="item_atributo">[j] distância mínima centro do eixo dianteiro | carroçaria</td><td class="aright">420</td><td class="aright">420</td><td class="aright">420</td><td class="aright"></td></tr><tr><td class="item_atributo">círculo de viragem do veículo</td><td class="aright">12600</td><td class="aright">14500</td><td class="aright">16600</td><td class="aright"></td></tr>
+					</table>
+				</div>
+			</div>
+			<div class="foto_dimensoes">
+				<img src="/images/accelo_1016_pic_2.jpg" height="262" width="247" />
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">
+				<table class="pesos" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td class="f15 pesos-td">Pesos <span>[kg]²</span></td>
+						<td class="pesos_separator">&nbsp;</td>
+						<td class="f15 pesos-td">Pesos admissíveis <span>[kg]</span></td>
+					</tr>
+				</table>
+			</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					<tr><td class="item_atributo"></td><td class="aright"><b>1016/31</b></td><td class="aright"><b>1016/37</b></td><td class="aright"><b>1016/44</b></td><td class="aright"><b></b></td><td class="pesos_separator">&nbsp;</td><td class="item_atributo"></td><td class="aright"><b>1016/31</b></td><td class="aright"><b>1016/37</b></td><td class="aright"><b>1016/44</b></td><td class="aright"><b></b></td></tr><tr><td class="item_atributo">Eixo Dianteiro</td><td class="aright">2200</td><td class="aright">2230</td><td class="aright">2290</td><td class="aright"></td><td class="pesos_separator">&nbsp;</td><td class="item_atributo">Eixo Dianteiro</td><td class="aright">3200</td><td class="aright">3200</td><td class="aright">3200</td><td class="aright"></td></tr><tr><td class="item_atributo">Eixo Traseiro</td><td class="aright">1120</td><td class="aright">1180</td><td class="aright">1180</td><td class="aright"></td><td class="pesos_separator">&nbsp;</td><td class="item_atributo">Eixo Traseiro</td><td class="aright">6400</td><td class="aright">6400</td><td class="aright">6400</td><td class="aright"></td></tr><tr><td class="item_atributo">Total</td><td class="aright">3320</td><td class="aright">3410</td><td class="aright">3470</td><td class="aright"></td><td class="pesos_separator">&nbsp;</td><td class="item_atributo">Peso Bruto Total (PBT)</td><td class="aright">9600</td><td class="aright">9600</td><td class="aright">9600</td><td class="aright"></td></tr><tr><td class="item_atributo"></td><td class="aright"></td><td class="aright"></td><td class="aright"></td><td class="aright"></td><td class="pesos_separator">&nbsp;</td><td class="item_atributo">Carga Útil Máxima (mais carroçaria)</td><td class="aright">6280</td><td class="aright">6190</td><td class="aright">6130</td><td class="aright"></td></tr><tr><td class="item_atributo"></td><td class="aright"></td><td class="aright"></td><td class="aright"></td><td class="aright"></td><td class="pesos_separator">&nbsp;</td><td class="item_atributo">Peso Bruto Total com 3º eixo</td><td class="aright">11.000/13.000¹</td><td class="aright">11.000/13.000¹</td><td class="aright">11.000/13.000¹</td><td class="aright"></td></tr><tr><td class="item_atributo"></td><td class="aright"></td><td class="aright"></td><td class="aright"></td><td class="aright"></td><td class="pesos_separator">&nbsp;</td><td class="item_atributo">Peso Bruto Total Combinado (PBTC)</td><td class="aright">11.000/13.000¹</td><td class="aright">11.000/13.000¹</td><td class="aright">11.000/13.000¹</td><td class="aright"></td></tr>
+				</table>
+			</div>
+		</div>
+		<!-- Quebra do rodape nao remover esta linha -->
+		<htmlpagefooter name="footerpg1">
+			<div class="rodape_pg_1">
+				[1]Chassi com cabina, sem carroçaria. Os dados apresentados podem variar de acordo com a configuração do veículo. [2]Os dados apresentados em Dimensões e Pesos podem variar de acordo com a configuração do veículo. 1) Sem carroçaria ou implemento, com tanque de combustível de 75 litros cheio, estepe, extintor de incêndio e caixa de ferramentas. Para projetos de carroçarias e equipamentos, consultar o Manual de Implementação disponível no site Mercedes-Benz. [3] Somente com câmbio MB G 56-6 e redução do eixo traseiro i=4,30 
+			</div>
+		</htmlpagefooter>
+		<sethtmlpagefooter name="footerpg1" value="on" />
+		<!-- Fim da quebra do rodape nao remover esta linha -->
+	</div>
+	<!-- Quebra de pagina nao remover a linha abaixo -->
+	<pagebreak />
+	<div class="eufalei">
+		<div class="linha">
+			<div class="item_title">Cabina <span>Avançada</span></div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					<tr><td class="item_atributo2">Versões</td><td>Curta</td><td></td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Suspensão</td><td>Metálica</td><td></td><td></td><td></td><td></td></tr>
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">Motor <span>MB OM 924 LA | BlueTec5 | 4 cilindros em linha | PROCONVE P-7</span></div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					<tr><td class="item_atributo2">Potência Máxima [NBR ISO 1585]</td><td>115 kW (156 cv) @ 2.200 rpm</td><td></td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Torque Máximo [NBR ISO 1585]</td><td>610 Nm (62,2 mkgf) @ 1.200 - 1.600 rpm</td><td></td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Cilindrada Total</td><td>4.800 cm³</td><td></td><td></td><td></td><td></td></tr>
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">Sistema elétrico <span></span></div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					<tr><td class="item_atributo2">Tensão Nominal</td><td>24V</td><td></td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Alternador</td><td>28V / 80A</td><td></td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Bateria</td><td>2 x 12V / 100Ah</td><td></td><td></td><td></td><td></td></tr>
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">Transmissão <span>ZF S5-580 | 5 marchas sincronizadas MB G 56-6* | 6 marchas sincronizadas</span></div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					<tr><td class="item_atributo2">Tipo</td><td>Manual</td><td></td><td>Manual</td><td></td><td></td></tr><tr><td class="item_atributo2">Relações (primeira/última)</td><td>5,72/0,76</td><td></td><td>6,29/0,78</td><td></td><td></td></tr><tr><td class="item_atributo2">Embreagem</td><td>Monodisco, diâmetro 362 mm</td><td></td><td>Monodisco, diâmetro 362 mm</td><td></td><td></td></tr>
+				</table>
+			</div>
+		</div>
+		
+		<div class="linha">
+			<div class="item_title">Eixos <span>eixo dianteiro • MB VL 2eixo traseiro • MB HL 2</span></div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					<tr><td class="item_atributo2">Relações de eixo traseiro</td><td>ZF S5-580 - i = 4,30 (43:10) MB G56 - i = 3,90 (43:11)*     i = 4,30 (43:10)   </td></tr>
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">Chassis <span>escada, rebitado • material: LNE 50 ( NBR 6656 )</span></div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					<tr><td class="item_atributo2">Suspensão dianteira</td><td colspan="5" class="item_atributo">Molas parabólicas com amortecedores telescópicos de dupla ação e barra estabilizadora</td></tr><tr><td class="item_atributo2">Suspensão traseira</td><td colspan="5" class="item_atributo">Molas parabólicas com amortecedores telescópicos de dupla ação e barra estabilizadora</td></tr><tr><td class="item_atributo2">Rodas</td><td>6.00x17.5</td><td></td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Pneus</td><td>235/75R17.5</td><td></td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Tanque de combustível</td><td>150 l</td><td>75 l³</td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Tanque de arla 32</td><td>25 l</td><td>12 l³</td><td></td><td></td><td></td></tr><tr><td colspan="6">³ Série para entre eixos 3100mm e opcional nos demais</td></tr>
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">Desempenho <span>ZF S5-580 | HL2 | 235/75R17.5 MB G 56-6 | HL2  | 235/75R17.5</span></div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					<tr><td class="item_atributo2">Relações</td><td>i = 4,30</td><td>i = 3,90</td><td>i = 4,30</td><td></td><td></td></tr><tr><td class="item_atributo2">Velocidade máxima [km/h]</td><td>116</td><td>120²</td><td>113</td><td></td><td></td></tr><tr><td class="item_atributo2">Capacidade de subida [em movimento] com 9.600 kg (%)</td><td>41</td><td>41</td><td>46</td><td></td><td></td></tr><tr><td class="item_atributo" style="text-align: right;">com 11.000 kg (%)</td><td>35</td><td>35</td><td>-</td><td></td><td></td></tr><tr><td class="item_atributo" style="text-align: right;">com 13.000 kg (%)**</td><td>-</td><td>-</td><td>32</td><td></td><td></td></tr><tr><td colspan="6">²velocidade máxima limitada eletronicamente</td></tr><tr><td colspan="6">**Somente com câmbio MB G 56-6 e redução do eixo traseiro i=4,30</td></tr>
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">Freios <span>Ar comprimido; ABS (Sistema Antitravamento das Rodas)</span></div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					<tr><td class="item_atributo2">Tipo</td><td>Tambor / Disco*</td><td></td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Freio de estacionamento</td><td>Câmara de mola acumuladora acionada pneumaticamente</td><td></td><td></td><td></td><td></td></tr><tr><td class="item_atributo2">Freio motor</td><td>Convencional + Top Brake</td><td></td><td></td><td></td><td></td></tr>
+				</table>
+			</div>
+		</div>
+		<!-- Quebra da nota nao remover esta linha -->
+		<htmlpagefooter name="footerpg2">
+			<div class="rodape">
+				<table>
+					<tr>
+						<td valign="top" width="340px" align="justify" class="sem-borda" rowspan="2" style="font-size: 7,5pt;">
+							[*] Item opcional | [**] Obrigatório câmbio MB G 56 - 6 e redução 4,30. | Alguns itens citados ou mostrados neste folheto são opcionais e podem não estar imediatamente disponíveis para atendimento. Procure um Concessionário Mercedes-Benz e conheça as múltiplas configurações oferecidas e a diversidade de opcionais disponíveis. No interesse do desenvolvimento tecnológico, a Mercedes-Benz reserva-se o direito de alterar as especificações e os desenhos dos produtos sem prévio aviso.
+						</td>
+						<td class="sem-borda" align="left" colspan="2" style="font-size: 7,5pt;">
+							Para mais informações, ligue para o nossa central pelo 0800 970 90 90 ou acesse www.mercedes-benz.com.br. Mercedes-Benz, marca do grupo Daimler.
+						</td>
+					</tr>
+					<tr>
+						<td class="sem-borda arial" align="right" valign="bottom">
+							Respeite a sinalização de trânsito.
+						</td>
+						<td class="sem-borda" width="50px" align="center" valign="bottom">
+							<img src="/images/ibama_logo.png" height="55px" />
+						</td>
+					</tr>
+				</table>
+			</div>
+		</htmlpagefooter>
+		<sethtmlpagefooter name="footerpg2" value="on" show-this-page="1" />
+		<!-- Fim da quebra da nota nao remover esta linha -->
+	</div>
+	<div class="side_text">
+		Marketing e Comunicação - Caminhões - Caixa Postal 202 - 09701-970 - São Bernardo do Campo - SP - Brasil VCM - B09916592 - 14 de maio de 2015
+	</div>
+	<!-- Quebra de pagina nao remover a linha abaixo -->
+</body>
+</html>

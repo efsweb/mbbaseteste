@@ -1,0 +1,229 @@
+<div class="ui-grid-a">
+	<div class="title">
+		<h1>Exportar - Fichas Técnicas</h1>
+		<a onclick="exportar();" href="#" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>exportar</a>
+	</div>
+	<div class="content">
+		<div class="content-tabs" id="tab-exportar">
+			<div class="ui-grid-a" style="margin-top: 20px;">
+				<div class="ui-block-a" style="width: 55%;">
+					<div class="exp_holder_content">
+						<div class="exp_title">por família</div>
+						<br /><br />
+						<div class="exp_holder_list">
+							<ul class="exp_family_list">
+								<?php foreach($this->familias as $familia): ?>
+								<li id="fm_<?= $familia; ?>" onclick="activemodels('<?= $familia; ?>',this);" class="exp_family_list_child"><?= $familia; ?></li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					</div>
+					<div class="exp_divider"></div>
+					<div class="exp_holder_content">
+						<div class="exp_holder_models">
+							<div class="exp_title">por modelo</div>
+							<br /><br />
+							<div class="exp_models_list">
+								<div id="model_list" class="exp_models_scroll">
+									<?php foreach($this->modelos as $familia => $modelos): ?>
+									<div id="grp_<?= $familia; ?>" class="exp_model_title"><?= $familia ?></div>
+									<div class="exp_model_list_holder">
+										<div class="exp_model_list_table">
+										<?php $i = 0; $c = count($modelos); foreach($modelos as $id => $desc): ?>
+											<?php
+											$pt   = explode(' ',$desc);
+											$nome = (isset($pt[1])) ? $pt[0] . '</br>' . ((isset($pt[2])) ? $pt[1] . ' ' . $pt[2] : $pt[1]) : $desc;
+											?>
+											<div onclick="activemodel(this,'<?= $familia; ?>');" data-familia="<?= $familia; ?>" data-modelo="<?= $desc; ?>" data-id="<?= $id; ?>" class="exp_model_cell"><?= $nome; ?></div>
+											<?php $i = $i + 1; if($i === 3 && $c > 1): ?>
+										</div>
+										<div class="line_row"></div>
+										<div class="exp_model_list_table">
+											<?php $i = 0; endif; ?>
+										<?php $c = $c - 1; endforeach; ?>
+										</div>
+									</div>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ui-block-b" style="width: 45%;">
+					<div id="answer" class="resposta" style="width: 450px; margin-left: 0;">
+						<div class="alert alert-success" role="alert"></div>
+					</div>
+					<div id="list_items">
+						<div class="exp_top_files"></div>
+						<div class="exp_files">
+							<!-- <div class="exp_line_file exp_andamento">ACTROS - 2546 ESTRADEIRO / EM ANDAMENTO</div>
+							<div class="exp_line_file">ACTROS - 2546 ESTRADEIRO / aguardando<div onclick="delmodel(this);" class="pull-right exp_del_item">X</div></div>
+							<div class="exp_line_file">ACTROS - 2546 ESTRADEIRO / aguardando<div onclick="delmodel(this);" class="pull-right exp_del_item">X</div></div>
+							<div class="exp_line_file">ACTROS - 2546 ESTRADEIRO / aguardando<div onclick="delmodel(this);" class="pull-right exp_del_item">X</div></div>
+							<div class="exp_line_file">ACTROS - 2546 ESTRADEIRO / aguardando<div onclick="delmodel(this);" class="pull-right exp_del_item">X</div></div>
+							<div class="exp_line_file">ACTROS - 2546 ESTRADEIRO / aguardando<div onclick="delmodel(this);" class="pull-right exp_del_item">X</div></div>
+							<div class="exp_line_file">ACTROS - 2546 ESTRADEIRO / aguardando<div onclick="delmodel(this);" class="pull-right exp_del_item">X</div></div>
+							<div class="exp_line_file">ACTROS - 2546 ESTRADEIRO / aguardando<div onclick="delmodel(this);" class="pull-right exp_del_item">X</div></div>
+							<div class="exp_line_file exp_concluido">ACTROS - 2546 ESTRADEIRO <div class="pull-right exp_download_session"> <a href="" title="Versão Site"><img align="left" src="/images/pdf-icon.png" height="20px" /></a><a href="" title="Versão Grafica"><img align="left" src="/images/pdf-icon.png" height="20px" /></a> </div></div>
+							<div class="exp_line_file exp_concluido">ACTROS - 2546 ESTRADEIRO  <a href="" class="exp_concluido">site</a> | <a href="" class="exp_concluido">gráfica</a></div>
+							<div class="exp_line_file exp_concluido">ACTROS - 2546 ESTRADEIRO  <a href="" class="exp_concluido">site</a> | <a href="" class="exp_concluido">gráfica</a></div>
+							<div class="exp_line_file exp_concluido">ACTROS - 2546 ESTRADEIRO  <a href="" class="exp_concluido">site</a> | <a href="" class="exp_concluido">gráfica</a></div>
+							<div class="exp_line_file exp_concluido">ACTROS - 2546 ESTRADEIRO  <a href="" class="exp_concluido">site</a> | <a href="" class="exp_concluido">gráfica</a></div> -->
+						</div>
+						<div class="exp_bottom_files"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+$('#mnulateralesquerdo').children('div:last').attr('data-collapsed', 'false');
+$('#mnulateralesquerdo').children('div:last').children('ul').children('li:last').prev().children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+/**
+ * Função que ativa os modelos quando escolhe a família
+ * Criado por: Eliel Fernandes
+ * Criado em: 28/07/2015
+ * Versão: 1.0.0
+ */
+function activemodels(family,obj){
+	grupo = '#grp_' + family;
+	if($(obj).hasClass('checked_family')){
+		$(obj).removeClass('checked_family');
+		$(grupo).next().children('div.exp_model_list_table').children('div').each(function(){
+			if($(this).hasClass('exp_model_checked')){
+				$(this).removeClass('exp_model_checked');
+			}
+		});
+	}else{
+		$(obj).addClass('checked_family');
+		$(grupo).next().children('div.exp_model_list_table').children('div').each(function(){
+			if(!$(this).hasClass('exp_model_checked')){
+				$(this).addClass('exp_model_checked');
+			}
+		});
+	}
+}
+
+/**
+ * Função que ativa um modelo quando é clicado
+ * Criado por: Eliel Fernandes
+ * Criado em: 28/07/2015
+ * Versão: 1.0.0
+ */
+function activemodel(obj,family){
+	familia = '#fm_' + family;
+	grupo   = '#grp_' + family;
+	flag 	= 0;
+	if($(obj).hasClass('exp_model_checked')){
+		$(obj).removeClass('exp_model_checked');
+		if($(familia).hasClass('checked_family')){
+			$(familia).removeClass('checked_family');
+		}
+	}else{
+		$(obj).addClass('exp_model_checked');
+		if(!$(familia).hasClass('checked_family')){
+			$.when($(grupo).next().children('div.exp_model_list_table').children('div').each(function(){
+				if(!$(this).hasClass('exp_model_checked')){
+					flag = 1;
+				}
+			})).done(function(){
+				if(flag == 0){
+					$(familia).addClass('checked_family');
+				}
+			});
+		}
+	}
+}
+
+/**
+ * Função que exclui arquivo da lista de exportação
+ * Criado por: Eliel Fernandes
+ * Criado em: 28/07/2015
+ * Versão: 1.0.0
+ */
+function delmodel(obj){
+	$(obj).parent().remove();
+}
+
+/**
+ * Função que organiza lista de arquivos para pdf e pega todos os ids dos modelos
+ * Criado por: Eliel Fernandes
+ * Criado em: 28/07/2015
+ * Atualizado em: 30/07/2015 #157 (Bug Corrigido)
+ * Versão: 1.0.1
+ */
+var trava = 0;
+function exportar(){
+	if(trava === 0){
+		trava = 1;
+		found = 0;
+		$('#list_items').children('div.exp_files').html('');
+		$.when($('#model_list').find('.exp_model_checked').each(function(){
+			found = 1;
+			a = $(this).attr('data-id');
+			b = $(this).attr('data-familia') + ' - ' + $(this).attr('data-modelo');
+			str = '<div data-md="' + b + '" data-id="' + a + '" class="exp_line_file">' + b + ' / aguardando <div onclick="delmodel(this);" class="pull-right exp_del_item">X</div></div>';
+			$('#list_items').children('div.exp_files').append(str);
+		})).done(function(){
+			if(found === 0){
+				alert('Selecione um modelo.');
+				trava = 0;
+			}else{
+				$('#answer').children('div').html('Montando lista de modelos.');
+				$('#answer').fadeIn('fast');
+				$('#list_items').fadeIn();
+				generateFiles('imprimir');
+			}
+		});
+	}else{
+		alert('Aguarde. Gerando arquivos pdf!');
+	}
+}
+
+/**
+ * Função de exportar funciona em loop gerando os arquivos pdf
+ * Criado por: Eliel Fernandes
+ * Criado em: 28/07/2015
+ * Versão 1.0.0
+ */
+function generateFiles(tipo){
+	msg = (tipo === '') ? 'Grafica' : 'Site';
+	if(!$('#list_items').children('div.exp_files').children(':first').hasClass('exp_concluido')){
+		md = $('#list_items').children('div.exp_files').children(':first').attr('data-md');
+		$('#answer').children('div').html('Reunindo dados. ' + md);
+		$('#list_items').children('div.exp_files').children(':first').html(md + ' / em andamento');
+		$('#list_items').children('div.exp_files').children(':first').addClass('exp_andamento');
+		aid = $('#list_items').children('div.exp_files').children(':first').attr('data-id');
+		$.when($.post('/modelos/pdf/index',{id: aid, versao: tipo})).then(function(data){
+			$('#answer').children('div').html('Gerando PDF versão ' + msg);
+			result = JSON.parse(data);
+			namefl = result.arquivo + ' ' + msg + '.pdf';
+			dnf01  = result.arquivo + ' Site.pdf';
+			dnf02  = result.arquivo + ' Grafica.pdf';
+			lkf01  = 'https://storage.googleapis.com/mb-fichas-tecnicas/' + result.arquivo + ' Site.pdf';
+			lkf02  = 'https://storage.googleapis.com/mb-fichas-tecnicas/' + result.arquivo + ' Grafica.pdf';
+			vs 	   = (tipo === '') ? 'grafica' : 'site';
+			$.when($.post('/modelos/pdf/generator',{nome: namefl, temp: result.temp, versao: vs})).then(function(final){
+				if(tipo === ''){
+					$('#answer').children('div').html('PDF versão ' + msg + ' OK.');
+					str  = '<div class="exp_line_file exp_concluido">' + md + ' / Concluido';
+					str += '<div class="pull-right exp_download_session"><a title="Versão Site" href="' + lkf01 + '" download="' + dnf01 + '" target="_blank" class="exp_concluido"><img align="left" src="/images/pdf-icon.png" height="20px" /></a>';
+					str += '<a title="Versão Gráfica" href="' + lkf02 + '" download="' + dnf02 + '" target="_blank" class="exp_concluido"><img align="left" src="/images/pdf-icon.png" height="20px" /></a></div></div>';
+					$('#list_items').children('div.exp_files').children('div:first').remove();
+					$('#list_items').children('div.exp_files').append(str);
+					generateFiles('imprimir');
+				}else{
+					generateFiles('');
+				}
+			});
+		});
+	}else{
+		$('#answer').children('div').html('Fichas exportadas com sucesso!');
+		trava = 0;
+	}
+}
+</script>

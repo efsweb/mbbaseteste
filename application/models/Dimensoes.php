@@ -18,25 +18,32 @@ class Model_Dimensoes{
         return $result;
     }
 
+    /**
+     * Função que atualiza a base de dados das fichas técnicas
+     * Criada por: Eliel Fernandes
+     * Atualizada em: 03/08/2015
+     * Versão: 1.1.0
+     * 
+     */
     public function atualizar($idmodelo, $linhas, $pg){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
         $arr;
         $return = '';
-        $del = array('D',1,$idmodelo,'',$pg, '', '', '', '', '', '', '', '', '', '', '', '');
-        $db->query("CALL sp_fe_com_mod_ft_linha(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", $del);
+        $del = array('D',1,$idmodelo,'',$pg, '', '', '', '', '', '', '', '', '', '', '', '', '');
+        $db->query("CALL sp_fe_com_mod_ft_linha(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", $del);
 
         $db->beginTransaction();
         try{
             for($i = 0; $i < count($linhas);$i++){
                 $arr = array('U',1,$idmodelo);
                 $pt  = explode(',',$linhas[$i]);
-                for($x = 0; $x < 14; $x++){
+                for($x = 0; $x < 15; $x++){
                     $itm = (isset($pt[$x])) ? $pt[$x] : '';
                     array_push($arr,$itm);
                 }
-                $db->query("CALL sp_fe_com_mod_ft_linha(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", $arr);
+                $db->query("CALL sp_fe_com_mod_ft_linha(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", $arr);
                 $arr = '';
             }
             return $db->commit();

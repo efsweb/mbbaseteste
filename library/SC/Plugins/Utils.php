@@ -32,7 +32,27 @@ class SC_Plugins_Utils extends Zend_Controller_Plugin_Abstract{
         $rg = preg_replace('/^(\d{1,2})(\d{3})(\d{3})([a-zA-Z0-9])$/', '$1.$2.$3-$4', $rg);
         return $rg;
     }
-    
+    public function dataExtenso($data){
+        $meses = array(
+        '01' => 'Janeiro',
+        '02' => 'Fevereiro',
+        '03' => 'Março',
+        '04' => 'Abril',
+        '05' => 'Maio',
+        '06' => 'Junho',
+        '07' => 'Julho',
+        '08' => 'Agosto',
+        '09' => 'Setembro',
+        '10' => 'Outubro',
+        '11' => 'Novembro',
+        '12' => 'Dezembro');
+        $a = explode(' ', $data);
+        $b = explode('-', $a[0]);
+        $c = $b[1];
+        $d = $meses[$c];
+        $e = $b[2] . ' de ' . $d . ' de ' . $b[0];
+        return $e;
+    }
     public function cepToBd($cep){
         $cep = preg_replace('/^(\d{5})-(\d{3})$/', '$1$2', $cep);
         return $cep;

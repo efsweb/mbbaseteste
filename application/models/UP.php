@@ -1,20 +1,20 @@
 <?php
 class Model_UP{
     
-    public function loadinicial($idmodelo, $pg){
+    public function loadinicial($idmodelo, $pg, $idsys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
-        $arr = array(1, $idmodelo, $pg, 0,0);
+        $arr = array($idsys, $idmodelo, $pg, 0,0);
         $return = $db->query("CALL sp_fe_com_consulta_visoes_modelo(?,?,?,?,?)", $arr);
         return $return->fetchAll();
     }
 
-    public function loadinicialitem($idmodelo, $pg){
+    public function loadinicialitem($idmodelo, $pg, $idsys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
-        $arr = array(1, $idmodelo, $pg, 0,0);
+        $arr = array($idsys, $idmodelo, $pg, 0,0);
         $return = $db->query("CALL sp_fe_com_consulta_visoes_modelo(?,?,?,?,?)", $arr);
         $rows   = $return->fetchAll();
         $baum   = array();
@@ -46,17 +46,17 @@ class Model_UP{
     }
 
 
-    public function clearBeforeSave($idmodelo){
+    public function clearBeforeSave($idmodelo, $idsys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
         $arr;
         $return = '';
-        $del = array('D',1,$idmodelo,'','', '', '', '', '', '', '', '');
+        $del = array('D',$idsys,$idmodelo,'','', '', '', '', '', '', '', '');
         $deleted = $db->query("CALL sp_fe_com_mod_up_ctrl(?,?,?,?,?,?,?,?,?,?,?,?)", $del);
         return $deleted->fetchAll();
     }
-    public function savegeral($idmodelo,$rows){
+    public function savegeral($idmodelo,$rows, $idsys){
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8"');
@@ -65,7 +65,7 @@ class Model_UP{
         $db->beginTransaction();
         try{
             for($i = 0; $i < count($rows); $i++){
-                $arr = array('I',1,$idmodelo);
+                $arr = array('I',$idsys,$idmodelo);
                 $pt  = explode(',',$rows[$i]);
                 for($x = 0; $x < 9; $x++){
                     if($pt[$x] == 'Nao Aplicado'){
@@ -86,17 +86,17 @@ class Model_UP{
         }
     }
 
-    public function clearItemBeforeSave($idmodelo){
+    public function clearItemBeforeSave($idmodelo, $idsys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
         $arr;
         $return = '';
-        $del = array('D',1,$idmodelo,'','', '', '', '', '', '');
+        $del = array('D',$idsys,$idmodelo,'','', '', '', '', '', '');
         $deleted = $db->query("CALL sp_fe_com_mod_up_linha(?,?,?,?,?,?,?,?,?,?)", $del);
         return $deleted->fetchAll();
     }
-    public function saveItem($id,$linhas){
+    public function saveItem($id,$linhas, $idsys){
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8"');
@@ -109,7 +109,7 @@ class Model_UP{
                 $pad = explode(',', $col[0]); //Produz 2 itens baumuster e id do item
                 for($i=1;$i<count($col);$i++){
                     $a = explode(',',$col[$i]);
-                    $b = array('I',1,$id,$pad[0],$a[3],$a[0],$pad[1],$a[1],$a[2],'S');
+                    $b = array('I',$idsys,$id,$pad[0],$a[3],$a[0],$pad[1],$a[1],$a[2],'S');
                     $db->query("CALL sp_fe_com_mod_up_linha(?,?,?,?,?,?,?,?,?,?)", $b);
                     //$lines[] = $b;
                 }

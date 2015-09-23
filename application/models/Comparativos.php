@@ -1,11 +1,11 @@
 <?php
 class Model_Comparativos{
     
-    public function loadinicial($idmodelo){
+    public function loadinicial($idmodelo,$idsys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
-        $arr = array('com_conc_ddl_selecao', '', '', '1', $idmodelo, '', '', '');
+        $arr = array('com_conc_ddl_selecao', '', '', $idsys, $idmodelo, '', '', '');
         $return = $db->query("CALL sp_fe_com_listas(?,?,?,?,?,?,?,?)", $arr);
         $rows = $return->fetchAll();
         $result = array();
@@ -15,11 +15,11 @@ class Model_Comparativos{
         return $result;
     }
 
-    public function loaddados($idmodelo, $idconcorrente){
+    public function loaddados($idmodelo, $idconcorrente,$idsys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
-        $arr = array(1, $idmodelo, 'mod_cp_geral', '',$idconcorrente);
+        $arr = array($idsys, $idmodelo, 'mod_cp_geral', '',$idconcorrente);
         $return = $db->query("CALL sp_fe_com_consulta_visoes_modelo(?,?,?,?,?)", $arr);
         $rows = $return->fetchAll();
 
@@ -246,17 +246,17 @@ class Model_Comparativos{
         return $myarr;
     }
 
-    public function clearBeforeSave($idmodelo, $idcp){
+    public function clearBeforeSave($idmodelo, $idcp,$idsys,$cp){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
         $arr;
         $return = '';
-        $del = array('D',1,$idmodelo,$idcp,'', '', '', '', '', '');
+        $del = array('D',$idsys,$idmodelo,$idcp,$cp, '', '', '', '', '');
         $return = $db->query("CALL sp_fe_com_mod_cp_geral(?,?,?,?,?,?,?,?,?,?)", $del);
         return $return->fetchAll();
     }
-    public function addConcorrenteLine($idmodelo, $idcp, $linhas){
+    public function addConcorrenteLine($idmodelo, $idcp, $linhas,$idsys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
@@ -265,7 +265,7 @@ class Model_Comparativos{
         $db->beginTransaction();
         try{
             for($i = 0; $i < count($linhas);$i++){
-                $arr = array('I',1,$idmodelo);
+                $arr = array('I',$idsys,$idmodelo);
                 $pt  = explode(',',$linhas[$i]);
                 for($x = 0; $x < 7; $x++){
                     $itm = (isset($pt[$x])) ? $pt[$x] : '';

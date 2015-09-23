@@ -1,50 +1,35 @@
+
     <div class="ui-grid-a">
         <div class="title">
             <h1>Modelos - Walk Around - Geral</h1>
-            <a href="#" class="btn-azul pull-right btn-save" data-toggle="tooltip" data-placement="left" title="salvar conteúdo"><span class="icon-ok-3"></span>salvar</a>
+            <a href="#" onclick="saveme();" class="btn-azul pull-right btn-save" data-toggle="tooltip" data-placement="left" title="salvar conteúdo"><span class="icon-ok-3"></span>salvar</a>
         </div>
-        
+        <div id="answer" class="resposta"><div class="alert" role="alert"></div></div>
         <div class="content" id="walk-around">
-            <div class="ui-grid-a cont-form row-01">
+            <div class="ui-grid-a cont-form row-01" style="overflow:visible!important">
             
                 <ul id="myTab" class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
-                        <a href="#externo" id="home-tab" role="tab" data-toggle="tab" aria-controls="externo" aria-expanded="true">Externo</a>
+                        <a onclick="mudavisao('externo');" href="#externo" id="home-tab" role="tab" data-toggle="tab" aria-controls="externo" aria-expanded="true">Externo</a>
                     </li>
                     <li class="" role="presentation">
-                        <a aria-expanded="false" href="#interno" role="tab" id="profile-tab" data-toggle="tab" aria-controls="interno">Interno</a>
+                        <a onclick="mudavisao('interno');" aria-expanded="false" href="#interno" role="tab" id="profile-tab" data-toggle="tab" aria-controls="interno">Interno</a>
                     </li>
+                    <input type="hidden" id="visaoselecionada"value="externo" />
                 </ul>
                 
                 <div id="myTabContent" class="tab-content">
                     <div role="tabpanel" class="tab-pane fade active in" id="externo" aria-labelledby="home-tab">
-                        <div style="width: 100%" class="foto-wa">
-                            <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
-                            <div class="dragg-bullet">
-                                <ul class="pop-dragg">
-                                    <div class="arrow"><span class="icon-left-dir-2"></span></div>
-                                    <li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>
-                                    <li><a href="#"><span class="icon-cancel-2"></span>excluir ponto</a></li>  
-                                    <li><p>arraste o ponto para editá-lo</p></li>
-                                </ul>
-                            </div>
-                            <img src="/images/img-wa.jpg" class="img-responsive"/>
+                        <div id="imgfront" style="width: 100%; position: relative;" class="foto-wa">
+                            <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="iconold-pencil-circled"></span></a>
+                            <img id='img_externo' src="<?= $this->imgfront; ?>" class="img-responsive" /> <!--  class="img-responsive" -->
                         </div>
                     </div>
                     
                     <div role="tabpanel" class="tab-pane fade" id="interno" aria-labelledby="profile-tab">
-                        <div style="width: 100%" class="foto-wa">
-                            <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="icon-pencil-circled"></span></a>
-                            <div class="dragg-bullet">
-                                <ul class="pop-dragg">
-                                    <div class="arrow"><span class="icon-left-dir-2"></span></div>
-                                    <li>Input</li>
-                                    <li><a href="#popWA" data-rel="popup" data-position-to="window" data-transition="pop"><span class="icon-plus"></span>conteúdo popup</a></li>
-                                    <li><a href="#"><span class="icon-cancel-2"></span>excluir ponto</a></li>  
-                                    <li><p>arraste o ponto para editá-lo</p></li>
-                                </ul>
-                            </div>
-                            <img src="/images/img-wa-interno.jpg" class="img-responsive"/>
+                        <div id="imgback" style="width: 100%; position: relative;" class="foto-wa">
+                            <a href="#popWAfoto" data-rel="popup" data-position-to="window" data-transition="pop" class="del-foto-wa" data-toggle="tooltip" title="editar imagem"><span class="iconold-pencil-circled"></span></a>
+                            <img id="img_interno" src="<?= $this->imgback; ?>" class="img-responsive" />
                         </div>
                     </div>
                 </div>
@@ -53,26 +38,547 @@
             
         </div><!-- /content -->
     </div><!-- ui-grid-a -->
+
+<script>
+// -----------------------------------------
+// Declarando váriaveis globais            |
+// -----------------------------------------
+var id_do_ponto = 0;
+var bd_content = <?php echo json_encode($this->dados_pontos); ?>;
+$('#mnulateralesquerdo').children('div:first').next().next().attr('data-collapsed', 'false');
+$('#mod_wa_geral').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+/**
+ * Função que limpa o cache ao sair
+ */
+$(document).on('pagehide', 'div', function (event, ui) { 
+    var page = jQuery(event.target);
+    if (page.attr('data-cache') == 'never') { 
+        page.remove(); 
+    }; 
+});
+
+/**
+ * Função de load inicial que ajusta os pontos e dados em seus lugares
+ * Criada por: Eliel Fernandes
+ * Criada em : 20/07/2015
+ * Versão: 1.0.0
+ */
+function loaddatainit(){
+    if(bd_content == ''){
+        setTimeout(function(){loaddatainit();},500);
+        return;
+    }else{
+        for(i=0;i<bd_content.length;i++){
+            var me = i + 1;
+            id_do_ponto = me;
+            var id   = '#bullet_' + me;
+            var xp   = bd_content[i].pos_x;
+            var yp   = bd_content[i].pos_y;
+            var tt   = (bd_content[i].id_alias_titulo_ponto != 0) ? bd_content[i].alias_titulo_ponto : 'Selecione Titulo';
+            var tb   = (bd_content[i].id_alias_titulo_pop_up != 0) ? bd_content[i].alias_titulo_pop_up : 'Selecione o título do popup';
+            var tc   = (bd_content[i].id_alias_pop != 0) ? bd_content[i].alias_pop : 'Descrição';
+            var idpt = bd_content[i].id_alias_titulo_ponto;
+            var img  = (bd_content[i].figura_pop_up == '') ? 'img-pop-wa.png' : bd_content[i].figura_pop_up;
+            imgpath  = 'https://storage.googleapis.com/mb-wa-images/pop_ups/' + img;
+
+            if(bd_content[i].visao == 'ext'){
+                mkdot(xp,yp,tt, idpt,'ext',i,bd_content[i].id_alias_titulo_pop_up, tb, bd_content[i].id_alias_pop, tc, imgpath);
+            }else{
+                mkdot(xp,yp,tt, idpt,'int',i,bd_content[i].id_alias_titulo_pop_up, tb, bd_content[i].id_alias_pop, tc, imgpath);
+            }
+        }
+    }
+}
+
+/**
+ * Função que cria o ponto e seta suas funções
+ * Criada por: Eliel Fernandes
+ * Criada em : 20/07/2015
+ * Versão: 1.0.0
+ */
+function mkdot(x,y,titulo,idpt,visao,i, a, b, c, d, e){
+    dv  = '<div id="bullet_'+ i + '" data-titlevlr="'+ a + '" data-titlehtml="'+ b + '" data-descvlr="'+ c + '" data-deschtml="'+ d + '" data-imgsrc="'+ e + '" data-imgpath="'+ e + '" style="top: ' + y + '%; left: ' + x + '%;" data-top="' + y + '" data-left="' + x + '" class="dragg-bullet">';
+    dv += '<ul class="pop-dragg" style="display:none;">';
+    dv += '<div class="arrow"><span class="icon-left-dir-2"></span></div>';
+    dv += '<li>';
+    dv += '<a href="#SelectItem" id="titlesearch_' + i + '" data-rel="#SelectItem" data-position-to="window" data-transition="popup" data-close="true" data-vlr="' + idpt + '" data-tipo="0" onclick="opensearchtitle(this);">';
+    dv += '<span class="icon-plus"></span>' + titulo + '</a></li>';
+    dv += '<li><a href="#" onclick="openpopupconteudowa(this);" data-position-to="window" data-transition="pop">';
+    dv += '<span class="icon-plus"></span>conteúdo popup</a></li>';
+    dv += '<li><a href="#" id="excluir_ext_'+ i +'" onclick="excludeme(this);"><span class="icon-cancel-2"></span>Excluir Ponto</a></li>';
+    dv += '<li><p>arraste o ponto para editá-lo</p></li>';
+    dv += '</ul></div>';
     
+    id = '#bullet_' + i;
+    it = 'bullet_' + i;
+
+    if(visao == 'ext'){
+        $('#imgfront').append(dv);
+    }else{
+        $('#imgback').append(dv);
+    }
+    $(id).draggable({ 
+        containment: ".tab-pane.active", scroll: false, 
+        drag: function() {
+            $(".pop-dragg").fadeOut();
+        },
+        stop: function(evt){
+            var porcent = [];
+            myid = $(this).attr('id');
+            myis = '#' + myid;
+            if(visao == 'ext'){
+                porcent = posicaoxy(myid, myis, 'externo');
+            }else{
+                porcent = posicaoxy(myid, myis, 'interno');
+            }
+            $(this).css("left",porcent['x']+"%");
+            $(this).css("top",porcent['y']+"%");
+        }
+    });
+    $(id).mouseover(function(){
+        if(!$(this).hasClass('ui-draggable-dragging'))
+        $(this).children('ul').fadeIn();
+    });
+}
+
+// ----------------------------------------------------------
+// Atualiza a posição do ponto convertendo em porcentagem   |
+// ----------------------------------------------------------
+function posicaoxy(div , id , local){ 
+    var div = document.getElementById(div);//div => bullet_(id_ponto)
+    if(local == 'externo'){
+        var div_img_externo = document.getElementById('imgfront'); //Div Referente a imagem  
+        var x_img = $('#imgfront').width(); //Comprimento da imagem
+        var y_img = $('#imgfront').height(); //Altura da imagem            
+    }else if(local == 'interno'){
+        var div_img_externo = document.getElementById('imgback'); //Div Referente a imagem  
+        var x_img = $('#imgback').width(); //Comprimento da imagem
+        var y_img = $('#imgback').height(); //Altura da imagem            
+    }
     
-            <script id="page-init">
-				$( ".dragg-bullet" ).draggable({ 
-				containment: ".tab-pane.active", scroll: false, 
-				drag: function() {
-					$(".pop-dragg").fadeOut();
-				},
-				
-				});
-			
-				$(".pop-dragg").hide();
-				$( ".dragg-bullet" ).mouseover(function(){
-					if(!$( ".dragg-bullet" ).hasClass('ui-draggable-dragging'))
-					$(".pop-dragg").fadeIn();
-				});
-				
-				$(".foto-wa > img").mouseenter(function(){
-					if(!$( ".dragg-bullet" ).hasClass('ui-draggable-dragging'))
-					$(".pop-dragg").fadeOut();
-				});
-           </script>
+    if( 'getComputedStyle' in window ){
+        var x = window.getComputedStyle(div).left;
+        var y = window.getComputedStyle(div).top;
+    } else {
+        // Obtém a largura para navegadores antigos
+        var x = div.currentStyle.left;
+        var y = div.currentStyle.top;
+    }
+    x = parseFloat(x);
+    y = parseFloat(y);
+
+    posicaoX = x;
+
+    y_img = parseInt(y_img);
+    x_img = parseInt(x_img);
+
+    coordenada_y = (y * 100) / y_img; // CORDENADA DE COMPRIMENTO
+    coordenada_x = (x * 100) / x_img; // CORDENADA DE ALTURA
+
+    $(id).attr('data-top',coordenada_y); //id => #bullet_(id_ponto)
+    $(id).attr('data-left',coordenada_x); 
+
+    var posicao = [];
+
+    posicao['x'] = coordenada_x;
+    posicao['y'] = coordenada_y;
+
+    return posicao;
+}
+
+// ------------------------------ EXTERNO
+document.getElementById('imgfront').addEventListener("contextmenu",function(e){
+    e.preventDefault();
+
+    id_do_ponto = id_do_ponto + 1;
+
+    var x = e.pageX - this.offsetLeft;
+    var y = e.pageY - this.offsetTop;
+    
+    x = parseFloat(x)-20;
+    y = parseFloat(y)-20;
+
+    var x_img_externo = $('#imgfront').width();
+    var y_img_externo = $('#imgfront').height(); //Altura da imagem
+
+    coordenada_y = (y * 100) / y_img_externo; // CORDENADA DE COMPRIMENTO em %
+    coordenada_x = (x * 100) / x_img_externo;
+    mkdot(coordenada_x,coordenada_y,'Selecione Titulo',0,'ext',id_do_ponto, 0, 'Selecione o título do popup', 0, 'Descrição', 'https://storage.googleapis.com/mb-wa-images/pop_ups/img-pop-wa.png');
+});
+
+
+// ----------------------------- INTERNO 
+document.getElementById('imgback').addEventListener('contextmenu',function(e){
+    e.preventDefault();
+
+    id_do_ponto = id_do_ponto + 1;
+
+    var x = e.pageX - this.offsetLeft;
+    var y = e.pageY - this.offsetTop;
+    
+    x = parseFloat(x)-20;
+    y = parseFloat(y)-20;
+
+    var x_img_interno = $('#imgback').width();
+    var y_img_interno = $('#imgback').height(); //Altura da imagem
+
+    coordenada_y = (y * 100) / y_img_interno; // CORDENADA DE COMPRIMENTO
+    coordenada_x = (x * 100) / x_img_interno; // CORDENADA DE ALTURA   
+    mkdot(coordenada_x,coordenada_y,'Selecione Titulo',0,'int',id_do_ponto, 0, 'Selecione o título do popup', 0, 'Descrição', 'https://storage.googleapis.com/mb-wa-images/pop_ups/img-pop-wa.png');
+});
+
+/**
+ * Função que exclui o ponto
+ */
+function excludeme(obj){
+    $(obj).closest('.dragg-bullet').remove();
+}
+
+
+// ------------------------------------------------
+// Oculta o menu enquanto estiver sendo arrastado |
+// ------------------------------------------------
+$(".foto-wa > img").mouseenter(function(){
+    if(!$('#bullet_1').hasClass('ui-draggable-dragging'))
+    $(".pop-dragg").fadeOut();
+});
+
+/**
+ * Função que faz o upload da foto principal de WA
+ * Criada por: Eliel Fernandes
+ * 20/07/2015
+ * Versão 1.0.0
+ */
+var chaveupnado = 0;
+function uploadwafoto(){
+    if(chaveupnado === 0){
+        chaveupnado = 1;
+        if($('#wapopfotoanswer').children('div').hasClass('alert-danger') || $('#wapopfotoanswer').children('div').hasClass('alert-success')){
+            $('#wapopfotoanswer').fadeOut('fast');
+            $('#wapopfotoanswer').children('div').removeClass('alert-danger');
+            $('#wapopfotoanswer').children('div').removeClass('alert-success');
+        }
+        if($('#popupwafoto').val() == ''){
+            $('#wapopfotoanswer').children('div').addClass('alert-danger').html('Selecione uma foto!');
+            $('#wapopfotoanswer').stop().fadeIn().delay(5000).fadeOut();
+            chaveupnado = 0;
+            return;
+        }else{
+            $('#wapopfotoanswer').children('div').addClass('alert-success').html('Excluindo foto atual!');
+            $('#wapopfotoanswer').stop().fadeIn();
+
+            visao  = $('#visaoselecionada').val();
+            modelo = $('#meumodelo option:selected').text();
+            partes = modelo.split(' / ');
+            modelo = partes[0].toLowerCase();
+            modelo = modelo + '_' + partes[1].replace(/ /g,'_').toLowerCase();;
+            nomeim = ['WA_',modelo,'_fundo_',visao,'.jpg'];
+            filename = nomeim.join("");
+            console.log(modelo);
+            $.post('/modelos/walkaround/deletefotowa',{nomefile: filename})
+            .done(function(data){
+                $('#wapopfotoanswer').children('div').html('Iniciando o upload da foto!');
+                frm  = document.getElementById('popupwafoto');
+                arq  = frm.files[0];
+                info = new FormData();
+                info.append('arquivo',arq);
+                info.append('nomefile',filename);
+
+                $.ajax({
+                    url: '/modelos/walkaround/uploadimg',
+                    type: 'POST',
+                    data: info,
+                    cache: false,
+                    processData: false,
+                    contentType: false
+                }).done(function(data){
+                    if(data == 'ok'){
+                        $('#wapopfotoanswer').fadeOut('fast');
+                        $('#wapopfotoanswer').children('div').removeClass('alert-danger');
+                        $('#wapopfotoanswer').children('div').removeClass('alert-success');
+                        $('#wapopfotoanswer').stop().fadeOut();
+                        ft = '#img_' + visao;
+                        $(ft).attr('src',$('#prevfotowa').val());
+                        clearfotopopup();
+                        chaveupnado = 0;
+                    }else{
+                        $('#wapopfotoanswer').children('div').removeClass('alert-success');
+                        $('#wapopfotoanswer').children('div').addClass('alert-danger');
+                        $('#wapopfotoanswer').children('div').html('Houve um problema ao conectar com o servidor.');
+                        $('#wapopfotoanswer').stop().delay(3000).fadeOut();
+                        clearfotopopup();
+                        chaveupnado = 0;
+                    }
+                }).fail(function(anw){
+                    $('#wapopfotoanswer').children('div').removeClass('alert-success');
+                    $('#wapopfotoanswer').children('div').addClass('alert-danger');
+                    $('#wapopfotoanswer').children('div').html('Houve um problema ao conectar com o servidor.');
+                    $('#wapopfotoanswer').stop().delay(3000).fadeOut();
+                    clearfotopopup();
+                    chaveupnado = 0;
+                });
+                
+            })
+            .fail(function(data){
+                $('#wapopfotoanswer').children('div').removeClass('alert-success');
+                $('#wapopfotoanswer').children('div').addClass('alert-danger');
+                $('#wapopfotoanswer').children('div').html('Houve um problema ao conectar com o servidor.');
+                clearfotopopup();
+                chaveupnado = 0;
+            });
+        }
+    }
+}
+
+/**
+ * Função que faz o upload da foto principal de WA
+ * Criada por: Eliel Fernandes
+ * Criada em: 20/07/2015
+ * Versão 1.0.0
+ */
+function clearfotopopup(){
+    $('#popupwafoto').val('');
+    $('#prevfotowa').val('');
+    $('#popWAfoto').popup('close');
+}
+
+/**
+ * No popup Conteudo WA ativa o input file para selecionar a imagem
+ */
+function activenext(obj){
+    $(obj).next().trigger('click');
+}
+
+/**
+ * Função que faz o upload da foto principal de WA
+ * Criada por: Eliel Fernandes
+ * Atualizada em 20/07/2015
+ * Versão 1.0.1
+ */
+function getbase64(id){
+    var reader = new FileReader();
+    var old_img = document.getElementById(id).src;
+
+    reader.onload = function(e){
+        if(id == 'popwaimgshowing'){
+            document.getElementById(id).src = e.target.result;
+            var width_img = document.getElementById('popwaimgshowing').naturalWidth;
+            var height_img = document.getElementById('popwaimgshowing').naturalHeight;
+            if(!ativafigura(width_img,height_img,old_img)){
+    
+            }
+        }else{
+            document.getElementById(id).value = e.target.result;
+        }
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+/**
+ * Função que valida o tamanho da imagem do popup Conteudo WA
+ */
+function ativafigura(largura, altura,old_img){  
+    if(largura == 264 && altura == 264){
+        console.log("Sucesso ! ");
+        $('#wapopanswer').children('div').addClass('alert-success').html('Imagem selecionada!');
+        $('#wapopanswer').children('div').slideDown().delay(5000).slideUp('slow',function(){  
+            $('#wapopanswer').children('div').remove();            
+        });
+        return true;
+    }else{
+        $('#wapopanswer').children('div').addClass('alert-danger').html('Tamanho de imagem, inválido!');
+        $('#wapopanswer').children('div').slideDown().delay(5000).slideUp('slow',function(){  
+            $('#wapopanswer').children('div').remove();            
+        });
+        return false;
+    }
+}
+
+/**
+ * Função executada quando clica no menu do bullet (Conteudo popup).
+ * Seta qual o id do bullet no popup, o id será usado no momento de gravar os dados.
+ * Também carrega os dados do bullet para o popup
+ * @por Eliel Fernandes
+ * version: 1.0.1
+ * create: 17/07/2015
+ * atualizada: 21/07/2015
+ */
+function openpopupconteudowa(obj){
+    id = $(obj).closest('ul').parent().attr('id');
+    bt = '#' + id;
+    $('#btngravarconteudowa').attr('data-tobullet',id);
+
+    titlevlr  = ($(bt).attr('data-titlevlr') != 0) ? $(bt).attr('data-titlevlr') : 0;
+    titlehtml = ($(bt).attr('data-titlehtml') != 'Selecione o título do popup') ? $(bt).attr('data-titlehtml') : 'Selecione o título do popup';
+    descvlr   = ($(bt).attr('data-descvlr') != 0) ? $(bt).attr('data-descvlr') : 0;
+    deschtml  = ($(bt).attr('data-deschtml') != 'Descrição') ? $(bt).attr('data-deschtml') : 'Descrição';
+    imgpath   = ($(bt).attr('data-imgsrc') != '') ? $(bt).attr('data-imgsrc') : 'https://storage.googleapis.com/mb-wa-images/pop_ups/img-pop-wa.png';
+    
+    $('#popwaimgshowing').attr('src',imgpath);
+    $('#popwatitulo').attr('data-vlr',titlevlr);
+    $('#popwatitulo').html(titlehtml);
+    $('#popwadesc').attr('data-vlr',descvlr);
+    $('#popwadesc').html(deschtml);
+
+    $('#popWA').popup('open');
+}
+
+/**
+ * Função que limpa o popup Conteudo WA ao fechar no X e depois de Gravar o conteúdo
+ * @por Eliel Fernandes
+ * version: 1.0
+ * create: 17/07/2015
+ */
+function clearpopupconteudowa(){
+    $('#popwaimg').val('');
+    $('#popwaimgshowing').attr('src','/images/img-pop-wa.png');
+    $('#popwatitulo').attr('data-tipo','0');
+    $('#popwatitulo').attr('data-vlr','0');
+    $('#popwatitulo').html('Selecione o título do popup');
+    $('#popwadesc').attr('data-tipo','0');
+    $('#popwadesc').attr('data-vlr','0');
+    $('#popwadesc').html('Descrição');
+    $('#popWA').popup('close');
+}
+
+/**
+ * Função que reune os dados e atribui ao bullet
+ * clicado é uma variavel de controle caso a pessoa clique uma segunda vez.
+ * @por Eliel Fernandes
+ * version: 1.0.1
+ * create: 17/07/2015
+ * atualizado: 21/07/2015
+ */
+var clicado = 0;
+function gravapopuupinfo(){
+    if(clicado == 0){
+        clicado = 1;
+
+        $('#wapopanswer').children('div').removeClass('alert-success');
+        $('#wapopanswer').children('div').removeClass('alert-danger');
+
+        if($('#popwaimg').val() != ''){
+            $('#wapopanswer').children('div').addClass('alert-success');
+            $('#wapopanswer').children('div').html('Iniciando o upload.');
+            $('#wapopanswer').fadeIn();
+        }
+
+        bullet    = '#' + $('#btngravarconteudowa').attr('data-tobullet');
+
+        titlevlr  = $('#popwatitulo').attr('data-vlr');
+        titlehtml = $('#popwatitulo').html();
+        descvlr   = $('#popwadesc').attr('data-vlr');
+        deschtml  = $('#popwadesc').html();
+        imgsrc    = $('#popwaimgshowing').attr('src');
+
+        $(bullet).attr('data-titlevlr',titlevlr);
+        $(bullet).attr('data-titlehtml',titlehtml);
+        $(bullet).attr('data-descvlr',descvlr);
+        $(bullet).attr('data-deschtml',deschtml);
+        $(bullet).attr('data-imgsrc',imgsrc);
+
+        if($('#popwaimg').val() != ''){
+            frm  = document.getElementById('popwaimg');
+            arq  = frm.files[0];
+            info = new FormData();
+            info.append('arquivo',arq);
+
+            $.ajax({
+                url: '/modelos/walkaround/uploadpopup',
+                type: 'POST',
+                data: info,
+                cache: false,
+                processData: false,
+                contentType: false
+            }).done(function(foi){
+                clicado = 0;
+                $(bullet).attr('data-imgpath', foi);
+                $('#wapopanswer').children('div').html('Imagem adicionada com sucesso!');
+                $('#wapopanswer').children('div').removeClass('alert-success');
+                $('#wapopanswer').children('div').removeClass('alert-danger');
+                $('#wapopanswer').fadeOut();
+                clearpopupconteudowa();
+            }).fail(function(quebro){
+                clicado = 0;
+                $('#wapopanswer').children('div').removeClass('alert-success');
+                $('#wapopanswer').children('div').removeClass('alert-danger');
+                $('#wapopanswer').fadeOut();
+                clearpopupconteudowa();
+            });
+        }else{
+            clicado = 0;
+            clearpopupconteudowa();
+        }
+    }
+}
+
+/**
+ * Função que reune os dados dos pontos para salvar
+ * Criado por: Eliel Fernandes
+ * Criado em : 21/07/2015
+ * Versão: 1.0.0
+ */
+function saveme(){
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    var post = Array();
+    $('#imgfront').children('div').each(function(){
+        visao = 'ext';
+        pos_x = $(this).attr('data-left');
+        pos_y = $(this).attr('data-top');
+        idtit = $(this).children(':first').children('li:first').children(':first').attr('data-vlr');
+        idpop = $(this).attr('data-titlevlr');
+        desc  = $(this).attr('data-descvlr');
+        img   = ($(this).attr('data-imgpath') != '') ? 'https://storage.googleapis.com/mb-wa-images/pop_ups/'+$(this).attr('data-imgpath') : 'https://storage.googleapis.com/mb-wa-images/pop_ups/img-pop-wa.png';
+        img   = img.split('/');
+        idimg = img[img.length-1];
+
+        dot = [visao,pos_x,pos_y,idtit,idpop,desc,idimg];
+        post.push(dot);
+    });
+    $('#imgback').children('div').each(function(){
+        visao = 'int';
+        pos_x = $(this).attr('data-left');
+        pos_y = $(this).attr('data-top');
+        idtit = $(this).children(':first').children('li:first').children(':first').attr('data-vlr');
+        idpop = $(this).attr('data-titlevlr');
+        desc  = $(this).attr('data-descvlr');
+        img   = ($(this).attr('data-imgpath') != '') ? 'https://storage.googleapis.com/mb-wa-images/pop_ups/'+$(this).attr('data-imgpath') : 'https://storage.googleapis.com/mb-wa-images/pop_ups/img-pop-wa.png';
+        img   = img.split('/');
+        idimg = img[img.length-1];
+
+        dot = [visao,pos_x,pos_y,idtit,idpop,desc,idimg];
+        post.push(dot);
+    });
+    $.post('/modelos/walkaround/savedata',{data: post})
+    .done(function(retorno){
+        $('#answer').children('div').addClass('alert-success');
+        $('#answer').children('div').html('Dados gravados com sucesso!');
+        $('#answer').slideDown().delay(5000).slideUp('fast');
+    })
+    .fail(function(data){
+        $('#answer').children('div').addClass('alert-danger');
+        $('#answer').children('div').html('Erro ao comunicar com o servidor. Tente mais tarde!');
+        $('#answer').slideDown().delay(5000).slideUp('fast');
+    });
+}
+
+/**
+ * Muda a visão para atualizar o popup Foto WA
+ * Criado por: Eliel Fernandes
+ * Criado em: 22/07/2015
+ * Versão: 1.0.0
+ */
+function mudavisao(visao){
+    $('#visaoselecionada').val(visao);
+}
+
+/**
+ * Chama função inicial que ajusta os pontos
+ */
+loaddatainit();
+</script>
     

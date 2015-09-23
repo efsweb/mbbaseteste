@@ -43,11 +43,11 @@ class Model_ModelosMapper{
         return $rows;
     }
 
-    public function visaomodelos($idmodelo, $idpg){
+    public function visaomodelos($idmodelo, $idpg, $sys){
     	$db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
-    	$arr    = array(1, $idmodelo, $idpg,'',0);
+    	$arr    = array($sys, $idmodelo, $idpg,'',0);
     	$return = $db->query("CALL sp_fe_com_consulta_visoes_modelo(?,?,?,?,?)", $arr);
     	$result = $return->fetchAll();
         $db->closeConnection();
@@ -61,26 +61,26 @@ class Model_ModelosMapper{
      * @version 1.0
      * @return  array [com o resultado da busca]
      */
-    public function searchalias($a, $b, $c, $d, $e){
+    public function searchalias($a, $b, $c, $d, $e,$idsys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
-        $arr    = array($a, $b, $c, $d, $e);
-        $return = $db->query("CALL sp_fe_com_pesquisa_alias(?,?,?,?,?)", $arr);
+        $arr    = array($a, $b, $c, $d, $e,$idsys);
+        $return = $db->query("CALL sp_fe_com_pesquisa_alias(?,?,?,?,?,?)", $arr);
         $result = $return->fetchAll();
         $db->closeConnection();
         return $result;
     }
 
-    public function savealias($a, $c, $d, $e, $f, $g){
+    public function savealias($a, $c, $d, $e, $f, $g,$sys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
         $arr;
         $idalias= $a;
-        $arr    = array('I',1,$a,$c,$d,$e,$f,$g,1);
+        $arr    = array('I',$sys,$a,$c,$d,$e,$f,$g,1);
         if($a != 0){
-            $arr= array('U',1,$a,$c,$d,$e,$f,$g,1);
+            $arr= array('U',$sys,$a,$c,$d,$e,$f,$g,1);
         }
         $return = $db->query("CALL sp_fe_dam_alias(?,?,?,?,?,?,?,?,?)", $arr);
         $result = $return->fetchAll();
@@ -90,29 +90,29 @@ class Model_ModelosMapper{
         $db->closeConnection();
         return $a;//delclasi($a, $b);
     }
-    public function delclasi($a){
+    public function delclasi($a,$sys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
-        $del = array('D', 1, $a, 0);
+        $del = array('D', $sys, $a, 0);
         $return = $db->query("CALL sp_fe_dam_alias_classificacao(?,?,?,?)", $del);
         $db->closeConnection();
         return $return->fetchAll();
     }
-    public function saveclasi($a, $b){
+    public function saveclasi($a, $b,$sys){
         $db     = Zend_Db_Table::getDefaultAdapter();
         $db->query('SET NAMES "utf8"');
         $db->query('SET CHARACTER SET "utf8" ');
         $db->beginTransaction();
         try{
             for($i = 0; $i < count($b);$i++){
-                $cla = array('I', 1, $a, $b[$i]);
+                $cla = array('I', $sys, $a, $b[$i]);
                 $db->query("CALL sp_fe_dam_alias_classificacao(?,?,?,?)", $cla);
                 $cla = '';
             }
-            $db->commit();
+            return $db->commit();
             $db->closeConnection();
-            return $arr;
+            //return $arr;
         }catch (Exception $e) {
            $db->rollBack();
            $db->closeConnection();

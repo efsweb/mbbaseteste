@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>PDF Grafica</title>
+	<style>
+		* {
+			font-weight: normal;
+			font-size: 8pt;
+			font-family: corpos;
+			color: cmyk(0,0,0,100);
+		}
+		.f15{
+			font-family: corpoa;
+			font-size: 15pt;
+		}
+		/* Codigo novo */
+		.eufalei{
+			padding-top: 37px;
+			width: 853px;
+			height: 1141px;
+			background-image: url('/images/bg_grafica1.jpg');
+		}
+		.banner, .banner_verniz{
+			display: block;
+			/*background-color: #b2b4b7;*/
+			/*background: linear-gradient(to left, #b2b4b7, #dfe4e7);*/
+			background: linear-gradient(to left, cmyk(0,0,0,38), cmyk(0,0,0,12));
+			width: 727px;
+			margin-left: 43px;
+			height: 100px;
+			border-radius: 10px;
+			padding-top: 5px;
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+		.banner table, .banner_verniz table{
+			height: 100px;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			color: cmyk(0,0,0,100);
+		}
+		.banner_verniz{
+			background: none;
+			background-color: transparent;
+		}
+		.foto{
+			padding-top: 5px;
+			padding-bottom: 5px;
+			width: 767px;
+			margin-left: 43px;
+		}
+		.foto img{
+			width: 100%;
+		}
+		.titulo{
+			font-family: corpoa;
+			font-size: 33pt !important;
+			line-height: 30pt !important;
+			letter-spacing: -2px;
+			color: cmyk(0,0,0,100);
+		}
+		.subtitulo {
+			font-family: corpoa;
+			font-size: 18pt !important;
+			line-height: 14pt;
+			color: cmyk(0,0,0,100);
+		}
+		.linha{
+			width: 767px;
+			display: block;
+			clear: both;
+			margin: 0;
+			padding: 0;
+			margin-left: 43px;
+			overflow: auto;
+			margin-bottom: 10px;
+		}
+		.item_title{
+			padding-left: 10px;
+			padding-right: 27px;
+			padding-top: 3px;
+			/*background: linear-gradient(to left, #b2b4b7, #dfe4e7);*/
+			background: linear-gradient(to left, cmyk(0,0,0,38), cmyk(0,0,0,12));
+			border-radius: 7px;
+			height: 34px;
+			font-family: corpoa;
+			font-size: 15pt;
+			text-align: left;
+			vertical-align: middle;
+			color: cmyk(0,0,0,100);
+		}
+		.dv_item_tabela{
+			padding-left: 5px;
+			padding-right: 5px;
+			color: cmyk(0,0,0,100);
+		}
+		.item_tabela{
+			width: 100%;
+		}
+		.item_tabela td{
+			line-height: 15px;
+			border-bottom: 0.01em solid cmyk(0,0,0,43);
+			padding: 2px 1px 2px 10px;
+			vertical-align: middle;
+			font-weight: normal;
+			font-size: 8pt !important;
+			font-family: corpos;
+			color: cmyk(0,0,0,100);
+		}
+		.item_atributo, .item_atributo_pesos{
+			width: 255px;
+			text-align: left;
+			font-size: 8pt;
+			font-family: corpos;
+		}
+		.item_atributo_pesos{
+			width: 200px;
+		}
+		.item_atributo2{
+			width: 250px !important;
+			text-align: left;
+		}
+		.aright{
+			text-align: right !important;
+		}
+		.dimensoes{
+			width: 546px;
+			float: left;
+		}
+		.foto_dimensoes{
+			margin-left: 6px;
+			width: 215px;
+			float: left;
+			right: 0;
+			top: 0;
+		}
+		.foto_dimensoes img{
+			width: 215px;
+		}
+		.pesos{
+			width: 100%;
+		}
+		.pesos-td{
+			width: 348px;
+		}
+		.pesos_separator{
+			width: 10px;
+		}
+		.rodape{
+			padding: 0;
+			width: 765px;
+			margin-left: 43px;
+			border-radius: 10px;
+			border: 1px solid cmyk(0,0,0,80);
+			margin-top: 5px;
+			padding: 7px 0 0 0;
+		}
+		.rodape_pg_1{
+			padding: 0;
+			width: 748px;
+			margin-left: 43px;
+			border-radius: 10px;
+			border: 0.01em solid cmyk(0,0,0,80);
+			padding: 2px 7px 2px 7px;
+		}
+		span{
+			font-family: corpod;
+			font-size: 10pt;
+		}
+		.item_title div{
+			font-family: corpod;
+			font-size: 9pt;
+			float: left;
+			margin-left: 250px;
+			margin-top: -20px;
+		}
+		.side_text{
+			font-family: corpos !important;
+			font-size: 6,5pt !important;
+			font-weight: normal !important;
+			border: none;
+			position: fixed;
+			right: 33px;
+			bottom: 35%;
+			rotate: -90;
+		}
+		.final_grafica{
+			width: 767px;
+			height: 390px;
+			border-radius: 10px;
+			background-color: cmyk(0,0,0,100);
+		}
+		.pdadd{
+			padding-left: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="eufalei">
+		<div class="banner">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td class="titulo" valign="bottom" width="115px">#TITULO#</td>
+					<td class="titulo" valign="bottom" width="190px">#TITULO2#</td>
+					<td rowspan="2" valign="middle" width="200px">
+						<img src="/images/logo_bluetec.jpg" width="120px" />
+					</td>
+					<td rowspan="2" valign="middle" align="right" width="200px">
+						<img src="/images/logo_mercedes_cabeca.jpg" width="190px" />
+					</td>
+				</tr>
+				<tr>
+					<td class="subtitulo" valign="top">#SUBTITULO#</td>
+					<td class="subtitulo" valign="top">#SUBTITULO2#</td>
+				</tr>
+			</table>
+		</div>
+		<div class="foto">
+			<img src="novas/accelo_815_pic_1.jpg" />
+		</div>
+		<div class="linha">
+			<div class="dimensoes">
+				<div class="item_title">#ITEM1#</div>
+				<div class="dv_item_tabela">
+					<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+						#DIMENSOES#
+					</table>
+				</div>
+			</div>
+			<div class="foto_dimensoes">
+				<img src="novas/accelo_815_pic_2.jpg" height="262" width="247" />
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">
+				<table class="pesos" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td class="f15 pesos-td">#ITEM2#</td>
+						<td class="pesos_separator">&nbsp;</td>
+						<td class="f15 pdadd">#ITEM3#</td>
+					</tr>
+				</table>
+			</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					#PESOS#
+				</table>
+			</div>
+		</div>
+		<!-- Quebra do rodape nao remover esta linha -->
+		<htmlpagefooter name="footerpg1">
+			<div class="rodape_pg_1">
+				#NOTA#
+			</div>
+		</htmlpagefooter>
+		<sethtmlpagefooter name="footerpg1" value="on" />
+		<!-- Fim da quebra do rodape nao remover esta linha -->
+	</div>
+	<!-- Quebra de pagina nao remover a linha abaixo -->
+	<pagebreak />
+	<div class="eufalei">
+		<div class="linha">
+			<div class="item_title">#ITEM4#</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					#CABINA#
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">#ITEM5#</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					#MOTOR#
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">#ITEM6#</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					#SISTEMA#
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">#ITEM7#</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					#TRANS#
+				</table>
+			</div>
+		</div>
+		#CAIXA#
+		<div class="linha">
+			<div class="item_title">#ITEM8#</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					#EIXO#
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">#ITEM9#</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					#CHASSI#
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">#ITEM10#</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					#DESEM#
+				</table>
+			</div>
+		</div>
+		<div class="linha">
+			<div class="item_title">#ITEM11#</div>
+			<div class="dv_item_tabela">
+				<table class="item_tabela" cellpadding="0" cellspacing="0" border="0">
+					#FREIOS#
+				</table>
+			</div>
+		</div>
+		<!-- Quebra da nota nao remover esta linha -->
+		<htmlpagefooter name="footerpg2">
+			<div class="rodape">
+				<table>
+					<tr>
+						<td valign="top" width="340px" align="justify" class="sem-borda" rowspan="2" style="font-size: 7,5pt;">
+							#RODAPE#
+						</td>
+						<td class="sem-borda" align="left" colspan="2" style="font-size: 7,5pt;">
+							Para mais informações, ligue para o nossa central pelo 0800 970 90 90 ou acesse www.mercedes-benz.com.br. Mercedes-Benz, marca do grupo Daimler.
+						</td>
+					</tr>
+					<tr>
+						<td class="sem-borda arial" align="right" valign="bottom">
+							Respeite a sinalização de trânsito.
+						</td>
+						<td class="sem-borda" width="50px" align="center" valign="bottom">
+							<img src="/images/ibama_logo.jpg" height="55px" />
+						</td>
+					</tr>
+				</table>
+			</div>
+		</htmlpagefooter>
+		<sethtmlpagefooter name="footerpg2" value="on" show-this-page="1" />
+		<!-- Fim da quebra da nota nao remover esta linha -->
+	</div>
+	<div class="side_text">
+		Marketing e Comunicação - Caminhões - Caixa Postal 202 - 09701-970 - São Bernardo do Campo - SP - Brasil #LATERAL#
+	</div>
+	<!-- Quebra de pagina nao remover a linha abaixo -->
+	<pagebreak />
+	<div class="eufalei">
+		<div class="banner_verniz">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td class="titulo" valign="bottom" width="115px">#TITULO#</td>
+					<td class="titulo" valign="bottom" width="190px">#TITULO2#</td>
+					<td rowspan="2" valign="middle" width="210px"></td>
+					<td rowspan="2" valign="middle" align="right" width="200px">
+						<img src="/images/logo_mercedes.jpg" width="160px" />
+					</td>
+				</tr>
+				<tr>
+					<td class="subtitulo" valign="top">&nbsp;</td>
+					<td class="subtitulo" valign="top">&nbsp;</td>
+				</tr>
+			</table>
+		</div>
+		<div class="linha final_grafica"></div>
+		<htmlpagefooter name="footerpg3">
+			<div></div>
+		</htmlpagefooter>
+		<sethtmlpagefooter name="footerpg3" value="on" />
+	</div>
+
+</body>
+</html>

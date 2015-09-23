@@ -1,53 +1,80 @@
 <div class="ui-grid-a">
     <div class="title">
         <h1>Modelos - Ficha Técnica - Eixos</h1>
-        <a onclick="savethis();" href="#" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
+        <a onclick="saveft('mod_ft_eixos');" href="#" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
     </div>
     <div id="answer" class="resposta">
         <div class="alert" role="alert"></div>
     </div>
-    <div id="listcontent" class="content">
+    <ul id="listcontent" class="content" data-pg-id="<?= $this->pgid; ?>">
         <?php foreach($this->content as $row): ?>
-        <div class="row-cont-ficha" id="linha_<?= $row['bmb_nr_linha']; ?>" data-linha="<?= $row['bmb_nr_linha']; ?>">
-            <table width="100%" border="0" cellspacing="2" cellpadding="0">
-                <tr>
-                    <td>
-                        <div class="ui-field-contain">
-                            <a id="col_<?= $row['bmb_nr_linha']; ?>_0" onclick='opensearch(this);' href="#SelectItem" data-rel="popup" data-idlabel="<?= $row['id_label']; ?>" data-position-to="window" data-transition="pop" class="btn-ficha btn-ficha-label">
-                                &nbsp;<?= $row['desc_label']; ?>
-                            </a>
-                        </div>
-                    </td>
-                    <td class="acoes-col acoes-col-azul">
-                        <div class="ui-field-contain">
-                            <a href="#" class="pull-left icon-cancel-2 link-icon del-row" data-toggle="tooltip" title="Deletar linha"></a>
-                        </div>                                        
-                    </td>
-                </tr>
-            </table>
+        <li class="row-cont-ficha" id="linha_<?= $row['bmb_nr_linha']; ?>" data-linha="<?= $row['bmb_nr_linha']; ?>">
+            <div class="ft-list-row-title">
+                <div class="pull-left handlearrasta"><span class="icon-resize-full-alt"></span></div>
+                <div class="pull-left mnutipoholder">
+                    <?php 
+                    $txt = $row['tipo_linha'];
+                    switch ($row['tipo_linha']) {
+                        case 'cabecalho':
+                            $txt = 'Cabeçalho';
+                            break;
+                        case 'obs':
+                            $txt = 'Observação';
+                            break;
+                        default:
+                            $txt = 'Item';
+                            break;
+                    }
+                    ?>
+                    <span class="tipo-linha-title"><?= $txt; ?></span> <span class="icon-down-dir"></span>
+                    <div class="mnutipo">
+                        <div onclick="changetype(this);" class="mnutipo-item">Item</div>
+                        <div onclick="changetype(this);" class="mnutipo-item">Cabeçalho</div>
+                        <div onclick="changetype(this);" class="mnutipo-item">Observação</div>
+                    </div>
+                </div>
+            </div>
+            <div class="not-dragg" style="padding-top: 37px;">
+                <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                    <tr>
+                        <td>
+                            <div class="ui-field-contain">
+                                <a id="col_<?= $row['bmb_nr_linha']; ?>_0" onclick='opensearch(this);' href="#SelectItem" data-rel="popup" data-idlabel="<?= $row['id_label']; ?>" data-position-to="window" data-transition="pop" class="btn-ficha btn-ficha-label">
+                                    &nbsp;<?= ($row['desc_label'] == '0') ? '' : $row['desc_label']; ?>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="acoes-col acoes-col-azul">
+                            <div class="ui-field-contain">
+                                <a href="#" class="pull-left icon-cancel-2 link-icon del-row" data-toggle="tooltip" title="Deletar linha"></a>
+                            </div>                                        
+                        </td>
+                    </tr>
+                </table>
 
-            <table data-colunas="<?= $row['qtde_coluna']; ?>" width="100%" border="0" cellspacing="2" cellpadding="0">
-                <tr>
-                    <?php for($i = 1; $i <= $row['qtde_coluna']; $i++): ?>
-                    <td>
-                        <div class="ui-field-contain">
-                            <button class="icon-cancel-2 btn-del-col"></button>
-                            <a onclick='opensearch(this);' id="col_<?= $row['bmb_nr_linha'] . '_' . $i; ?>" data-vlr="<?php $t = 'id_vlr_' . $i; echo $row[$t]; ?>" data-tipo="<?php $t = 'tipo_vlr_' . $i; echo $row[$t]; ?>" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-ficha">
-                                &nbsp;<?php $t = 'desc_vlr_' . $i; echo $row[$t]; ?>
-                            </a>
-                        </div>
-                    </td>
-                    <?php endfor; ?>
-                    <td class="acoes-col">
-                        <div class="ui-field-contain">
-                            <a onclick="addColumnToDesc(this);" href="#" class="pull-left icon-plus link-icon add-icon" data-toggle="tooltip" title="Adicionar coluna"></a>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div><!-- /row-cont-ficha -->
+                <table data-colunas="<?= $row['qtde_coluna']; ?>" width="100%" border="0" cellspacing="2" cellpadding="0">
+                    <tr>
+                        <?php for($i = 1; $i <= $row['qtde_coluna']; $i++): ?>
+                        <td>
+                            <div class="ui-field-contain">
+                                <button class="icon-cancel-2 btn-del-col"></button>
+                                <a onclick='opensearch(this);' id="col_<?= $row['bmb_nr_linha'] . '_' . $i; ?>" data-vlr="<?php $t = 'id_vlr_' . $i; echo $row[$t]; ?>" data-tipo="<?php $t = 'tipo_vlr_' . $i; echo $row[$t]; ?>" href="#SelectItem" data-rel="popup" data-position-to="window" data-transition="pop" class="btn-ficha">
+                                    &nbsp;<?php $t = 'desc_vlr_' . $i; echo ($row[$t] == '0') ? '' : $row[$t]; ?>
+                                </a>
+                            </div>
+                        </td>
+                        <?php endfor; ?>
+                        <td class="acoes-col">
+                            <div class="ui-field-contain">
+                                <a onclick="addColumnToDesc(this);" href="#" class="pull-left icon-plus link-icon add-icon" data-toggle="tooltip" title="Adicionar coluna"></a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </li>
         <?php endforeach; ?> 
-    </div><!-- /content -->
+    </ul><!-- /content -->
 
     <a href="#" onclick="addRowToContent();" class="btn-azul pull-right" id="add-row-ficha"><span class="icon-plus"></span>adicionar</a>
 
@@ -63,6 +90,13 @@ $(document).on('pagehide', 'div', function (event, ui) {
 });
 $('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
 $('#mod_ft_eixos').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+/**
+ * Salva o conteúdo da lista
+ * Criado por: Eliel Fernandes
+ * Atualizada em: 03/08/2015
+ * Versão: 1.1.0
+ */
 function savethis(){
     $.mobile.loading("show");
     if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
@@ -73,11 +107,26 @@ function savethis(){
     var str = '';
     var post = [];
     $('.content').find('.row-cont-ficha').each(function(){
+        tipo_linha = $(this).children('div:first').children('div:last').children('span:first').html();
+        switch(tipo_linha){
+            case 'Cabeçalho':
+                tipo_linha = 'cabecalho';
+                break;
+            case 'Observação':
+                tipo_linha = 'obs';
+                break;
+            default:
+                tipo_linha = 'item';
+                break;
+        }
+        pg_id = 'mod_ft_eixos';
+        console.log('ID_PG ' + pg_id);
         str += $(this).attr('data-linha');
-        str += ',mod_ft_eixos';
-        str += ',' + $(this).children('table:last').attr('data-colunas');
-        str += ',' + $(this).children('table:first').children('tbody').children('tr').children('td').children('div').children('a').attr('data-idlabel');
-        $(this).children('table:last').children('tbody').children('tr').find('td').each(function(){
+        str += ',' + pg_id;
+        str += ',' + tipo_linha;
+        str += ',' + $(this).children('div.not-dragg').children('table:last').attr('data-colunas');
+        str += ',' + $(this).children('div.not-dragg').children('table:first').children('tbody').children('tr').children('td').children('div').children('a').attr('data-idlabel');
+        $(this).children('div.not-dragg').children('table:last').children('tbody').children('tr').find('td').each(function(){
             if($(this).hasClass('acoes-col')){
 
             }else{
@@ -88,20 +137,21 @@ function savethis(){
         post.push(str);
         str = '';
     });
-    $.post('/modelos/actions/savedimensoes',{lines: post,pg:'mod_ft_eixos'})
+    //console.log(post);
+    $.post('/modelos/actions/savedimensoes',{lines: post, pg:'mod_ft_eixos'})
     .done(function(data){
-        var result = JSON.parse(data);
-        console.log(result);
+        //console.log(data);
+        //var result = JSON.parse(data);
         $.mobile.loading("hide");
         $('#answer').children('div').addClass('alert-success').html('Informações atualizadas com sucesso!');
         $('#answer').slideDown().delay(5000).slideUp();
     })
     .fail(function(err){
-        var result = JSON.parse(err);
+        //var result = JSON.parse(err);
+        console.log('Erro: ' + err);
         $.mobile.loading("hide");
         $('#answer').children('div').addClass('alert-danger').html('Houve um erro, tente mais tarde!');
         $('#answer').delay(5000).slideDown();
     });
 }
-
 </script>

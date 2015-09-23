@@ -1,0 +1,51 @@
+<div class="ui-grid-a">
+    <div class="title">
+        <h1>Ficha Técnica - Nota Final da Ficha</h1>
+        <a onclick="savedata();" class="btn-azul pull-right btn-save"><span class="icon-ok-3"></span>salvar</a>
+    </div>
+    <div id="answer" class="resposta">
+        <div class="alert" role="alert"></div>
+    </div>
+    <div class="content">
+        <form id="frm_ft" method="post">
+            <div class="ui-grid-a cont-form">
+                <label for="comentario_1" class="label-line">Comentário 1:</label>
+                <textarea id="comentario_1" name="comentario_1" class="height-text-area ui-input-text ui-textinput-autogrow" rows="50" cols="90"><?= (isset($this->content[0]['comentario_1'])) ? trim($this->content[0]['comentario_1']) : ''; ?></textarea>
+                <div class="traco"></div>
+                <label for="comentario_2" class="label-line">Comentário 2:</label>
+                <textarea id="comentario_2" name="comentario_2" class="height-text-area ui-input-text ui-textinput-autogrow" rows="50" cols="90"><?= (isset($this->content[0]['comentario_2'])) ? trim($this->content[0]['comentario_2']) : ''; ?></textarea>
+            </div>
+        </form>
+    </div><!-- /content -->
+<a id="downloadfile" target="_blank" style="visibility: hidden;">&nbsp;</a>
+</div><!-- ui-grid-a -->
+
+
+<script id="panel-init">
+$('#mnulateralesquerdo').children('div:first').attr('data-collapsed', 'false');
+$('#mnulateralesquerdo').children('div:first').children('ul').children('li:last').children('a').css("background","url('/images/arrow-menu-left.png')no-repeat right");
+
+function savedata(){
+    $.mobile.loading("show");
+    if($('#answer').children('div').hasClass('alert-danger') || $('#answer').children('div').hasClass('alert-success')){
+        $('#answer').slideUp('fast');
+        $('#answer').children('div').removeClass('alert-danger');
+        $('#answer').children('div').removeClass('alert-success');
+    }
+    var a = $('#comentario_1').val();
+    var b = $('#comentario_2').val();
+    $.post('/modelos/actions/savenotafinal',{c1 : a, c2 : b})
+    .done(function(data){
+        console.log(data);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-success').html('Informações atualizadas com sucesso!');
+        $('#answer').slideDown().delay(5000).slideUp();
+    })
+    .fail(function(err){
+        console.log('Erro: ' + err);
+        $.mobile.loading("hide");
+        $('#answer').children('div').addClass('alert-danger').html('Houve um erro, tente mais tarde!');
+        $('#answer').delay(5000).slideDown();
+    });
+}
+</script>

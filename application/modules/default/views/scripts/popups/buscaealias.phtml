@@ -1,0 +1,139 @@
+<div data-role="popup" id="SelectItem" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+    <a href="#" onclick="backsearch();" data-rel="back" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+    <div data-role="header" data-theme="b" class="header-popup">
+        <h1>Pesquisa Descrição Comercial</h1>
+    </div>
+    <div role="main" class="ui-content content-popup" style="padding-bottom: 39px;">
+        <div id="tabs">
+            <ul role="tablist">
+                <li role="presentation" class="active" onclick="closealias();"><a id="btn-aba-search" href="#tab-pesquisa" aria-controls="tab-pesquisa" role="tab" data-toggle="tab">Pesquisa</a></li>
+                <li role="presentation"><a id="btn-aba-alias" href="#tab-alias" class="hide" aria-controls="tab-alias" role="tab" data-toggle="tab">Alias</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tab-pesquisa">
+                    <form data-theme="b">
+                        <div class="ui-grid-b radios-filtro">
+                            <div class="ui-block-a">
+                                <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                    <input type="radio" name="filtro1" id="alias" value="alias" checked="checked">
+                                    <label for="alias">Alias</label>
+                                    <input type="radio" name="filtro1" id="item" value="item">
+                                    <label for="item">Item</label>
+                                    <input type="hidden" id="param_tipo" value="alias" />
+                                </fieldset>
+                            </div>
+
+                            <div class="ui-block-b">
+                                <div class="option-alias">
+                                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                        <input type="radio" name="filtro2" id="label" value="label" checked="checked">
+                                        <label for="label">Label</label>
+                                        <input type="radio" name="filtro2" id="valor" value="valor">
+                                        <label for="valor">Valor</label>
+                                        <input type="hidden" id="param_finalidade" value="label" />
+                                    </fieldset>
+                                </div>
+                            </div>
+
+                            <div class="ui-block-c busca-ficha">
+                                <div class="ui-block-a">
+                                    <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset" style="float: left; width: 80%;">
+                                        <input title="Pressione enter para realizar a busca" id="param_desc_alias" onkeypress="if((event.keyCode || event.which) == 13){search(); return false;}" type="search" placeholder="Precione a tecla enter para realizar a busca" data-mini="true">
+                                    </div>
+                                    <div class="ui-block-b" style="float: right;">
+                                        <a href="#" onclick="showalias('0','0',this);" data-toggle="tooltip" title="Novo alias" class="ui-btn btn-azul icon-plus"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="traco-b"></div>
+                        <div id="tbl_resultado_header" class="ui-grid-a tabela-item-label">
+                            <table width="98%" border="0" cellspacing="2" cellpadding="0" data-filter="true" data-input="select-native-2">
+                                <thead>
+                                    <tr class="title-table-pop">
+                                        <td class="acoes"><p>Ações</p></td>
+                                        <td width="270"><p>Descrição Alias</p></td>
+                                        <td width="105"><p>Grupo</p></td>
+                                        <td width="150"><p>Classificação</p></td>
+                                        <td><p>Item Engenharia</p></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div id="dvscroller" style="width: 100%; height: 300px; overflow-y: scroll; display: block;" class="ui-grid-a tabela-item-label">
+                            <table id="tbl_resultado" width="100%" border="0" cellspacing="2" cellpadding="0"></table>
+                        </div>
+                        <div class="traco-b"></div>
+                    </form>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="tab-alias" style="padding-top:15px;">
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <p>Descritivo Comercial</p>
+                            <textarea id="desc_alias_new" class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset"></textarea>
+                        </div>
+                        <div class="ui-block-b">
+                            <div class="row-01" id="nrcodigo">
+                                <p style="float:left; padding-top: 12px;">Código: <span>Novo</span></p> 
+                            </div>
+
+
+                            <div style="float:right;">
+                                <p style="float:left; padding-top: 12px;">Finalidade</p>
+                                <fieldset class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                    <div class="ui-controlgroup-controls">
+                                        <div class="ui-radio">
+                                            <label class="ui-btn ui-corner-all ui-btn-inherit ui-radio-off" for="new-alias">Label</label>
+                                            <input data-cacheval="false" name="label-alias" id="new-alias" value="label" checked="checked" type="radio">
+                                        </div>
+                                        <div class="ui-radio">
+                                            <label class="ui-btn ui-corner-all ui-btn-inherit ui-first-child ui-radio-off" for="new-label">Valor</label>
+                                            <input data-cacheval="true" name="label-alias" id="new-label" value="valor" type="radio">
+                                        </div>
+                                        <input type="hidden" id="param_novo_tipo_finalidade" value="label" />
+                                        <input type="hidden" id="param_novo_tipo_alias" value="alias" />
+                                        <input type="hidden" id="param_id_alias" value="0" />
+                                    </div>
+                                </fieldset>            
+                            </div>
+                            <div style="clear: both;"></div>
+
+                            <div class="traco-b"></div>
+
+                            <div class="row-02">
+                                <div id="popengitem" class="pop-itens-engenharia">
+                                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right btn-close">Close</a>
+                                    <div data-role="header" class="header-popup"><h3>item / descritivo</h3></div>
+                                    <ul id="list_itens_vinculados" class="itens-descricao">
+                                        <?php echo $this->action('loaditemengenharia', 'index', 'modelos') ?>
+                                    </ul>
+                                </div>
+                                <div class="ui-input-btn ui-btn ui-icon-delete ui-btn-icon-notext ui-nodisc-icon" data-toggle="tooltip" data-placement="top" title="deletar item">
+                                    <input onclick="backtonormal(this);" type="button" data-enhanced="true" value="<span class='icon-plus'>&nbsp;</span>adicionar item engenharia">
+                                </div>        
+                                <a href="#" id="btn_add_item_vinculado" class="ui-btn add-item-engenharia"><span class="icon-plus">&nbsp;</span>adicionar item engenharia</a>
+                                <input type="hidden" id="itemvinculado" />
+                            </div>
+
+                            <div class="traco-b"></div>
+
+                            <div class="row-03">
+                                <p>Classificação</p>
+                                <div class="ui-select select">
+                                    <select id="myclassifications" class="js-example-basic-multiple " multiple="multiple">
+                                        <?php echo $this->action('loadclassificacao', 'index', 'modelos') ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" onclick="backsearch();" class="btn-azul pull-right btn-save ui-link"><span class="icon-cancel-2"></span>cancelar</a>
+                    <a href="#" onclick="savealias();" class="btn-azul pull-right btn-save ui-link" style=" margin-right: 5px;"><span class="icon-ok-3"></span>gravar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

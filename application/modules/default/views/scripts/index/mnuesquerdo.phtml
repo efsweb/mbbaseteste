@@ -5,18 +5,24 @@
 ?>
 <?php foreach($this->menu as $title => $content): ?>
 <div data-role="collapsible" id="collapsible" data-collapsed="true">
-        <h3><span class="icon-folder-2"></span><?= $title; ?></h3>
+        <h3><span class="iconold-folder-2"></span><?= $title; ?></h3>
         <ul data-role="listview" data-inset="false" data-icon="false" class="lista">
                 <?php foreach($content as $res): ?>
-                <li id="<?= $res['id']; ?>">
-                        <a data-id="<?= $res['id']; ?>" href="/<?= $base . '/' . $res['link']; ?>">
-                                <?= $res['desc']; ?>
-                        </a>
-                </li>
+                        <?php if($res['id'] == 'mod_wa_geral'): ?>
+                                <li id="<?= $res['id']; ?>">
+                                        <a data-ajax="false" data-id="<?= $res['id']; ?>" href="/<?= $base . '/' . $res['link']; ?>">
+                                                <?= $res['desc']; ?>
+                                        </a>
+                                </li>
+                        <?php else: ?>                        
+                                <li id="<?= $res['id']; ?>">
+                                        <a data-ajax="false" data-id="<?= $res['id']; ?>" href="/<?= $base . '/' . $res['link']; ?>">
+                                                <?= $res['desc']; ?>
+                                        </a>
+                                </li>                        
+                        <?php endif; ?>
+
                 <?php endforeach; ?>
         </ul>
 </div>
 <?php endforeach; ?>
-
-
-

@@ -1,0 +1,74 @@
+<div data-role="popup" id="popUP" data-overlay-theme="b" data-theme="b" data-dismissible="false" class="popup-ficha">
+    <a onclick="closeuppopup(this);" data-tipo="close" href="#" data-theme="b" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        
+    <div data-role="header" data-theme="b" class="header-popup">
+        <h3>Conteúdo UP</h3>
+    </div>
+
+    <div role="main" class="ui-content content-popup itens-up">
+        <div class="ui-grid-a row-01">
+            <div class="ui-block-a">
+                <div class="ui-input-text ui-body-inherit ui-corner-all ui-mini ui-shadow-inset">
+                    <input name="item" disabled="disabled" id="txtitemup" placeholder="Item" value="" data-mini="true" type="text">
+                </div>                
+            </div>
+
+            <div class="ui-block-b">
+                <fieldset class="ui-controlgroup ui-controlgroup-vertical ui-corner-all" data-role="controlgroup">
+                    <div class="ui-controlgroup-controls ">
+                        <div class="ui-checkbox">
+                            <label class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-off" for="marcar">Marcar</label>
+                            <input data-cacheval="true" name="marcar" id="marcar" type="checkbox">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>  
+        </div>
+
+        <div class="traco-b"></div>
+
+        <div class="ui-grid-a row-02">
+            <div class="ui-block-a">
+                <div class="ui-select ui-mini">
+                    <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow" id="lista-completa">
+                        <span>Lista Completa</span>
+                        <select onchange="changeselup(this);" name="sel-lista-completa" id="sel-lista-completa">
+                            <option value="0" selected="selected">Lista Completa</option>
+                            <option value="N">Não Atribuído</option>
+                            <option value="C">Conforto</option>
+                            <option value="D">Desempenho</option>
+                            <option value="P">Praticidade</option>
+                            <option value="S">Segurança</option>
+                            <option value="V">Vocação</option>
+                            <option value="P">Pintura</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-block-b">
+                <div class="ui-select ui-mini">
+                    <div class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow" id="lista-resumida">
+                        <span>Lista Resumida</span>
+                        <select onchange="changeselup(this);" name="sel-lista-resumida" id="sel-lista-resumida">
+                            <option value="0" selected="selected">Lista Resumida</option>
+                            <option value="N">Não Atribuído</option>
+                            <option value="C">Conforto</option>
+                            <option value="D">Desempenho</option>
+                            <option value="P">Praticidade</option>
+                            <option value="S">Segurança</option>
+                            <option value="V">Vocação</option>
+                            <option value="P">Pintura</option>
+                        </select>
+                    </div>
+                </div>
+            </div>  
+        </div>
+
+        <div class="traco-b"></div>
+
+        <div class="ui-grid-a">
+            <a onclick="closeuppopup(this);" data-tipo="save" href="#" data-transition="flow" class="ui-btn btn-azul pull-right">gravar</a>
+        </div>
+    </div>
+</div>
